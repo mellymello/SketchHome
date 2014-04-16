@@ -9,26 +9,38 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.List;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.JTree;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JToolBar;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+
 import java.awt.Font;
+
 import javax.swing.JSeparator;
+
 import java.awt.Color;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
+
+import app.DrawingBoard;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame {
 	
@@ -36,6 +48,8 @@ public class MainFrame extends JFrame {
 	private JFormattedTextField txtWidth;
 	private JFormattedTextField txtHeight;
 	private JFormattedTextField txtRotation;
+	
+	public DrawingBoard pnlDrawingBoard;
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -101,7 +115,7 @@ public class MainFrame extends JFrame {
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel pnlDrawingBoard = new JPanel();
+		pnlDrawingBoard = new DrawingBoard();
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 		
@@ -186,7 +200,13 @@ public class MainFrame extends JFrame {
 		gbc_btnBedroom.gridy = 2;
 		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
 		
-		JButton btnOffice = new JButton("Office");
+		JButton btnOffice = new JButton("");
+		btnOffice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/icon.png")));
 		GridBagConstraints gbc_btnOffice = new GridBagConstraints();
 		gbc_btnOffice.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOffice.gridx = 1;
