@@ -164,6 +164,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				selectedCtrlPoint = detectedReleasedPoint;
 			}
 		}
+		repaint();
 	}
 
 	private CtrlPoint ctrlPointDetected(int x, int y) {

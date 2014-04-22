@@ -12,8 +12,9 @@ public class Wall {
 	private double ctrlPointDiameter;
 	private int wallThickness;
 
-	public Wall(double xStartPoint, double yStartPoint,double ctrlPointDiameter, int wallThickness) {
-		
+	public Wall(double xStartPoint, double yStartPoint,
+			double ctrlPointDiameter, int wallThickness) {
+
 		this.ctrlPointDiameter = ctrlPointDiameter;
 		this.wallThickness = wallThickness;
 
@@ -26,8 +27,9 @@ public class Wall {
 
 	public Wall(CtrlPoint startPoint, int ctrlPointDiameter, int wallThickness) {
 		this.startPoint = startPoint;
-		endPoint = new CtrlPoint(startPoint.getX(), startPoint.getY(), ctrlPointDiameter);
-		
+		endPoint = new CtrlPoint(startPoint.getX(), startPoint.getY(),
+				ctrlPointDiameter);
+
 		this.wallThickness = wallThickness;
 		wallLine = new Line2D.Double(startPoint, endPoint);
 
@@ -56,18 +58,16 @@ public class Wall {
 		wallLine.setLine(startPoint, endPoint);
 	}
 
-
 	public Line2D getWallLine() {
 		return wallLine;
 	}
-	
-	
-	public double getWallLength(){
-		return Math.sqrt ( ( startPoint.getX() * endPoint.getX() ) - ( startPoint.getY() *  endPoint.getY()))  ;
+
+	public double getWallLength() {
+		return Math.sqrt(Math.pow((endPoint.getX() - startPoint.getX()), 2)	+ Math.pow((endPoint.getY() - startPoint.getY()), 2));
 	}
-	
 
 	public String toString() {
-		return "[" + startPoint + ":" + endPoint + "] wallLine: {"+ wallLine.getP1()+" : "+wallLine.getP2()+"}";
+		return "[" + startPoint + ":" + endPoint + "] wallLine: {"
+				+ wallLine.getP1() + " : " + wallLine.getP2() + "}";
 	}
 }
