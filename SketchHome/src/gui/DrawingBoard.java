@@ -78,7 +78,14 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	@Override
 	public void mouseDragged(MouseEvent me) {
 		if (selectedCtrlPoint != null) {
-			selectedCtrlPoint.setLocation(me.getX(), me.getY());
+			selectedCtrlPoint.setLocation(me.getX(), me.getY());	
+			for (Wall w : walls) {
+				if (w.getCtrlPointStart() == selectedCtrlPoint) {
+					w.setNewStartPoint(selectedCtrlPoint);
+				} else if (w.getCtrlPointEnd() == selectedCtrlPoint) {
+					w.setNewEndPoint(selectedCtrlPoint);
+				}
+			}
 
 		}
 
@@ -145,8 +152,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		CtrlPoint detectedReleasedPoint = ctrlPointDetected(me.getX(),
 				me.getY());
 
-		if (detectedReleasedPoint != null
-				&& detectedReleasedPoint != selectedCtrlPoint) {
+		if (detectedReleasedPoint != null && detectedReleasedPoint != selectedCtrlPoint) {
 			if (selectedCtrlPoint != null) {
 				for (Wall w : walls) {
 					if (w.getCtrlPointStart() == detectedReleasedPoint) {
