@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import sun.org.mozilla.javascript.internal.ObjToIntMap.Iterator;
 import drawableObject.*;
 
 public class DrawingBoard extends JPanel implements MouseListener,
@@ -23,9 +25,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private int ctrlPointDiameter;
 	private int wallThickness;
 
+	private Wall selectedWall;
+	private boolean showMeasure;
+
 	// precision is uesd to detect if a ctrlPoint is selected or not
-	public DrawingBoard(int width, int height, int ctrlPointDiameter, int wallThickness) {
-		
+	public DrawingBoard(int width, int height, int ctrlPointDiameter,
+			int wallThickness) {
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(width, height));
 
@@ -34,6 +40,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		selectedCtrlPoint = null;
 		this.ctrlPointDiameter = ctrlPointDiameter;
 		this.wallThickness = wallThickness;
+		this.showMeasure = true;
+
+		this.selectedWall = null;
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -51,7 +60,17 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			// g2.drawLine(w.getCtrlPointStart().getX(), w.getCtrlPointStart()
 			// .getY(), w.getCtrlPointEnd().getX(), w.getCtrlPointEnd()
 			// .getY());
+
 			g2.draw(w.getWallLine());
+			// g2.draw(w.getWallRect());
+			if (showMeasure) {
+				g2.drawString(String.valueOf(w.getWallLength()), (int) (((w
+						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
+						.getX()) / 2)),
+						(int) ((w.getCtrlPointStart().getY() + w
+								.getCtrlPointEnd().getY()) / 2));
+
+			}
 
 			// painting CtrlPoints
 			g2.setColor(Color.red);
@@ -67,7 +86,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			// .getCtrlPointStart().getY(), tmpWall.getCtrlPointEnd()
 			// .getX(), tmpWall.getCtrlPointEnd().getY());
 			g2.draw(tmpWall.getWallLine());
-			
+
 			g2.setColor(Color.red);
 			g2.draw(tmpWall.getCtrlPointStart().getCtrlPoint());
 			g2.draw(tmpWall.getCtrlPointEnd().getCtrlPoint());
@@ -78,7 +97,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	@Override
 	public void mouseDragged(MouseEvent me) {
 		if (selectedCtrlPoint != null) {
-			selectedCtrlPoint.setLocation(me.getX(), me.getY());	
+			selectedCtrlPoint.setLocation(me.getX(), me.getY());
 			for (Wall w : walls) {
 				if (w.getCtrlPointStart() == selectedCtrlPoint) {
 					w.setNewStartPoint(selectedCtrlPoint);
@@ -105,23 +124,54 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		if (selectedCtrlPoint == null) {
-			if (tmpWall == null) {
-				tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
-						wallThickness);
+		if (selectedWall == null) {
+			if (selectedCtrlPoint == null) {
+				if (tmpWall == null) {
+					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
+							wallThickness);
+				} else {
+					tmpWall.setEndPoint(me.getX(), me.getY());
+					walls.add(tmpWall);
+					tmpWall = null;
+				}
 			} else {
-				tmpWall.setEndPoint(me.getX(), me.getY());
-				walls.add(tmpWall);
-				tmpWall = null;
+				if (tmpWall == null) {
+					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
+							wallThickness);
+				} else {
+					tmpWall.setNewEndPoint(selectedCtrlPoint);
+					walls.add(tmpWall);
+					tmpWall = null;
+				}
 			}
-		} else {
-			if (tmpWall == null) {
-				tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
-						wallThickness);
+			//managing the action of connecting a wall with an existing wall on the "middle" (not over a ctrlPoint)
+			//The reaction of the program is to split the "base" wall into 2 walls and let the user continue to draw the third wall
+		} else { 
+			if (selectedCtrlPoint == null) {
+				if (tmpWall == null) {
+					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
+							wallThickness);
+					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointStart(),wallThickness));
+					walls.add(new Wall(tmpWall.getCtrlPointStart(),selectedWall.getCtrlPointEnd(),wallThickness));
+					walls.remove(selectedWall);
+					
+				} else {
+					tmpWall.setEndPoint(me.getX(), me.getY());
+					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointEnd(),wallThickness));
+					walls.add(new Wall(tmpWall.getCtrlPointEnd(),selectedWall.getCtrlPointEnd(),wallThickness));
+					walls.remove(selectedWall);
+					walls.add(tmpWall);
+					tmpWall = null;
+				}
 			} else {
-				tmpWall.setNewEndPoint(selectedCtrlPoint);
-				walls.add(tmpWall);
-				tmpWall = null;
+				if (tmpWall == null) {
+					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
+							wallThickness);
+				} else {
+					tmpWall.setNewEndPoint(selectedCtrlPoint);
+					walls.add(tmpWall);
+					tmpWall = null;
+				}
 			}
 		}
 		repaint();
@@ -145,14 +195,17 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	@Override
 	public void mousePressed(MouseEvent me) {
 		selectedCtrlPoint = ctrlPointDetected(me.getX(), me.getY());
+		selectedWall = wallDetect(me.getX(), me.getY());
+		System.out.println(selectedWall);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
-		CtrlPoint detectedReleasedPoint = ctrlPointDetected(me.getX(),
-				me.getY());
+		CtrlPoint detectedReleasedPoint = ctrlPointDetected(me.getX(),me.getY());
+//		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
 
-		if (detectedReleasedPoint != null && detectedReleasedPoint != selectedCtrlPoint) {
+		if (detectedReleasedPoint != null
+				&& detectedReleasedPoint != selectedCtrlPoint) {
 			if (selectedCtrlPoint != null) {
 				for (Wall w : walls) {
 					if (w.getCtrlPointStart() == detectedReleasedPoint) {
@@ -164,6 +217,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				selectedCtrlPoint = detectedReleasedPoint;
 			}
 		}
+	
 		repaint();
 	}
 
@@ -176,5 +230,18 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			}
 		}
 		return null;
+	}
+
+	public Wall wallDetect(int x, int y) {
+		for (Wall w : walls) {
+			if (w.getWallLine().ptSegDist(x, y) < wallThickness) {
+				return w;
+			}
+		}
+		return null;
+	}
+
+	public void setShowMeasure(boolean show) {
+		showMeasure = show;
 	}
 }

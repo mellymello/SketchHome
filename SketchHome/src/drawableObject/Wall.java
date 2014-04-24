@@ -1,5 +1,6 @@
 package drawableObject;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
@@ -34,6 +35,15 @@ public class Wall {
 		wallLine = new Line2D.Double(startPoint, endPoint);
 
 	}
+	
+	public Wall(CtrlPoint startPoint, CtrlPoint endPoint, int wallThickness){
+		this.startPoint = startPoint;
+		this.endPoint=endPoint;
+		this.wallThickness= wallThickness;
+		
+		wallLine = new Line2D.Double(startPoint, endPoint);
+		
+	}
 
 	public CtrlPoint getCtrlPointStart() {
 		return startPoint;
@@ -51,16 +61,19 @@ public class Wall {
 	public void setNewEndPoint(CtrlPoint newEndPoint) {
 		endPoint = newEndPoint;
 		wallLine.setLine(startPoint, endPoint);
+		
 	}
 
 	public void setNewStartPoint(CtrlPoint newStartPoint) {
 		startPoint = newStartPoint;
 		wallLine.setLine(startPoint, endPoint);
+		
 	}
 
 	public Line2D getWallLine() {
 		return wallLine;
 	}
+
 
 	public double getWallLength() {
 		return Math.sqrt(Math.pow((endPoint.getX() - startPoint.getX()), 2)	+ Math.pow((endPoint.getY() - startPoint.getY()), 2));
