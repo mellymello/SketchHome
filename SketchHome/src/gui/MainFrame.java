@@ -38,12 +38,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
-import app.DrawingBoard;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame {
+	
+	private static final int WINDOW_HEIGTH = 600;
+	private static final int WINDOW_WEIDTH = 800;
+	private static final int CTRL_POINT_DIAMETER = 10;
+	private static final int WALL_THICKNESS = 5;
 	
 	private JTextField txtName;
 	private JFormattedTextField txtWidth;
@@ -117,7 +121,7 @@ public class MainFrame extends JFrame {
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		pnlDrawingBoard = new DrawingBoard();
+		pnlDrawingBoard = new DrawingBoard(WINDOW_WEIDTH, WINDOW_HEIGTH, CTRL_POINT_DIAMETER,WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 		
