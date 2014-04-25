@@ -41,6 +41,7 @@ import javax.swing.JFormattedTextField;
 import app.DrawingBoard;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame {
 	
@@ -100,6 +101,7 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnDisplay);
 		
 		JMenuItem mntmMeasurements = new JMenuItem("Measurements");
+		mntmMeasurements.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cotations.png")));
 		mnDisplay.add(mntmMeasurements);
 		
 		JMenuItem mntmObjectTree = new JMenuItem("Object tree");
@@ -133,7 +135,11 @@ public class MainFrame extends JFrame {
 		gbl_pnlToolsBtn.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
 		
-		JButton btnSelectionTool = new JButton("Select");
+		JButton btnSelectionTool = new JButton("");
+		btnSelectionTool.setToolTipText("Select");
+		btnSelectionTool.setBorderPainted(false);
+		btnSelectionTool.setMargin(new Insets(0, 0, 0, 0));
+		btnSelectionTool.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/souris.png")));
 		GridBagConstraints gbc_btnSelectionTool = new GridBagConstraints();
 		gbc_btnSelectionTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelectionTool.gridx = 0;
@@ -147,7 +153,11 @@ public class MainFrame extends JFrame {
 		gbc_btnFurniturecreation.gridy = 0;
 		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
 		
-		JButton btnTextTool = new JButton("Text");
+		JButton btnTextTool = new JButton("");
+		btnTextTool.setToolTipText("Text");
+		btnTextTool.setBorderPainted(false);
+		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
+		btnTextTool.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/texte.png")));
 		GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
 		gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnTextTool.gridx = 2;
@@ -155,6 +165,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
 		JButton btnImageTool = new JButton("Image");
+		btnImageTool.setIcon(null);
 		GridBagConstraints gbc_btnImageTool = new GridBagConstraints();
 		gbc_btnImageTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnImageTool.gridx = 3;
@@ -175,7 +186,11 @@ public class MainFrame extends JFrame {
 		gbc_btnZoomminus.gridy = 0;
 		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
 		
-		JButton btnConstructionMode = new JButton("Construction Mode");
+		JButton btnConstructionMode = new JButton("");
+		btnConstructionMode.setToolTipText("Construction Mode");
+		btnConstructionMode.setBorderPainted(false);
+		btnConstructionMode.setMargin(new Insets(0, 0, 0, 0));
+		btnConstructionMode.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/construction.png")));
 		GridBagConstraints gbc_btnConstructionMode = new GridBagConstraints();
 		gbc_btnConstructionMode.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnConstructionMode.gridwidth = 3;
@@ -184,7 +199,11 @@ public class MainFrame extends JFrame {
 		gbc_btnConstructionMode.gridy = 1;
 		pnlToolsBtn.add(btnConstructionMode, gbc_btnConstructionMode);
 		
-		JButton btnFurnitureMode = new JButton("Furniture Mode");
+		JButton btnFurnitureMode = new JButton("");
+		btnFurnitureMode.setToolTipText("Furniture Mode");
+		btnFurnitureMode.setBorderPainted(false);
+		btnFurnitureMode.setMargin(new Insets(0, 0, 0, 0));
+		btnFurnitureMode.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/ameublement.png")));
 		GridBagConstraints gbc_btnFurnitureMode = new GridBagConstraints();
 		gbc_btnFurnitureMode.insets = new Insets(0, 0, 5, 0);
 		gbc_btnFurnitureMode.fill = GridBagConstraints.HORIZONTAL;
@@ -193,7 +212,11 @@ public class MainFrame extends JFrame {
 		gbc_btnFurnitureMode.gridy = 1;
 		pnlToolsBtn.add(btnFurnitureMode, gbc_btnFurnitureMode);
 		
-		JButton btnBedroom = new JButton("BedRoom");
+		JButton btnBedroom = new JButton("");
+		btnBedroom.setToolTipText("BedRoom");
+		btnBedroom.setBorderPainted(false);
+		btnBedroom.setMargin(new Insets(0, 0, 0, 0));
+		btnBedroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambre.png")));
 		GridBagConstraints gbc_btnBedroom = new GridBagConstraints();
 		gbc_btnBedroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBedroom.gridx = 0;
@@ -201,72 +224,117 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
 		
 		JButton btnOffice = new JButton("");
+		btnOffice.setToolTipText("Office");
+		btnOffice.setBorderPainted(false);
+		btnOffice.setMargin(new Insets(0, 0, 0, 0));
 		btnOffice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/icon.png")));
+		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/bureau.png")));
 		GridBagConstraints gbc_btnOffice = new GridBagConstraints();
 		gbc_btnOffice.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOffice.gridx = 1;
 		gbc_btnOffice.gridy = 2;
 		pnlToolsBtn.add(btnOffice, gbc_btnOffice);
 		
-		JButton btnKitchen = new JButton("Kitchen");
+		JButton btnKitchen = new JButton("");
+		btnKitchen.setToolTipText("Kitchen");
+		btnKitchen.setBorderPainted(false);
+		btnKitchen.setMargin(new Insets(0, 0, 0, 0));
+		btnKitchen.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisine.png")));
 		GridBagConstraints gbc_btnKitchen = new GridBagConstraints();
 		gbc_btnKitchen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnKitchen.gridx = 2;
 		gbc_btnKitchen.gridy = 2;
 		pnlToolsBtn.add(btnKitchen, gbc_btnKitchen);
 		
-		JButton btnLivingroom = new JButton("LivingRoom");
+		JButton btnLivingroom = new JButton("");
+		btnLivingroom.setToolTipText("Livinh Room");
+		btnLivingroom.setBorderPainted(false);
+		btnLivingroom.setMargin(new Insets(0, 0, 0, 0));
+		btnLivingroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salon.png")));
 		GridBagConstraints gbc_btnLivingroom = new GridBagConstraints();
 		gbc_btnLivingroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLivingroom.gridx = 3;
 		gbc_btnLivingroom.gridy = 2;
 		pnlToolsBtn.add(btnLivingroom, gbc_btnLivingroom);
 		
-		JButton btnBathroom = new JButton("BathRoom");
+		JButton btnBathroom = new JButton("");
+		btnBathroom.setToolTipText("Bath Room");
+		btnBathroom.setBorderPainted(false);
+		btnBathroom.setMargin(new Insets(0, 0, 0, 0));
+		btnBathroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bain.png")));
 		GridBagConstraints gbc_btnBathroom = new GridBagConstraints();
 		gbc_btnBathroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBathroom.gridx = 4;
 		gbc_btnBathroom.gridy = 2;
 		pnlToolsBtn.add(btnBathroom, gbc_btnBathroom);
 		
+		JButton btnDiningRoom = new JButton("");
+		btnDiningRoom.setToolTipText("Dining Room");
+		btnDiningRoom.setBorderPainted(false);
+		btnDiningRoom.setMargin(new Insets(0, 0, 0, 0));
+		btnDiningRoom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_manger.png")));
+		GridBagConstraints gbc_btnDiningRoom = new GridBagConstraints();
+		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDiningRoom.gridx = 5;
+		gbc_btnDiningRoom.gridy = 2;
+		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
+		
 		JButton btnCustomfurniture = new JButton("Custom Furniture");
 		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
-		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 0);
-		gbc_btnCustomfurniture.gridx = 5;
-		gbc_btnCustomfurniture.gridy = 2;
+		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCustomfurniture.gridx = 0;
+		gbc_btnCustomfurniture.gridy = 3;
 		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
 		
-		JButton btnWall = new JButton("Wall");
+		JButton btnWall = new JButton("");
+		btnWall.setToolTipText("Simple Wall");
+		btnWall.setBorderPainted(false);
+		btnWall.setMargin(new Insets(0, 0, 0, 0));
+		btnWall.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_simple.png")));
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
-		gbc_btnWall.insets = new Insets(0, 0, 5, 5);
+		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall.gridx = 0;
-		gbc_btnWall.gridy = 3;
+		gbc_btnWall.gridy = 4;
 		pnlToolsBtn.add(btnWall, gbc_btnWall);
+		
+		JButton btnWall2 = new JButton("");
+		btnWall2.setToolTipText("contiguous Wall");
+		btnWall2.setBorderPainted(false);
+		btnWall2.setMargin(new Insets(0, 0, 0, 0));
+		btnWall2.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_polygonal.png")));
+		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
+		gbc_btnWall2.insets = new Insets(0, 0, 0, 5);
+		gbc_btnWall2.gridx = 1;
+		gbc_btnWall2.gridy = 4;
+		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
 		
 		JButton btnWindow = new JButton("Window");
 		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
-		gbc_btnWindow.insets = new Insets(0, 0, 5, 5);
-		gbc_btnWindow.gridx = 1;
-		gbc_btnWindow.gridy = 3;
+		gbc_btnWindow.insets = new Insets(0, 0, 0, 5);
+		gbc_btnWindow.gridx = 2;
+		gbc_btnWindow.gridy = 4;
 		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
 		
 		JButton btnDoor = new JButton("Door");
 		GridBagConstraints gbc_btnDoor = new GridBagConstraints();
-		gbc_btnDoor.insets = new Insets(0, 0, 5, 5);
-		gbc_btnDoor.gridx = 2;
-		gbc_btnDoor.gridy = 3;
+		gbc_btnDoor.insets = new Insets(0, 0, 0, 5);
+		gbc_btnDoor.gridx = 3;
+		gbc_btnDoor.gridy = 4;
 		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
 		
-		JButton btnStair = new JButton("Stair");
+		JButton btnStair = new JButton("");
+		btnStair.setToolTipText("Stairs");
+		btnStair.setBorderPainted(false);
+		btnStair.setMargin(new Insets(0, 0, 0, 0));
+		btnStair.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/escaliers.png")));
 		GridBagConstraints gbc_btnStair = new GridBagConstraints();
-		gbc_btnStair.insets = new Insets(0, 0, 5, 5);
-		gbc_btnStair.gridx = 3;
-		gbc_btnStair.gridy = 3;
+		gbc_btnStair.insets = new Insets(0, 0, 0, 5);
+		gbc_btnStair.gridx = 4;
+		gbc_btnStair.gridy = 4;
 		pnlToolsBtn.add(btnStair, gbc_btnStair);
 		
 		JPanel pnlObjects = new JPanel();

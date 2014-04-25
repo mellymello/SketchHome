@@ -17,7 +17,7 @@ public class SketchHome {
 		frame.pnlDrawingBoard.addFurniture(new Furniture("chaise", "ma chaise", "img/Sans titre-2.png", new Dimension(100,100), new Point(20,20)));
 		frame.pnlDrawingBoard.addFurniture(new Furniture("chaise", "ma chaise", "img/Sans titre-2.png", new Dimension(100,100), new Point(150,30)));
 		frame.pnlDrawingBoard.addFurniture(new Furniture("chaise", "ma chaise", "img/Sans titre-2.png", new Dimension(100,100), new Point(150,150), 0, false, false));
-		frame.pnlDrawingBoard.addFurniture(new Furniture("chaise", "ma chaise", "img/Sans titre-2.png", new Dimension(100,100), new Point(150,300), 10, false, true));
+		frame.pnlDrawingBoard.addFurniture(new Furniture("chaise", "ma chaise", "img/Sans titre-2.png", new Dimension(100,100), new Point(150,300), 45, false, true));
 	}
 
 }
