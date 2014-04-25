@@ -5,12 +5,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import sun.org.mozilla.javascript.internal.ObjToIntMap.Iterator;
@@ -27,6 +34,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	private Wall selectedWall;
 	private boolean showMeasure;
+	
+	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
 
 	// precision is uesd to detect if a ctrlPoint is selected or not
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
@@ -47,6 +56,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
+	}
+	
+	public void addFurniture(Furniture f) {
+		furnitures.add(f);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -79,7 +92,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		}
 
-		// painting the tmp wall:
+		// painting the tmp wall
 		if (tmpWall != null) {
 			g2.setColor(Color.black);
 			// g2.drawLine(tmpWall.getCtrlPointStart().getX(), tmpWall
@@ -90,6 +103,49 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			g2.setColor(Color.red);
 			g2.draw(tmpWall.getCtrlPointStart().getCtrlPoint());
 			g2.draw(tmpWall.getCtrlPointEnd().getCtrlPoint());
+		}
+		
+		//painting the furnitures
+		java.util.ListIterator<Furniture> it = furnitures.listIterator();
+		while(it.hasNext()) {
+				Furniture furniture = it.next();
+				if(furniture.getVisible()) {
+					//g.drawImage(Toolkit.getDefaultToolkit().getImage(furniture.getPicture()), furniture.getPosition().x, furniture.getPosition().y, (int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), null);
+					
+					
+					Image img;
+					try {
+						
+						/*
+						 * TODO : problème avec la rotation : la forme dépasse du carré
+						 * idée : faire un carré de longueur = à diagonale de de la forme
+						 */
+						
+						img = ImageIO.read(new File(furniture.getPicture()));
+	
+					    int diagonaleImg = (int)Math.sqrt((int)furniture.getDimension().getWidth() * (int)furniture.getDimension().getWidth() + (int)furniture.getDimension().getHeight() * (int)furniture.getDimension().getHeight());
+					    
+						// Create a buffered image with transparency
+						//BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+						BufferedImage bimage = new BufferedImage(diagonaleImg, diagonaleImg, BufferedImage.TYPE_INT_ARGB);
+	
+					    // Draw the image on to the buffered image
+					    Graphics2D bGr = bimage.createGraphics();
+					    bGr.drawImage(img, 0, 0, null);
+					    bGr.dispose();
+					    
+						
+						// Drawing the rotated image at the required drawing locations
+						AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth()/2, furniture.getDimension().getHeight()/2);
+						AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+						g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, diagonaleImg, diagonaleImg, Color.BLUE, null);
+						//g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, diagonaleImg, diagonaleImg, null);
+
+					
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 		}
 
 	}
