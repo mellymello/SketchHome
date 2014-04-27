@@ -40,12 +40,15 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.SwingConstants;
+
+import tools.ITools;
 
 public class MainFrame extends JFrame {
 	
 	private static final int WINDOW_HEIGTH = 600;
-	private static final int WINDOW_WEIDTH = 800;
+	private static final int WINDOW_WIDTH = 800;
 	private static final int CTRL_POINT_DIAMETER = 10;
 	private static final int WALL_THICKNESS = 5;
 	
@@ -55,6 +58,8 @@ public class MainFrame extends JFrame {
 	private JFormattedTextField txtRotation;
 	
 	public DrawingBoard pnlDrawingBoard;
+	
+	public ITools selectedTool;
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -106,6 +111,12 @@ public class MainFrame extends JFrame {
 		
 		JMenuItem mntmMeasurements = new JMenuItem("Measurements");
 		mntmMeasurements.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cotations.png")));
+		mntmMeasurements.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pnlDrawingBoard.toggleShowMeasurements();
+				pnlDrawingBoard.repaint();
+			}
+		});
 		mnDisplay.add(mntmMeasurements);
 		
 		JMenuItem mntmObjectTree = new JMenuItem("Object tree");
@@ -121,7 +132,7 @@ public class MainFrame extends JFrame {
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		pnlDrawingBoard = new DrawingBoard(WINDOW_WEIDTH, WINDOW_HEIGTH, CTRL_POINT_DIAMETER,WALL_THICKNESS);
+		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGTH, CTRL_POINT_DIAMETER,WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 		
@@ -158,6 +169,11 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
 		
 		JButton btnTextTool = new JButton("");
+		btnTextTool.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectedTool = TextTool.getInstance();
+			}
+		});
 		btnTextTool.setToolTipText("Text");
 		btnTextTool.setBorderPainted(false);
 		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
@@ -191,6 +207,10 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
 		
 		JButton btnConstructionMode = new JButton("");
+		btnConstructionMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnConstructionMode.setToolTipText("Construction Mode");
 		btnConstructionMode.setBorderPainted(false);
 		btnConstructionMode.setMargin(new Insets(0, 0, 0, 0));

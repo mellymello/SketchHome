@@ -21,37 +21,35 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import sun.org.mozilla.javascript.internal.ObjToIntMap.Iterator;
+import tools.ITools;
 import drawableObject.*;
 
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
 
-	private LinkedList<Wall> walls;
+	private LinkedList<Wall> walls = new LinkedList<Wall>();
 	private Wall tmpWall;
 	private CtrlPoint selectedCtrlPoint;
 	private int ctrlPointDiameter;
 	private int wallThickness;
 
 	private Wall selectedWall;
-	private boolean showMeasure;
+	private boolean showMeasurements;
 	
 	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
 
-	// precision is uesd to detect if a ctrlPoint is selected or not
+	// precision is used to detect if a ctrlPoint is selected or not
+	
+	
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
 			int wallThickness) {
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(width, height));
 
-		walls = new LinkedList<Wall>();
-		tmpWall = null;
-		selectedCtrlPoint = null;
 		this.ctrlPointDiameter = ctrlPointDiameter;
 		this.wallThickness = wallThickness;
-		this.showMeasure = true;
-
-		this.selectedWall = null;
+		this.showMeasurements = true;
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -76,12 +74,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 			g2.draw(w.getWallLine());
 			// g2.draw(w.getWallRect());
-			if (showMeasure) {
-				g2.drawString(String.valueOf(w.getWallLength()), (int) (((w
-						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
-						.getX()) / 2)),
-						(int) ((w.getCtrlPointStart().getY() + w
-								.getCtrlPointEnd().getY()) / 2));
+			if (showMeasurements) {
+				g2.drawString(String.valueOf(w.getWallLength()),
+						(int) (((w.getCtrlPointStart().getX() + w.getCtrlPointEnd().getX()) / 2)),
+						(int) ((w.getCtrlPointStart().getY() + w.getCtrlPointEnd().getY()) / 2));
 
 			}
 
@@ -99,6 +95,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			// .getCtrlPointStart().getY(), tmpWall.getCtrlPointEnd()
 			// .getX(), tmpWall.getCtrlPointEnd().getY());
 			g2.draw(tmpWall.getWallLine());
+			
+			if (showMeasurements) {
+				g2.drawString(String.valueOf(tmpWall.getWallLength()),
+						(int) (((tmpWall.getCtrlPointStart().getX() + tmpWall.getCtrlPointEnd().getX()) / 2)),
+						(int) ((tmpWall.getCtrlPointStart().getY() + tmpWall.getCtrlPointEnd().getY()) / 2));
+
+			}
 
 			g2.setColor(Color.red);
 			g2.draw(tmpWall.getCtrlPointStart().getCtrlPoint());
@@ -123,11 +126,11 @@ public class DrawingBoard extends JPanel implements MouseListener,
 						
 						img = ImageIO.read(new File(furniture.getPicture()));
 	
-					    int diagonaleImg = (int)Math.sqrt((int)furniture.getDimension().getWidth() * (int)furniture.getDimension().getWidth() + (int)furniture.getDimension().getHeight() * (int)furniture.getDimension().getHeight());
+					    //int diagonaleImg = (int)Math.sqrt((int)furniture.getDimension().getWidth() * (int)furniture.getDimension().getWidth() + (int)furniture.getDimension().getHeight() * (int)furniture.getDimension().getHeight());
 					    
 						// Create a buffered image with transparency
-						//BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-						BufferedImage bimage = new BufferedImage(diagonaleImg, diagonaleImg, BufferedImage.TYPE_INT_ARGB);
+						BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+						//BufferedImage bimage = new BufferedImage(diagonaleImg, diagonaleImg, BufferedImage.TYPE_INT_ARGB);
 	
 					    // Draw the image on to the buffered image
 					    Graphics2D bGr = bimage.createGraphics();
@@ -138,8 +141,23 @@ public class DrawingBoard extends JPanel implements MouseListener,
 						// Drawing the rotated image at the required drawing locations
 						AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth()/2, furniture.getDimension().getHeight()/2);
 						AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-						g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, diagonaleImg, diagonaleImg, Color.BLUE, null);
-						//g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, diagonaleImg, diagonaleImg, null);
+						//g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, diagonaleImg, diagonaleImg, Color.BLUE, null);
+						g.drawImage(op.filter(bimage, null), furniture.getPosition().x, furniture.getPosition().y, (int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), Color.BLUE, null);
+						
+						
+						if (showMeasurements) {
+							g2.setColor(Color.BLACK);
+							
+							//largeur affichée en bas de l'image au milleu
+							g2.drawString(String.valueOf(furniture.getDimension().width),
+									(int) (furniture.getPosition().x + (furniture.getDimension().width - g2.getFontMetrics().stringWidth(String.valueOf(furniture.getDimension().width))) / 2),
+									(int) (furniture.getPosition().y + furniture.getDimension().height + g2.getFontMetrics().getHeight()));
+							
+							//hauteur affichée à droite de l'image au millieu
+							g2.drawString(String.valueOf(furniture.getDimension().height),
+									(int) (furniture.getPosition().x + furniture.getDimension().width),
+									(int) (furniture.getPosition().y + furniture.getDimension().height / 2));
+						}
 
 					
 					} catch (IOException e) {
@@ -250,14 +268,14 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mousePressed(MouseEvent me) {
-		selectedCtrlPoint = ctrlPointDetected(me.getX(), me.getY());
+		selectedCtrlPoint = ctrlPointDetect(me.getX(), me.getY());
 		selectedWall = wallDetect(me.getX(), me.getY());
 		System.out.println(selectedWall);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
-		CtrlPoint detectedReleasedPoint = ctrlPointDetected(me.getX(),me.getY());
+		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(),me.getY());
 //		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
 
 		if (detectedReleasedPoint != null
@@ -277,7 +295,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		repaint();
 	}
 
-	private CtrlPoint ctrlPointDetected(int x, int y) {
+	private CtrlPoint ctrlPointDetect(int x, int y) {
 		for (Wall w : walls) {
 			if (w.getCtrlPointStart().getCtrlPoint().contains(x, y)) {
 				return w.getCtrlPointStart();
@@ -297,7 +315,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		return null;
 	}
 
-	public void setShowMeasure(boolean show) {
-		showMeasure = show;
+	public void toggleShowMeasurements() {
+		showMeasurements = !showMeasurements;
 	}
 }

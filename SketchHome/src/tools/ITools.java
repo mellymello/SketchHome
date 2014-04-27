@@ -9,4 +9,6 @@ public interface ITools {
 	public void onMouseDragged(MouseEvent e);
 	public void onMouseReleased(MouseEvent e);
 	public void onMouseMoved(MouseEvent e);
+	
+	public ITools getInstance();
 }
