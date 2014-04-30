@@ -1,13 +1,21 @@
 package tools;
 
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 
 import drawableObject.CtrlPoint;
 import drawableObject.Wall;
 
-public abstract class WallTool implements ITools {
+public abstract class WallTool implements IDrawingTool {
+	
+	protected LinkedList<Wall> walls = new LinkedList<Wall>();
+	protected Wall tmpWall;
+	protected CtrlPoint selectedCtrlPoint;
+	protected int ctrlPointDiameter;
+	protected int wallThickness;
+	protected Wall selectedWall;
 
-	private CtrlPoint ctrlPointDetect(int x, int y) {
+	public CtrlPoint ctrlPointDetect(int x, int y) {
 		for (Wall w : walls) {
 			if (w.getCtrlPointStart().getCtrlPoint().contains(x, y)) {
 				return w.getCtrlPointStart();
@@ -25,6 +33,12 @@ public abstract class WallTool implements ITools {
 			}
 		}
 		return null;
+	}
+	
+	public void initWalls(LinkedList<Wall> walls, int ctrPointDiameter, int wallThickness) {
+		this.walls = walls;
+		this.wallThickness = wallThickness;
+		this.ctrlPointDiameter = ctrPointDiameter;
 	}
 
 }

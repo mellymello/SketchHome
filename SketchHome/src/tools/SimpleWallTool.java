@@ -5,14 +5,14 @@ import java.awt.event.MouseEvent;
 import drawableObject.CtrlPoint;
 import drawableObject.Wall;
 
-public class SimpleWallTool extends WallTool implements IDrawingTool {
+public class SimpleWallTool extends WallTool {
 	
 	private static SimpleWallTool instance;
 	
 	private SimpleWallTool() {}
 
 	@Override
-	public void onMouseClicked(MouseEvent e) {
+	public void onMouseClicked(MouseEvent me) {		
 		if (selectedWall == null) {
 			if (selectedCtrlPoint == null) {
 				if (tmpWall == null) {
@@ -67,14 +67,14 @@ public class SimpleWallTool extends WallTool implements IDrawingTool {
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
+	public void onMousePressed(MouseEvent me) {
 		selectedCtrlPoint = ctrlPointDetect(me.getX(), me.getY());
 		selectedWall = wallDetect(me.getX(), me.getY());
 		System.out.println(selectedWall);
 	}
 
 	@Override
-	public void onMouseDragged(MouseEvent e) {
+	public void onMouseDragged(MouseEvent me) {
 		if (selectedCtrlPoint != null) {
 			selectedCtrlPoint.setLocation(me.getX(), me.getY());
 			for (Wall w : walls) {
@@ -90,7 +90,7 @@ public class SimpleWallTool extends WallTool implements IDrawingTool {
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
+	public void onMouseReleased(MouseEvent me) {
 		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(),me.getY());
 //		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
 
@@ -111,7 +111,7 @@ public class SimpleWallTool extends WallTool implements IDrawingTool {
 	}
 
 	@Override
-	public void onMouseMoved(MouseEvent e) {
+	public void onMouseMoved(MouseEvent me) {
 		if (tmpWall != null) {
 
 			tmpWall.setEndPoint(me.getX(), me.getY());
@@ -121,8 +121,7 @@ public class SimpleWallTool extends WallTool implements IDrawingTool {
 
 	}
 
-	@Override
-	public ITools getInstance() {
+	public static SimpleWallTool getInstance() {
 		if(instance == null) {
 			instance = new SimpleWallTool();
 		}

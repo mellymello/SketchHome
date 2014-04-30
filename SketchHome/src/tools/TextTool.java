@@ -11,8 +11,7 @@ public class TextTool extends PlacementTool {
 		
 	}
 
-	@Override
-	public ITools getInstance() {
+	public static TextTool getInstance() {
 		// TODO Auto-generated method stub
 		return null;
 	}

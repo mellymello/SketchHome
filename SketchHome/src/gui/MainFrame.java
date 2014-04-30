@@ -58,9 +58,8 @@ public class MainFrame extends JFrame {
 	private JFormattedTextField txtHeight;
 	private JFormattedTextField txtRotation;
 	
-	public DrawingBoard pnlDrawingBoard;
+	private DrawingBoard pnlDrawingBoard;
 	
-	public ITools selectedTool;
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -136,7 +135,7 @@ public class MainFrame extends JFrame {
 		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGTH, CTRL_POINT_DIAMETER,WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
-		
+				
 		JPanel pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
@@ -332,6 +331,14 @@ public class MainFrame extends JFrame {
 		btnWall.setBorderPainted(false);
 		btnWall.setMargin(new Insets(0, 0, 0, 0));
 		btnWall.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_simple.png")));
+		btnWall.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getSimpleWallTool());
+				
+			}
+		});
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
 		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall.gridx = 0;

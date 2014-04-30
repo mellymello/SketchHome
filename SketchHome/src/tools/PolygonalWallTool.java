@@ -2,7 +2,7 @@ package tools;
 
 import java.awt.event.MouseEvent;
 
-public class PolygonalWallTool extends WallTool implements IDrawingTool {
+public class PolygonalWallTool extends WallTool {
 	
 	private static PolygonalWallTool instance;
 	
@@ -38,8 +38,7 @@ public class PolygonalWallTool extends WallTool implements IDrawingTool {
 		
 	}
 
-	@Override
-	public ITools getInstance() {
+	public static PolygonalWallTool getInstance() {
 		if(instance == null) {
 			instance = new PolygonalWallTool();
 		}

@@ -20,15 +20,16 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import sun.org.mozilla.javascript.internal.ObjToIntMap.Iterator;
 import tools.ITools;
+import tools.SimpleWallTool;
+import tools.WallTool;
 import drawableObject.*;
 
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
 	
-	ITools selectedTool;
-
+	private ITools selectedTool;
+	
 	private LinkedList<Wall> walls = new LinkedList<Wall>();
 	private Wall tmpWall;
 	private CtrlPoint selectedCtrlPoint;
@@ -36,9 +37,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private int wallThickness;
 
 	private Wall selectedWall;
+	
 	private boolean showMeasurements;
 	
 	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
+	
+	
+	SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
 
 	// precision is used to detect if a ctrlPoint is selected or not
 	
@@ -54,6 +59,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness);
 
 	}
 	
@@ -217,5 +224,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	public void toggleShowMeasurements() {
 		showMeasurements = !showMeasurements;
+	}
+	
+	public SimpleWallTool getSimpleWallTool(){
+		return simpleWallTool;
+	}
+	
+	public void setSelectedTool(ITools tool){
+		selectedTool = tool;
 	}
 }
