@@ -44,6 +44,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import tools.ITools;
+import tools.TextTool;
 
 public class MainFrame extends JFrame {
 	
@@ -151,6 +152,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
 		
 		JButton btnSelectionTool = new JButton("");
+		btnSelectionTool.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/sourisB.png")));
 		btnSelectionTool.setToolTipText("Select");
 		btnSelectionTool.setBorderPainted(false);
 		btnSelectionTool.setMargin(new Insets(0, 0, 0, 0));
@@ -169,9 +171,10 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
 		
 		JButton btnTextTool = new JButton("");
+		btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/texteB.png")));
 		btnTextTool.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedTool = TextTool.getInstance();
+				//selectedTool = TextTool.getInstance();
 			}
 		});
 		btnTextTool.setToolTipText("Text");
@@ -185,6 +188,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
 		JButton btnImageTool = new JButton("Image");
+		btnImageTool.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/outil_imageB.png")));
 		btnImageTool.setIcon(null);
 		GridBagConstraints gbc_btnImageTool = new GridBagConstraints();
 		gbc_btnImageTool.insets = new Insets(0, 0, 5, 5);
@@ -207,6 +211,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
 		
 		JButton btnConstructionMode = new JButton("");
+		btnConstructionMode.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/constructionB.png")));
 		btnConstructionMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -224,6 +229,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnConstructionMode, gbc_btnConstructionMode);
 		
 		JButton btnFurnitureMode = new JButton("");
+		btnFurnitureMode.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/ameublementB.png")));
 		btnFurnitureMode.setToolTipText("Furniture Mode");
 		btnFurnitureMode.setBorderPainted(false);
 		btnFurnitureMode.setMargin(new Insets(0, 0, 0, 0));
@@ -237,6 +243,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnFurnitureMode, gbc_btnFurnitureMode);
 		
 		JButton btnBedroom = new JButton("");
+		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambreB.png")));
 		btnBedroom.setToolTipText("BedRoom");
 		btnBedroom.setBorderPainted(false);
 		btnBedroom.setMargin(new Insets(0, 0, 0, 0));
@@ -248,6 +255,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
 		
 		JButton btnOffice = new JButton("");
+		btnOffice.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/bureauB.png")));
 		btnOffice.setToolTipText("Office");
 		btnOffice.setBorderPainted(false);
 		btnOffice.setMargin(new Insets(0, 0, 0, 0));
@@ -264,6 +272,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnOffice, gbc_btnOffice);
 		
 		JButton btnKitchen = new JButton("");
+		btnKitchen.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisineB.png")));
 		btnKitchen.setToolTipText("Kitchen");
 		btnKitchen.setBorderPainted(false);
 		btnKitchen.setMargin(new Insets(0, 0, 0, 0));
@@ -275,6 +284,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnKitchen, gbc_btnKitchen);
 		
 		JButton btnLivingroom = new JButton("");
+		btnLivingroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salonB.png")));
 		btnLivingroom.setToolTipText("Livinh Room");
 		btnLivingroom.setBorderPainted(false);
 		btnLivingroom.setMargin(new Insets(0, 0, 0, 0));
@@ -286,6 +296,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnLivingroom, gbc_btnLivingroom);
 		
 		JButton btnBathroom = new JButton("");
+		btnBathroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bainB.png")));
 		btnBathroom.setToolTipText("Bath Room");
 		btnBathroom.setBorderPainted(false);
 		btnBathroom.setMargin(new Insets(0, 0, 0, 0));
@@ -297,6 +308,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnBathroom, gbc_btnBathroom);
 		
 		JButton btnDiningRoom = new JButton("");
+		btnDiningRoom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_mangerB.png")));
 		btnDiningRoom.setToolTipText("Dining Room");
 		btnDiningRoom.setBorderPainted(false);
 		btnDiningRoom.setMargin(new Insets(0, 0, 0, 0));
@@ -315,6 +327,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
 		
 		JButton btnWall = new JButton("");
+		btnWall.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_simpleB.png")));
 		btnWall.setToolTipText("Simple Wall");
 		btnWall.setBorderPainted(false);
 		btnWall.setMargin(new Insets(0, 0, 0, 0));
@@ -326,6 +339,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnWall, gbc_btnWall);
 		
 		JButton btnWall2 = new JButton("");
+		btnWall2.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_polygonalB.png")));
 		btnWall2.setToolTipText("contiguous Wall");
 		btnWall2.setBorderPainted(false);
 		btnWall2.setMargin(new Insets(0, 0, 0, 0));
@@ -351,6 +365,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
 		
 		JButton btnStair = new JButton("");
+		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/escaliersB.png")));
 		btnStair.setToolTipText("Stairs");
 		btnStair.setBorderPainted(false);
 		btnStair.setMargin(new Insets(0, 0, 0, 0));

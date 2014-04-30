@@ -26,6 +26,8 @@ import drawableObject.*;
 
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
+	
+	ITools selectedTool;
 
 	private LinkedList<Wall> walls = new LinkedList<Wall>();
 	private Wall tmpWall;
@@ -43,7 +45,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
 			int wallThickness) {
-
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(width, height));
 
@@ -170,149 +171,48 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseDragged(MouseEvent me) {
-		if (selectedCtrlPoint != null) {
-			selectedCtrlPoint.setLocation(me.getX(), me.getY());
-			for (Wall w : walls) {
-				if (w.getCtrlPointStart() == selectedCtrlPoint) {
-					w.setNewStartPoint(selectedCtrlPoint);
-				} else if (w.getCtrlPointEnd() == selectedCtrlPoint) {
-					w.setNewEndPoint(selectedCtrlPoint);
-				}
-			}
-
-		}
+		selectedTool.onMouseDragged(me);
 
 		repaint();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent me) {
-		if (tmpWall != null) {
-
-			tmpWall.setEndPoint(me.getX(), me.getY());
-
-			repaint();
-		}
-
+		selectedTool.onMouseMoved(me);
+		
+		repaint();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		if (selectedWall == null) {
-			if (selectedCtrlPoint == null) {
-				if (tmpWall == null) {
-					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
-							wallThickness);
-				} else {
-					tmpWall.setEndPoint(me.getX(), me.getY());
-					walls.add(tmpWall);
-					tmpWall = null;
-				}
-			} else {
-				if (tmpWall == null) {
-					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
-							wallThickness);
-				} else {
-					tmpWall.setNewEndPoint(selectedCtrlPoint);
-					walls.add(tmpWall);
-					tmpWall = null;
-				}
-			}
-			//managing the action of connecting a wall with an existing wall on the "middle" (not over a ctrlPoint)
-			//The reaction of the program is to split the "base" wall into 2 walls and let the user continue to draw the third wall
-		} else { 
-			if (selectedCtrlPoint == null) {
-				if (tmpWall == null) {
-					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
-							wallThickness);
-					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointStart(),wallThickness));
-					walls.add(new Wall(tmpWall.getCtrlPointStart(),selectedWall.getCtrlPointEnd(),wallThickness));
-					walls.remove(selectedWall);
-					
-				} else {
-					tmpWall.setEndPoint(me.getX(), me.getY());
-					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointEnd(),wallThickness));
-					walls.add(new Wall(tmpWall.getCtrlPointEnd(),selectedWall.getCtrlPointEnd(),wallThickness));
-					walls.remove(selectedWall);
-					walls.add(tmpWall);
-					tmpWall = null;
-				}
-			} else {
-				if (tmpWall == null) {
-					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
-							wallThickness);
-				} else {
-					tmpWall.setNewEndPoint(selectedCtrlPoint);
-					walls.add(tmpWall);
-					tmpWall = null;
-				}
-			}
-		}
+		selectedTool.onMouseClicked(me);
+		
 		repaint();
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent me) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseEntered(MouseEvent me) {	}
 
 	@Override
 	public void mouseExited(MouseEvent me) {
-		// TODO Auto-generated method stub
-		System.out.println("---- WALLS ----");
-		for (Wall w : walls) {
-			System.out.println(w + " length:" + w.getWallLength());
-		}
+//		System.out.println("---- WALLS ----");
+//		for (Wall w : walls) {
+//			System.out.println(w + " length:" + w.getWallLength());
+//		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent me) {
-		selectedCtrlPoint = ctrlPointDetect(me.getX(), me.getY());
-		selectedWall = wallDetect(me.getX(), me.getY());
-		System.out.println(selectedWall);
+		selectedTool.onMousePressed(me);
+		
+		repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
-		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(),me.getY());
-//		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
-
-		if (detectedReleasedPoint != null
-				&& detectedReleasedPoint != selectedCtrlPoint) {
-			if (selectedCtrlPoint != null) {
-				for (Wall w : walls) {
-					if (w.getCtrlPointStart() == detectedReleasedPoint) {
-						w.setNewStartPoint(selectedCtrlPoint);
-					} else if (w.getCtrlPointEnd() == detectedReleasedPoint) {
-						w.setNewEndPoint(selectedCtrlPoint);
-					}
-				}
-				selectedCtrlPoint = detectedReleasedPoint;
-			}
-		}
-	
+		selectedTool.onMouseReleased(me);
+		
 		repaint();
-	}
-
-	private CtrlPoint ctrlPointDetect(int x, int y) {
-		for (Wall w : walls) {
-			if (w.getCtrlPointStart().getCtrlPoint().contains(x, y)) {
-				return w.getCtrlPointStart();
-			} else if (w.getCtrlPointEnd().getCtrlPoint().contains(x, y)) {
-				return w.getCtrlPointEnd();
-			}
-		}
-		return null;
-	}
-
-	public Wall wallDetect(int x, int y) {
-		for (Wall w : walls) {
-			if (w.getWallLine().ptSegDist(x, y) < wallThickness) {
-				return w;
-			}
-		}
-		return null;
 	}
 
 	public void toggleShowMeasurements() {
