@@ -162,7 +162,15 @@ public class MainFrame extends JFrame {
 		gbc_btnSelectionTool.gridy = 0;
 		pnlToolsBtn.add(btnSelectionTool, gbc_btnSelectionTool);
 		
-		JButton btnFurniturecreation = new JButton("FurnitureCreation");
+		JButton btnFurniturecreation = new JButton("");
+		btnFurniturecreation.setBorderPainted(false);
+		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
+		btnFurniturecreation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_persoB.png")));
+		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_perso.png")));
 		GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
 		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
 		gbc_btnFurniturecreation.gridx = 1;
@@ -186,9 +194,15 @@ public class MainFrame extends JFrame {
 		gbc_btnTextTool.gridy = 0;
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
-		JButton btnImageTool = new JButton("Image");
+		JButton btnImageTool = new JButton("");
+		btnImageTool.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnImageTool.setBorderPainted(false);
+		btnImageTool.setMargin(new Insets(0, 0, 0, 0));
 		btnImageTool.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/outil_imageB.png")));
-		btnImageTool.setIcon(null);
+		btnImageTool.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/outil_image.png")));
 		GridBagConstraints gbc_btnImageTool = new GridBagConstraints();
 		gbc_btnImageTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnImageTool.gridx = 3;
@@ -318,7 +332,15 @@ public class MainFrame extends JFrame {
 		gbc_btnDiningRoom.gridy = 2;
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
 		
-		JButton btnCustomfurniture = new JButton("Custom Furniture");
+		JButton btnCustomfurniture = new JButton("");
+		btnCustomfurniture.setBorderPainted(false);
+		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
+		btnCustomfurniture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_persoB.png")));
+		btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_perso.png")));
 		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
 		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCustomfurniture.gridx = 0;
@@ -357,14 +379,24 @@ public class MainFrame extends JFrame {
 		gbc_btnWall2.gridy = 4;
 		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
 		
-		JButton btnWindow = new JButton("Window");
+		JButton btnWindow = new JButton("");
+		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetreB.png")));
+		btnWindow.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetre.png")));
 		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
 		gbc_btnWindow.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWindow.gridx = 2;
 		gbc_btnWindow.gridy = 4;
 		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
 		
-		JButton btnDoor = new JButton("Door");
+		JButton btnDoor = new JButton("");
+		btnDoor.setBorderPainted(false);
+		btnDoor.setMargin(new Insets(0, 0, 0, 0));
+		btnDoor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porteB.png")));
+		btnDoor.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porte.png")));
 		GridBagConstraints gbc_btnDoor = new GridBagConstraints();
 		gbc_btnDoor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnDoor.gridx = 3;
@@ -372,6 +404,8 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
 		
 		JButton btnStair = new JButton("");
+		btnStair.setBorderPainted(false);
+		btnStair.setMargin(new Insets(0, 0, 0, 0));
 		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/escaliersB.png")));
 		btnStair.setToolTipText("Stairs");
 		btnStair.setBorderPainted(false);

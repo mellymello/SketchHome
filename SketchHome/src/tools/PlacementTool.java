@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 
 import drawableObject.Furniture;
 
-public abstract class PlacementTool implements ITools {
+public abstract class PlacementTool extends ITools {
 	
 	private Furniture selectedFurniture;
 	

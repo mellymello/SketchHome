@@ -1,5 +1,5 @@
 package tools;
 
-public interface IDrawingTool extends ITools {
+public abstract class IDrawingTool extends ITools {
 
 }

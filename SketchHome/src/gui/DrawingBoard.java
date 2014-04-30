@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import tools.ITools;
+import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
 import tools.WallTool;
 import drawableObject.*;
@@ -30,22 +31,12 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	private ITools selectedTool;
 	
-	private LinkedList<Wall> walls = new LinkedList<Wall>();
-	private Wall tmpWall;
-	private CtrlPoint selectedCtrlPoint;
-	private int ctrlPointDiameter;
-	private int wallThickness;
-
-	private Wall selectedWall;
+	private DrawingBoardContent drawingBoardContent;
 	
-	private boolean showMeasurements;
-	
-	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
-	
+	private boolean showMeasurements;	
 	
 	SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
-
-	// precision is used to detect if a ctrlPoint is selected or not
+	PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
 	
 	
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
@@ -53,28 +44,30 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(width, height));
 
-		this.ctrlPointDiameter = ctrlPointDiameter;
-		this.wallThickness = wallThickness;
+		drawingBoardContent = new DrawingBoardContent(ctrlPointDiameter, wallThickness);
+		
+		//this.ctrlPointDiameter = ctrlPointDiameter;
+		//this.wallThickness = wallThickness;
 		this.showMeasurements = true;
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
-		simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness);
-
+		//simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness, drawingBoardContent.getTmpWall());
+		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 	}
 	
 	public void addFurniture(Furniture f) {
-		furnitures.add(f);
+		drawingBoardContent.addFurniture(f);
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(wallThickness));
+		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
 
 		// painting the already "fixed" walls
-		for (Wall w : walls) {
+		for (Wall w : drawingBoardContent.getWalls()) {
 			g2.setColor(Color.black);
 			// g2.drawLine(w.getCtrlPointStart().getX(), w.getCtrlPointStart()
 			// .getY(), w.getCtrlPointEnd().getX(), w.getCtrlPointEnd()
@@ -97,27 +90,27 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		}
 
 		// painting the tmp wall
-		if (tmpWall != null) {
+		if (drawingBoardContent.getTmpWall() != null) {
 			g2.setColor(Color.black);
-			// g2.drawLine(tmpWall.getCtrlPointStart().getX(), tmpWall
-			// .getCtrlPointStart().getY(), tmpWall.getCtrlPointEnd()
-			// .getX(), tmpWall.getCtrlPointEnd().getY());
-			g2.draw(tmpWall.getWallLine());
+			// g2.drawLine(drawingBoardContent.getTmpWall().getCtrlPointStart().getX(), drawingBoardContent.getTmpWall()
+			// .getCtrlPointStart().getY(), drawingBoardContent.getTmpWall().getCtrlPointEnd()
+			// .getX(), drawingBoardContent.getTmpWall().getCtrlPointEnd().getY());
+			g2.draw(drawingBoardContent.getTmpWall().getWallLine());
 			
 			if (showMeasurements) {
-				g2.drawString(String.valueOf(tmpWall.getWallLength()),
-						(int) (((tmpWall.getCtrlPointStart().getX() + tmpWall.getCtrlPointEnd().getX()) / 2)),
-						(int) ((tmpWall.getCtrlPointStart().getY() + tmpWall.getCtrlPointEnd().getY()) / 2));
+				g2.drawString(String.valueOf(drawingBoardContent.getTmpWall().getWallLength()),
+						(int) (((drawingBoardContent.getTmpWall().getCtrlPointStart().getX() + drawingBoardContent.getTmpWall().getCtrlPointEnd().getX()) / 2)),
+						(int) ((drawingBoardContent.getTmpWall().getCtrlPointStart().getY() + drawingBoardContent.getTmpWall().getCtrlPointEnd().getY()) / 2));
 
 			}
 
 			g2.setColor(Color.red);
-			g2.draw(tmpWall.getCtrlPointStart().getCtrlPoint());
-			g2.draw(tmpWall.getCtrlPointEnd().getCtrlPoint());
+			g2.draw(drawingBoardContent.getTmpWall().getCtrlPointStart().getCtrlPoint());
+			g2.draw(drawingBoardContent.getTmpWall().getCtrlPointEnd().getCtrlPoint());
 		}
 		
 		//painting the furnitures
-		java.util.ListIterator<Furniture> it = furnitures.listIterator();
+		java.util.ListIterator<Furniture> it = drawingBoardContent.getFurnitures().listIterator();
 		while(it.hasNext()) {
 				Furniture furniture = it.next();
 				if(furniture.getVisible()) {
@@ -232,5 +225,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public void setSelectedTool(ITools tool){
 		selectedTool = tool;
+	}
+	
+	public DrawingBoardContent getDrawingBoardContent() {
+		return drawingBoardContent;
 	}
 }
