@@ -20,6 +20,11 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import drawableObject.DrawingBoardContent;
+import drawableObject.Furniture;
+import drawableObject.FurnitureLibrary;
+import drawableObject.Wall;
+import tools.FurniturePlacementTool;
 import tools.ITools;
 import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
@@ -33,8 +38,11 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	private boolean showMeasurements;	
 	
-	SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
-	PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
+	private SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
+	private PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
+	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
+	
+	private FurnitureLibrary selectedFurnitureLibrary;
 	
 	
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
@@ -54,6 +62,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		//simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness, drawingBoardContent.getTmpWall());
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
+		furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
 	}
 	
 	public void addFurniture(Furniture f) {
@@ -215,6 +224,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	public PolygonalWallTool getPolygonalWallTool(){
 		return polygonalWallTool;
 	}
+	public FurniturePlacementTool getFurniturePlacementTool() {
+		return furniturePlacementTool;
+	}
 	
 	public void setSelectedTool(ITools tool){
 		selectedTool = tool;
@@ -222,5 +234,17 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public DrawingBoardContent getDrawingBoardContent() {
 		return drawingBoardContent;
+	}
+
+	public void setSelectedFurnitureLibrary(FurnitureLibrary selectedFurnitureLibrary) {
+		this.selectedFurnitureLibrary = selectedFurnitureLibrary;		
+	}
+	
+	public FurnitureLibrary getSelectedFurnitureLibrary() {
+		return selectedFurnitureLibrary;		
+	}
+
+	public void setSelectedFurniture(Furniture furniture) {
+		drawingBoardContent.setSelectedFurniture(furniture);
 	}
 }

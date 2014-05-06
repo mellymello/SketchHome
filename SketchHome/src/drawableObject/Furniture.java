@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.text.Position;
 
-public class Furniture {
+public class Furniture implements Cloneable {
 	private String name;
 	private String description;
 	private Dimension dimension;
@@ -36,6 +36,15 @@ public class Furniture {
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position) {
 		this(name, description, picture, dimension, position, 0, false, true);
 	}
+	
+	public Furniture clone() { 
+		Furniture f = null; 
+		try { 
+			f = (Furniture) super.clone(); 
+		} 
+		catch (CloneNotSupportedException e) { } 
+		return f; 
+	}
 
 	public Dimension getDimension() {
 		return dimension;
@@ -59,5 +68,45 @@ public class Furniture {
 	
 	public double getOrientation() {
 		return orientation;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDimension(Dimension dimension) {
+		this.dimension = dimension;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
+	}
+
+	public void setPosition(Point position) {
+		this.position = position;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 }

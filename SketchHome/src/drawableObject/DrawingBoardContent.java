@@ -11,7 +11,7 @@ public class DrawingBoardContent {
 	private int wallThickness;
 	private Wall selectedWall;
 	
-	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
+	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
 	private Furniture selectedFurniture;
 	
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {
@@ -52,15 +52,15 @@ public class DrawingBoardContent {
 	}
 
 	public LinkedList<Furniture> getFurnitures() {
-		return furnitures;
+		return placedFurnitures;
 	}
 
 	public void setFurnitures(LinkedList<Furniture> furnitures) {
-		this.furnitures = furnitures;
+		this.placedFurnitures = furnitures;
 	}
 
 	public void addFurniture(Furniture f) {
-		furnitures.add(f);
+		placedFurnitures.add(f);
 	}
 
 	public LinkedList<Wall> getWalls() {
@@ -77,5 +77,13 @@ public class DrawingBoardContent {
 
 	public void setWallThickness(int wallThickness) {
 		this.wallThickness = wallThickness;
+	}
+
+	public Furniture getSelectedFurniture() {
+		return selectedFurniture;
+	}
+
+	public void setSelectedFurniture(Furniture selectedFurniture) {
+		this.selectedFurniture = selectedFurniture;
 	}
 }

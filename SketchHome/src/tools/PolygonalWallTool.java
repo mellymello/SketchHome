@@ -178,8 +178,8 @@ public class PolygonalWallTool extends WallTool {
 				}
 			} else if (drawingBoardContent.getSelectedWall() != detectedRelasedWall) {
 
-				Wall newWall = new Wall(detectedRelasedWall.getCtrlPointStart(), new CtrlPoint(me.getX(),
-						me.getY(), drawingBoardContent.getCtrlPointDiameter()),
+				Wall newWall = new Wall(detectedRelasedWall.getCtrlPointStart(),
+						drawingBoardContent.getSelectedCtrlPoint(),
 						drawingBoardContent.getWallThickness());
 				Wall newWall2 = new Wall(newWall.getCtrlPointEnd(), detectedRelasedWall.getCtrlPointEnd(), drawingBoardContent.getWallThickness());
 

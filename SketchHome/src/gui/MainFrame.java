@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import java.awt.Graphics;
 import java.awt.List;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
@@ -40,9 +41,13 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.SwingConstants;
 
+import drawableObject.Furniture;
+import drawableObject.FurnitureLibrary;
 import tools.ITools;
 import tools.TextTool;
 
@@ -58,7 +63,12 @@ public class MainFrame extends JFrame {
 	private JFormattedTextField txtHeight;
 	private JFormattedTextField txtRotation;
 	
+	private JLabel lblSelectedobjectlibrary;
+	private JPanel pnlFurnitureLibrary;
+	
 	private DrawingBoard pnlDrawingBoard;
+	
+	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml");
 	
 	
 	public MainFrame() {
@@ -258,6 +268,17 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnFurnitureMode, gbc_btnFurnitureMode);
 		
 		JButton btnBedroom = new JButton("");
+		btnBedroom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//refresh the library
+				bedRoomLibrary.loadLibraryContent();
+				lblSelectedobjectlibrary.setText("Selected Object Library : Bedroom");
+				pnlDrawingBoard.setSelectedFurnitureLibrary(bedRoomLibrary);
+				selectLibrary(bedRoomLibrary);
+				
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+			}
+		});
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambreB.png")));
 		btnBedroom.setToolTipText("BedRoom");
 		btnBedroom.setBorderPainted(false);
@@ -435,11 +456,11 @@ public class MainFrame extends JFrame {
 		GridBagLayout gbl_pnlObjects = new GridBagLayout();
 		gbl_pnlObjects.columnWidths = new int[]{633, 0};
 		gbl_pnlObjects.rowHeights = new int[]{14, 0, 107, 0};
-		gbl_pnlObjects.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_pnlObjects.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlObjects.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnlObjects.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		pnlObjects.setLayout(gbl_pnlObjects);
 		
-		JLabel lblSelectedobjectlibrary = new JLabel("Selected Object Library :");
+		lblSelectedobjectlibrary = new JLabel("Selected Object Library :");
 		lblSelectedobjectlibrary.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblSelectedobjectlibrary = new GridBagConstraints();
 		gbc_lblSelectedobjectlibrary.anchor = GridBagConstraints.NORTH;
@@ -459,12 +480,13 @@ public class MainFrame extends JFrame {
 		gbc_separator_2.gridy = 1;
 		pnlObjects.add(separator_2, gbc_separator_2);
 		
-		JScrollPane scrollPaneObjectLibrary = new JScrollPane();
-		GridBagConstraints gbc_scrollPaneObjectLibrary = new GridBagConstraints();
-		gbc_scrollPaneObjectLibrary.fill = GridBagConstraints.BOTH;
-		gbc_scrollPaneObjectLibrary.gridx = 0;
-		gbc_scrollPaneObjectLibrary.gridy = 2;
-		pnlObjects.add(scrollPaneObjectLibrary, gbc_scrollPaneObjectLibrary);
+		pnlFurnitureLibrary = new JPanel();
+		GridBagConstraints gbc_pnlObjectLibrary = new GridBagConstraints();
+		gbc_pnlObjectLibrary.fill = GridBagConstraints.BOTH;
+		gbc_pnlObjectLibrary.gridx = 0;
+		gbc_pnlObjectLibrary.gridy = 2;
+		pnlObjects.add(pnlFurnitureLibrary, gbc_pnlObjectLibrary);
+		pnlFurnitureLibrary.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel pnlObjectTree = new JPanel();
 		pnlTools.add(pnlObjectTree);
@@ -608,5 +630,40 @@ public class MainFrame extends JFrame {
 		txtRotation.setColumns(10);
 		
 		pack();
+	}
+	
+	public void selectLibrary(FurnitureLibrary furnitureLibrary) {
+		pnlFurnitureLibrary.removeAll();
+		FurnitureMiniature miniature;
+		for (Furniture f : furnitureLibrary.getFurnitures()) {
+			miniature = new FurnitureMiniature(f);
+			miniature.setText(f.getName());
+
+			pnlFurnitureLibrary.add(miniature);
+		}
+		
+		pnlFurnitureLibrary.repaint();
+	}
+	
+	//TODO : test, à compléter
+	class FurnitureMiniature extends JLabel implements MouseListener {
+		private Furniture furniture;
+		public FurnitureMiniature(Furniture furniture) {
+			super("");
+			this.furniture = furniture;
+			addMouseListener(this);
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			pnlDrawingBoard.setSelectedFurniture(furniture);
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {}
+		@Override
+		public void mouseReleased(MouseEvent e) {}
+		@Override
+		public void mouseEntered(MouseEvent e) {}
+		@Override
+		public void mouseExited(MouseEvent e) {}
 	}
 }
