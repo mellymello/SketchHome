@@ -13,10 +13,6 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
->>>>>>> 97bd846ab2ff57e523ee59a95d7c55f2c7323718
 		
 		if (drawingBoardContent.getSelectedWall() == null) {
 			if (drawingBoardContent.getSelectedCtrlPoint() == null) {
@@ -118,14 +114,10 @@ public class PolygonalWallTool extends WallTool {
 	}
 	@Override
 	public void onMousePressed(MouseEvent me) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
 
 		drawingBoardContent.setSelectedCtrlPoint(ctrlPointDetect(me.getX(),
 				me.getY()));
 		drawingBoardContent.setSelectedWall(wallDetect(me.getX(), me.getY()));
->>>>>>> 97bd846ab2ff57e523ee59a95d7c55f2c7323718
 		
 		System.out.println("Pressed:"+ drawingBoardContent.getSelectedCtrlPoint());
 		System.out.println("Pressed Wall:"+ drawingBoardContent.getSelectedWall());
@@ -134,10 +126,6 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		
-=======
 
 		// déplacer le point de contrôle
 		if (drawingBoardContent.getSelectedCtrlPoint() != null) {
@@ -155,20 +143,15 @@ public class PolygonalWallTool extends WallTool {
 			}
 		}
 
->>>>>>> 97bd846ab2ff57e523ee59a95d7c55f2c7323718
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
 		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(), me.getY());
 		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
 		
 		System.out.println("Relased:"+ detectedReleasedPoint);
 		System.out.println("Relased Wall:"+ detectedRelasedWall);
->>>>>>> 97bd846ab2ff57e523ee59a95d7c55f2c7323718
 		
 
 		if (detectedRelasedWall != null) {
@@ -226,17 +209,12 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMouseMoved(MouseEvent me) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		
-=======
 		if (drawingBoardContent.getTmpWall() != null) {
 
 			drawingBoardContent.getTmpWall().setEndPoint(me.getX(), me.getY());
 
 		}
 
->>>>>>> 97bd846ab2ff57e523ee59a95d7c55f2c7323718
 	}
 
 	public static PolygonalWallTool getInstance() {

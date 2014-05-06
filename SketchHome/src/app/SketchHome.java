@@ -3,7 +3,6 @@ package app;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import drawableObject.Furniture;
 import tools.ITools;
 import gui.MainFrame;
 

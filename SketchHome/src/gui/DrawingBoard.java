@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import tools.ITools;
 import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
-import tools.WallTool;
-import drawableObject.*;
 
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
