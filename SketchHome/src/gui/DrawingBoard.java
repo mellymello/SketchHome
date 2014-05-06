@@ -187,15 +187,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent me) {	}
+	public void mouseEntered(MouseEvent me) {}
 
 	@Override
-	public void mouseExited(MouseEvent me) {
-		System.out.println("---- WALLS ----");
-		for (Wall w : drawingBoardContent.getWalls()) {
-			System.out.println(w + " length:" + w.getWallLength());
-		}
-	}
+	public void mouseExited(MouseEvent me) {}
 
 	@Override
 	public void mousePressed(MouseEvent me) {

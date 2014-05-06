@@ -163,6 +163,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnSelectionTool, gbc_btnSelectionTool);
 		
 		JButton btnFurniturecreation = new JButton("");
+		btnFurniturecreation.setToolTipText("Furniture creation");
 		btnFurniturecreation.setBorderPainted(false);
 		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
 		btnFurniturecreation.addActionListener(new ActionListener() {
@@ -195,6 +196,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
 		JButton btnImageTool = new JButton("");
+		btnImageTool.setToolTipText("Image");
 		btnImageTool.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -333,6 +335,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
 		
 		JButton btnCustomfurniture = new JButton("");
+		btnCustomfurniture.setToolTipText("Furniture creation");
 		btnCustomfurniture.setBorderPainted(false);
 		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
 		btnCustomfurniture.addActionListener(new ActionListener() {
@@ -369,7 +372,7 @@ public class MainFrame extends JFrame {
 		
 		JButton btnWall2 = new JButton("");
 		btnWall2.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_polygonalB.png")));
-		btnWall2.setToolTipText("contiguous Wall");
+		btnWall2.setToolTipText("Contiguous Wall");
 		btnWall2.setBorderPainted(false);
 		btnWall2.setMargin(new Insets(0, 0, 0, 0));
 		btnWall2.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_polygonal.png")));
@@ -380,6 +383,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
 		
 		JButton btnWindow = new JButton("");
+		btnWindow.setToolTipText("Windows");
 		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetreB.png")));
 		btnWindow.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetre.png")));
 		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
@@ -389,6 +393,7 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
 		
 		JButton btnDoor = new JButton("");
+		btnDoor.setToolTipText("Doors");
 		btnDoor.setBorderPainted(false);
 		btnDoor.setMargin(new Insets(0, 0, 0, 0));
 		btnDoor.addActionListener(new ActionListener() {

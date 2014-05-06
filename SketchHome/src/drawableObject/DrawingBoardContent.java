@@ -12,6 +12,7 @@ public class DrawingBoardContent {
 	private Wall selectedWall;
 	
 	private LinkedList<Furniture> furnitures = new LinkedList<Furniture>();
+	private Furniture selectedFurniture;
 	
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {
 		this.ctrlPointDiameter = ctrlPointDiameter;
