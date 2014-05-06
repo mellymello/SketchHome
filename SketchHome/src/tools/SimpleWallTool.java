@@ -6,60 +6,107 @@ import drawableObject.CtrlPoint;
 import drawableObject.Wall;
 
 public class SimpleWallTool extends WallTool {
-	
+
 	private static SimpleWallTool instance;
-	
-	private SimpleWallTool() {}
+
+	private SimpleWallTool() {
+	}
 
 	@Override
-	public void onMouseClicked(MouseEvent me) {		
-		if (selectedWall == null) {
-			if (selectedCtrlPoint == null) {
-				if (tmpWall == null) {
-					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
-							wallThickness);
+	public void onMouseClicked(MouseEvent me) {
+		if (drawingBoardContent.getSelectedWall() == null) {
+			if (drawingBoardContent.getSelectedCtrlPoint() == null) {
+				// on doit creer un nouveau mur
+				if (drawingBoardContent.getTmpWall() == null) {
+					drawingBoardContent.setTmpWall(new Wall(me.getX(), me
+							.getY(),
+							drawingBoardContent.getCtrlPointDiameter(),
+							drawingBoardContent.getWallThickness()));
 				} else {
-					tmpWall.setEndPoint(me.getX(), me.getY());
-					walls.add(tmpWall);
-					tmpWall = null;
-				}
-			} else {
-				if (tmpWall == null) {
-					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
-							wallThickness);
-				} else {
-					tmpWall.setNewEndPoint(selectedCtrlPoint);
-					walls.add(tmpWall);
-					tmpWall = null;
+					// on peut fixer le tmpWall et l'ajouter dans la liste des
+					// mur
+					drawingBoardContent.getTmpWall().setEndPoint(me.getX(),
+							me.getY());
+
+					drawingBoardContent.getWalls().add(
+							drawingBoardContent.getTmpWall());
+
+					drawingBoardContent.setTmpWall(null);
 				}
 			}
-			//managing the action of connecting a wall with an existing wall on the "middle" (not over a ctrlPoint)
-			//The reaction of the program is to split the "base" wall into 2 walls and let the user continue to draw the third wall
-		} else { 
-			if (selectedCtrlPoint == null) {
-				if (tmpWall == null) {
-					tmpWall = new Wall(me.getX(), me.getY(), ctrlPointDiameter,
-							wallThickness);
-					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointStart(),wallThickness));
-					walls.add(new Wall(tmpWall.getCtrlPointStart(),selectedWall.getCtrlPointEnd(),wallThickness));
-					walls.remove(selectedWall);
-					
+			// Dessiner un mur après avoir cliqué sur un mur existant.
+			// La reaction du programme est la suivante:
+			// splitter le mur de base (selui ou on a cliqué) en 2 mur
+			// et utiliser le point ou le click à été detecté comme point de
+			// départ pour un nouveau mur.
+		} else {
+			if (drawingBoardContent.getSelectedCtrlPoint() == null) {
+				// on commence à dessiner un nouveau mur
+				if (drawingBoardContent.getTmpWall() == null) {
+					drawingBoardContent.setTmpWall(new Wall(me.getX(), me
+							.getY(),
+							drawingBoardContent.getCtrlPointDiameter(),
+							drawingBoardContent.getWallThickness()));
+
+					drawingBoardContent.getWalls().add(
+							new Wall(drawingBoardContent.getSelectedWall()
+									.getCtrlPointStart(), drawingBoardContent
+									.getTmpWall().getCtrlPointStart(),
+									drawingBoardContent.getWallThickness()));
+
+					drawingBoardContent.getWalls().add(
+							new Wall(drawingBoardContent.getTmpWall()
+									.getCtrlPointStart(), drawingBoardContent
+									.getSelectedWall().getCtrlPointEnd(),
+									drawingBoardContent.getWallThickness()));
+
+					drawingBoardContent.getWalls().remove(
+							drawingBoardContent.getSelectedWall());
+
 				} else {
-					tmpWall.setEndPoint(me.getX(), me.getY());
-					walls.add(new Wall(selectedWall.getCtrlPointStart(), tmpWall.getCtrlPointEnd(),wallThickness));
-					walls.add(new Wall(tmpWall.getCtrlPointEnd(),selectedWall.getCtrlPointEnd(),wallThickness));
-					walls.remove(selectedWall);
-					walls.add(tmpWall);
-					tmpWall = null;
+					// on doit fixer le point d'arrivé du mur
+					drawingBoardContent.getTmpWall().setEndPoint(me.getX(),
+							me.getY());
+
+					drawingBoardContent.getWalls().add(
+							new Wall(drawingBoardContent.getSelectedWall()
+									.getCtrlPointStart(), drawingBoardContent
+									.getTmpWall().getCtrlPointEnd(),
+									drawingBoardContent.getWallThickness()));
+
+					drawingBoardContent.getWalls().add(
+							new Wall(drawingBoardContent.getTmpWall()
+									.getCtrlPointEnd(), drawingBoardContent
+									.getSelectedWall().getCtrlPointEnd(),
+									drawingBoardContent.getWallThickness()));
+
+					drawingBoardContent.getWalls().remove(
+							drawingBoardContent.getSelectedWall());
+
+					drawingBoardContent.getWalls().add(
+							drawingBoardContent.getTmpWall());
+
+					drawingBoardContent.setTmpWall(null);
 				}
 			} else {
-				if (tmpWall == null) {
-					tmpWall = new Wall(selectedCtrlPoint, ctrlPointDiameter,
-							wallThickness);
+				// l'utilisateur a cliqué sur un point de contrôle. On doit
+				// l'utiliser comme point de départ pour le nouvau mur
+				if (drawingBoardContent.getTmpWall() == null) {
+					drawingBoardContent.setTmpWall(new Wall(drawingBoardContent
+							.getSelectedCtrlPoint(), drawingBoardContent
+							.getCtrlPointDiameter(), drawingBoardContent
+							.getWallThickness()));
 				} else {
-					tmpWall.setNewEndPoint(selectedCtrlPoint);
-					walls.add(tmpWall);
-					tmpWall = null;
+					// ici le point de contrôle selectionné doit être le point
+					// de terminaison du mur
+					drawingBoardContent.getTmpWall().setNewEndPoint(
+							drawingBoardContent.getSelectedCtrlPoint());
+
+					drawingBoardContent.getWalls().add(
+							drawingBoardContent.getTmpWall());
+
+					drawingBoardContent.setTmpWall(null);
+
 				}
 			}
 		}
@@ -68,43 +115,74 @@ public class SimpleWallTool extends WallTool {
 
 	@Override
 	public void onMousePressed(MouseEvent me) {
-		selectedCtrlPoint = ctrlPointDetect(me.getX(), me.getY());
-		selectedWall = wallDetect(me.getX(), me.getY());
-		System.out.println(selectedWall);
+
+		drawingBoardContent.setSelectedCtrlPoint(ctrlPointDetect(me.getX(),
+				me.getY()));
+		drawingBoardContent.setSelectedWall(wallDetect(me.getX(), me.getY()));
+
 	}
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-		if (selectedCtrlPoint != null) {
-			selectedCtrlPoint.setLocation(me.getX(), me.getY());
-			for (Wall w : walls) {
-				if (w.getCtrlPointStart() == selectedCtrlPoint) {
-					w.setNewStartPoint(selectedCtrlPoint);
-				} else if (w.getCtrlPointEnd() == selectedCtrlPoint) {
-					w.setNewEndPoint(selectedCtrlPoint);
+
+		// déplacer le point de contrôle
+		if (drawingBoardContent.getSelectedCtrlPoint() != null) {
+			drawingBoardContent.getSelectedCtrlPoint().setLocation(me.getX(),
+					me.getY());
+			for (Wall w : drawingBoardContent.getWalls()) {
+				if (w.getCtrlPointStart() == drawingBoardContent
+						.getSelectedCtrlPoint()) {
+					w.setNewStartPoint(drawingBoardContent
+							.getSelectedCtrlPoint());
+				} else if (w.getCtrlPointEnd() == drawingBoardContent
+						.getSelectedCtrlPoint()) {
+					w.setNewEndPoint(drawingBoardContent.getSelectedCtrlPoint());
 				}
 			}
-
 		}
 
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(),me.getY());
-//		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
+		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(), me.getY());
+		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
 
-		if (detectedReleasedPoint != null
-				&& detectedReleasedPoint != selectedCtrlPoint) {
-			if (selectedCtrlPoint != null) {
-				for (Wall w : walls) {
-					if (w.getCtrlPointStart() == detectedReleasedPoint) {
-						w.setNewStartPoint(selectedCtrlPoint);
-					} else if (w.getCtrlPointEnd() == detectedReleasedPoint) {
-						w.setNewEndPoint(selectedCtrlPoint);
+		if (detectedRelasedWall != null) {
+			// si on relache le click sur un point de contrôle il faut setter le
+			// point de contrôle cliqué comme étant le start/end point du mur en
+			// construction
+			if (detectedReleasedPoint != null
+					&& detectedReleasedPoint != drawingBoardContent
+							.getSelectedCtrlPoint()) {
+
+				if (drawingBoardContent.getSelectedCtrlPoint() != null) {
+					for (Wall w : drawingBoardContent.getWalls()) {
+						if (w.getCtrlPointStart() == detectedReleasedPoint) {
+							w.setNewStartPoint(drawingBoardContent
+									.getSelectedCtrlPoint());
+						} else if (w.getCtrlPointEnd() == detectedReleasedPoint) {
+							w.setNewEndPoint(drawingBoardContent
+									.getSelectedCtrlPoint());
+						}
 					}
+
+					drawingBoardContent
+							.setSelectedCtrlPoint(detectedReleasedPoint);
 				}
-				selectedCtrlPoint = detectedReleasedPoint;
+			} else if (drawingBoardContent.getSelectedWall() != detectedRelasedWall) {
+
+//				Wall newWall = new Wall(drawingBoardContent.getSelectedWall()
+//						.getCtrlPointStart(), new CtrlPoint(me.getX(),
+//						me.getY(), drawingBoardContent.getCtrlPointDiameter()),
+//						drawingBoardContent.getWallThickness());
+//				Wall toRemove = drawingBoardContent.getSelectedWall();
+//
+//				drawingBoardContent.getWalls().add(newWall);
+//
+//				drawingBoardContent.getSelectedWall().setNewEndPoint(
+//						newWall.getCtrlPointEnd());
+
 			}
 		}
 
@@ -112,17 +190,16 @@ public class SimpleWallTool extends WallTool {
 
 	@Override
 	public void onMouseMoved(MouseEvent me) {
-		if (tmpWall != null) {
+		if (drawingBoardContent.getTmpWall() != null) {
 
-			tmpWall.setEndPoint(me.getX(), me.getY());
+			drawingBoardContent.getTmpWall().setEndPoint(me.getX(), me.getY());
 
-			
 		}
 
 	}
 
 	public static SimpleWallTool getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new SimpleWallTool();
 		}
 		return instance;
