@@ -119,6 +119,9 @@ public class SimpleWallTool extends WallTool {
 		drawingBoardContent.setSelectedCtrlPoint(ctrlPointDetect(me.getX(),
 				me.getY()));
 		drawingBoardContent.setSelectedWall(wallDetect(me.getX(), me.getY()));
+		
+		System.out.println("Pressed:"+ drawingBoardContent.getSelectedCtrlPoint());
+		System.out.println("Pressed Wall:"+ drawingBoardContent.getSelectedWall());
 
 	}
 
@@ -147,6 +150,10 @@ public class SimpleWallTool extends WallTool {
 	public void onMouseReleased(MouseEvent me) {
 		CtrlPoint detectedReleasedPoint = ctrlPointDetect(me.getX(), me.getY());
 		Wall detectedRelasedWall = wallDetect(me.getX(), me.getY());
+		
+		System.out.println("Relased:"+ detectedReleasedPoint);
+		System.out.println("Relased Wall:"+ detectedRelasedWall);
+		
 
 		if (detectedRelasedWall != null) {
 			// si on relache le click sur un point de contrôle il faut setter le
@@ -172,16 +179,24 @@ public class SimpleWallTool extends WallTool {
 				}
 			} else if (drawingBoardContent.getSelectedWall() != detectedRelasedWall) {
 
-//				Wall newWall = new Wall(drawingBoardContent.getSelectedWall()
-//						.getCtrlPointStart(), new CtrlPoint(me.getX(),
-//						me.getY(), drawingBoardContent.getCtrlPointDiameter()),
-//						drawingBoardContent.getWallThickness());
-//				Wall toRemove = drawingBoardContent.getSelectedWall();
-//
-//				drawingBoardContent.getWalls().add(newWall);
-//
-//				drawingBoardContent.getSelectedWall().setNewEndPoint(
-//						newWall.getCtrlPointEnd());
+				Wall newWall = new Wall(detectedRelasedWall.getCtrlPointStart(), new CtrlPoint(me.getX(),
+						me.getY(), drawingBoardContent.getCtrlPointDiameter()),
+						drawingBoardContent.getWallThickness());
+				Wall newWall2 = new Wall(newWall.getCtrlPointEnd(), detectedRelasedWall.getCtrlPointEnd(), drawingBoardContent.getWallThickness());
+
+				
+				drawingBoardContent.getWalls().add(newWall);
+				drawingBoardContent.getWalls().add(newWall2);
+				
+				if(drawingBoardContent.getSelectedCtrlPoint() == drawingBoardContent.getSelectedWall().getCtrlPointEnd()){
+				drawingBoardContent.getSelectedWall().setNewEndPoint(
+						newWall.getCtrlPointEnd());
+				}
+				else{
+					drawingBoardContent.getSelectedWall().setNewStartPoint(
+							newWall.getCtrlPointEnd());
+				}
+				drawingBoardContent.getWalls().remove(detectedRelasedWall);
 
 			}
 		}
