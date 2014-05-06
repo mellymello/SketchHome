@@ -13,6 +13,7 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
+		
 		if (drawingBoardContent.getSelectedWall() == null) {
 			if (drawingBoardContent.getSelectedCtrlPoint() == null) {
 				// on doit creer un nouveau mur
