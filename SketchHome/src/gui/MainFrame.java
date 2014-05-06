@@ -640,6 +640,7 @@ public class MainFrame extends JFrame {
 	
 	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
 		pnlFurnitureLibrary.removeAll();
+		
 		FurnitureMiniature miniature;
 		for (Furniture f : furnitureLibrary.getFurnitures()) {
 			miniature = new FurnitureMiniature(f);
