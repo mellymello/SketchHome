@@ -12,6 +12,7 @@ public class DrawingBoardContent {
 	private Wall selectedWall;
 	
 	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
+	private Furniture selectedModelFurniture;
 	private Furniture selectedFurniture;
 	
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {
@@ -85,5 +86,13 @@ public class DrawingBoardContent {
 
 	public void setSelectedFurniture(Furniture selectedFurniture) {
 		this.selectedFurniture = selectedFurniture;
+	}
+
+	public Furniture getSelectedModelFurniture() {
+		return selectedModelFurniture;
+	}
+
+	public void setSelectedModelFurniture(Furniture selectedModelFurniture) {
+		this.selectedModelFurniture = selectedModelFurniture;
 	}
 }

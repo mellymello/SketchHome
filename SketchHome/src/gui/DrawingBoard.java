@@ -247,4 +247,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	public void setSelectedFurniture(Furniture furniture) {
 		drawingBoardContent.setSelectedFurniture(furniture);
 	}
+
+	public Furniture getSelectedFurniture() {
+		return drawingBoardContent.getSelectedFurniture();
+	}
+
+	public void setSelectedModelFurniture(Furniture furniture) {
+		drawingBoardContent.setSelectedModelFurniture(furniture);
+		
+	}
 }

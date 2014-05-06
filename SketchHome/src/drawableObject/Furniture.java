@@ -109,4 +109,8 @@ public class Furniture implements Cloneable {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+
+	public boolean contains(int x, int y) {
+		return x >= position.x && x <= position.x + dimension.width && y >= position.y && y <= position.y + dimension.height;
+	}
 }

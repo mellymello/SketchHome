@@ -16,4 +16,16 @@ public class TextTool extends PlacementTool {
 		return null;
 	}
 
+	@Override
+	public void onMousePressed(MouseEvent me) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseDragged(MouseEvent me) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

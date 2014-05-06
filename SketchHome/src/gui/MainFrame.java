@@ -655,7 +655,7 @@ public class MainFrame extends JFrame {
 		}
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			pnlDrawingBoard.setSelectedFurniture(furniture);
+			pnlDrawingBoard.setSelectedModelFurniture(furniture);
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {}
