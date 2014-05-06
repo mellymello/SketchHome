@@ -55,7 +55,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		
 		//simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness, drawingBoardContent.getTmpWall());
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
-		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
 	}
 	
 	public void addFurniture(Furniture f) {
@@ -218,10 +217,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public SimpleWallTool getSimpleWallTool(){
 		return simpleWallTool;
-	}
-	
-	public PolygonalWallTool getPolygonalWallTool(){
-		return polygonalWallTool;
 	}
 	
 	public void setSelectedTool(ITools tool){
