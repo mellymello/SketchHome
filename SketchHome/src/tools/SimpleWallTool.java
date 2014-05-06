@@ -179,22 +179,30 @@ public class SimpleWallTool extends WallTool {
 				}
 			} else if (drawingBoardContent.getSelectedWall() != detectedRelasedWall) {
 
-				Wall newWall = new Wall(detectedRelasedWall.getCtrlPointStart(), drawingBoardContent.getSelectedCtrlPoint(),
+				Wall newWall = new Wall(detectedRelasedWall.getCtrlPointStart(), new CtrlPoint(me.getX(),
+						me.getY(), drawingBoardContent.getCtrlPointDiameter()),
 						drawingBoardContent.getWallThickness());
 				Wall newWall2 = new Wall(newWall.getCtrlPointEnd(), detectedRelasedWall.getCtrlPointEnd(), drawingBoardContent.getWallThickness());
+
+				
+				drawingBoardContent.getWalls().add(newWall);
+				drawingBoardContent.getWalls().add(newWall2);
 				
 				if(drawingBoardContent.getSelectedCtrlPoint() == drawingBoardContent.getSelectedWall().getCtrlPointEnd()){
-					drawingBoardContent.getSelectedWall().setNewEndPoint(
-							newWall.getCtrlPointEnd());
+				drawingBoardContent.getSelectedWall().setNewEndPoint(
+						newWall.getCtrlPointEnd());
 				}
 				else{
 					drawingBoardContent.getSelectedWall().setNewStartPoint(
 							newWall.getCtrlPointEnd());
 				}
+<<<<<<< HEAD
 				
 				
 				drawingBoardContent.getWalls().add(newWall);
 				drawingBoardContent.getWalls().add(newWall2);
+=======
+>>>>>>> 1be01dc58d57787b7bb6b48bdbbf2cd3d1325a95
 				drawingBoardContent.getWalls().remove(detectedRelasedWall);
 
 			}
