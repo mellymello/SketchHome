@@ -67,14 +67,13 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
 
 		// painting the already "fixed" walls
+		//dessiner les mur qui sont "déjà" definitifs
 		for (Wall w : drawingBoardContent.getWalls()) {
+			
 			g2.setColor(Color.black);
-			// g2.drawLine(w.getCtrlPointStart().getX(), w.getCtrlPointStart()
-			// .getY(), w.getCtrlPointEnd().getX(), w.getCtrlPointEnd()
-			// .getY());
 
 			g2.draw(w.getWallLine());
-			// g2.draw(w.getWallRect());
+
 			if (showMeasurements) {
 				g2.drawString(String.valueOf(w.getWallLength()),
 						(int) (((w.getCtrlPointStart().getX() + w.getCtrlPointEnd().getX()) / 2)),
@@ -82,19 +81,16 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 			}
 
-			// painting CtrlPoints
+			// dessiner les CtrlPoints
 			g2.setColor(Color.red);
 			g2.draw(w.getCtrlPointStart().getCtrlPoint());
 			g2.draw(w.getCtrlPointEnd().getCtrlPoint());
 
 		}
 
-		// painting the tmp wall
+		// dessiner le tmp wall
 		if (drawingBoardContent.getTmpWall() != null) {
 			g2.setColor(Color.black);
-			// g2.drawLine(drawingBoardContent.getTmpWall().getCtrlPointStart().getX(), drawingBoardContent.getTmpWall()
-			// .getCtrlPointStart().getY(), drawingBoardContent.getTmpWall().getCtrlPointEnd()
-			// .getX(), drawingBoardContent.getTmpWall().getCtrlPointEnd().getY());
 			g2.draw(drawingBoardContent.getTmpWall().getWallLine());
 			
 			if (showMeasurements) {
@@ -109,7 +105,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			g2.draw(drawingBoardContent.getTmpWall().getCtrlPointEnd().getCtrlPoint());
 		}
 		
-		//painting the furnitures
+		//dessiner les furnitures
 		java.util.ListIterator<Furniture> it = drawingBoardContent.getFurnitures().listIterator();
 		while(it.hasNext()) {
 				Furniture furniture = it.next();
@@ -195,10 +191,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseExited(MouseEvent me) {
-//		System.out.println("---- WALLS ----");
-//		for (Wall w : walls) {
-//			System.out.println(w + " length:" + w.getWallLength());
-//		}
+		System.out.println("---- WALLS ----");
+		for (Wall w : drawingBoardContent.getWalls()) {
+			System.out.println(w + " length:" + w.getWallLength());
+		}
 	}
 
 	@Override
