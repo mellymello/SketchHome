@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.List;
 import java.awt.GridLayout;
@@ -270,12 +271,11 @@ public class MainFrame extends JFrame {
 		JButton btnBedroom = new JButton("");
 		btnBedroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//refresh the library
-				bedRoomLibrary.loadLibraryContent();
 				lblSelectedobjectlibrary.setText("Selected Object Library : Bedroom");
-				pnlDrawingBoard.setSelectedFurnitureLibrary(bedRoomLibrary);
-				selectLibrary(bedRoomLibrary);
+				bedRoomLibrary.loadLibraryContent();
+				showContentOfLibrary(bedRoomLibrary);
 				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(bedRoomLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
@@ -412,7 +412,13 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
 		
 		JButton btnWindow = new JButton("");
+		btnWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnWindow.setToolTipText("Windows");
+		btnWindow.setBorderPainted(false);
+		btnWindow.setMargin(new Insets(0, 0, 0, 0));
 		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetreB.png")));
 		btnWindow.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetre.png")));
 		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
@@ -632,7 +638,7 @@ public class MainFrame extends JFrame {
 		pack();
 	}
 	
-	public void selectLibrary(FurnitureLibrary furnitureLibrary) {
+	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
 		pnlFurnitureLibrary.removeAll();
 		FurnitureMiniature miniature;
 		for (Furniture f : furnitureLibrary.getFurnitures()) {
@@ -642,7 +648,8 @@ public class MainFrame extends JFrame {
 			pnlFurnitureLibrary.add(miniature);
 		}
 		
-		pnlFurnitureLibrary.repaint();
+		//because we have performed a "removeAll()" we must use revalidate
+		pnlFurnitureLibrary.validate();
 	}
 	
 	//TODO : test, à compléter
