@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 public class TextTool extends PlacementTool {
 
 	@Override
-	public void onMouseClicked(MouseEvent e) {
+	public void onMouseClicked(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -3,6 +3,7 @@ package tools;
 import java.awt.event.MouseEvent;
 
 import drawableObject.CtrlPoint;
+import drawableObject.DrawingBoardContent;
 import drawableObject.Wall;
 
 public class SimpleWallTool extends WallTool {
@@ -12,7 +13,7 @@ public class SimpleWallTool extends WallTool {
 	private SimpleWallTool() {}
 
 	@Override
-	public void onMouseClicked(MouseEvent me) {		
+	public void onMouseClicked(MouseEvent me) {
 		if (selectedWall == null) {
 			if (selectedCtrlPoint == null) {
 				if (tmpWall == null) {

@@ -298,7 +298,7 @@ public class MainFrame extends JFrame {
 		
 		JButton btnLivingroom = new JButton("");
 		btnLivingroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salonB.png")));
-		btnLivingroom.setToolTipText("Livinh Room");
+		btnLivingroom.setToolTipText("Living Room");
 		btnLivingroom.setBorderPainted(false);
 		btnLivingroom.setMargin(new Insets(0, 0, 0, 0));
 		btnLivingroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salon.png")));

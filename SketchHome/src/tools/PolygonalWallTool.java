@@ -9,31 +9,31 @@ public class PolygonalWallTool extends WallTool {
 	private PolygonalWallTool() {}
 
 	@Override
-	public void onMouseClicked(MouseEvent e) {
+	public void onMouseClicked(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
+	public void onMousePressed(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onMouseDragged(MouseEvent e) {
+	public void onMouseDragged(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
+	public void onMouseReleased(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onMouseMoved(MouseEvent e) {
+	public void onMouseMoved(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
