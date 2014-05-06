@@ -8,12 +8,6 @@ import drawableObject.Wall;
 
 public abstract class WallTool extends IDrawingTool {
 	
-//	protected LinkedList<Wall> walls = new LinkedList<Wall>();
-//	protected Wall tmpWall;
-//	protected CtrlPoint selectedCtrlPoint;
-//	protected int ctrlPointDiameter;
-//	protected int wallThickness;
-//	protected Wall selectedWall;
 
 	public CtrlPoint ctrlPointDetect(int x, int y) {
 		for (Wall w : drawingBoardContent.getWalls()) {
@@ -35,10 +29,4 @@ public abstract class WallTool extends IDrawingTool {
 		return null;
 	}
 	
-//	public void initWalls(LinkedList<Wall> walls, int ctrPointDiameter, int wallThickness) {
-//		this.walls = walls;
-//		this.wallThickness = wallThickness;
-//		this.ctrlPointDiameter = ctrPointDiameter;
-//	}
-
 }
