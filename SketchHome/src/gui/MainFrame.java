@@ -373,6 +373,14 @@ public class MainFrame extends JFrame {
 		btnWall2.setBorderPainted(false);
 		btnWall2.setMargin(new Insets(0, 0, 0, 0));
 		btnWall2.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/mur_polygonal.png")));
+		btnWall2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getPolygonalWallTool());
+				
+			}
+		});
 		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
 		gbc_btnWall2.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall2.gridx = 1;

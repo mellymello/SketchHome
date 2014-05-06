@@ -196,13 +196,11 @@ public class SimpleWallTool extends WallTool {
 					drawingBoardContent.getSelectedWall().setNewStartPoint(
 							newWall.getCtrlPointEnd());
 				}
-<<<<<<< HEAD
 				
 				
 				drawingBoardContent.getWalls().add(newWall);
 				drawingBoardContent.getWalls().add(newWall2);
-=======
->>>>>>> 1be01dc58d57787b7bb6b48bdbbf2cd3d1325a95
+				
 				drawingBoardContent.getWalls().remove(detectedRelasedWall);
 
 			}
