@@ -1,0 +1,22 @@
+<furnitureLybrary>
+	<furniture>
+		<name>Bed1</name>
+		<description>A bed</description>
+		<dimension>
+			<width>90</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/bedroom/bed1.jpg</picture>
+		<orientation>0</orientation>
+	</furniture>
+	<furniture>
+		<name>Chair1</name>
+		<description>A blue chair</description>
+		<dimension>
+			<width>50</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/bedroom/chair1.jpg</picture>
+		<orientation>0</orientation>
+	</furniture>
+</furnitureLybrary>
