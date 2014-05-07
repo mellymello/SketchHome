@@ -1,8 +1,5 @@
 package tools;
 
-import java.awt.event.MouseEvent;
-import java.util.LinkedList;
-
 import drawableObject.CtrlPoint;
 import drawableObject.Wall;
 
