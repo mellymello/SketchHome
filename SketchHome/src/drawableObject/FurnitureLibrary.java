@@ -16,10 +16,12 @@ import org.w3c.dom.NodeList;
 public class FurnitureLibrary {
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
+	private String name; 
 	
-	public FurnitureLibrary(String xmlFilePath) {
+	public FurnitureLibrary(String xmlFilePath, String name) {
 		this.xmlFilePath = xmlFilePath;
 		loadLibraryContent();
+		this.name = name;
 	}
 	
 	//TODO : source : http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
@@ -67,5 +69,8 @@ public class FurnitureLibrary {
 
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
+	}
+	public String getName () {
+		return name;
 	}
 }
