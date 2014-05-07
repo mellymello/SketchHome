@@ -428,6 +428,7 @@ public class MainFrame extends JFrame {
 		JButton btnWindow = new JButton("");
 		btnWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
 			}
 		});
 		btnWindow.setToolTipText("Windows");
