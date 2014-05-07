@@ -1,6 +1,9 @@
 package drawableObject;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,8 +21,10 @@ public class Furniture implements Cloneable {
 	private double orientation;
 	//the upper-left corner position
 	private Point position;
-	boolean locked;
-	boolean visible;
+	private boolean locked;
+	private boolean visible;
+	
+	private Image loadedImage;
 	
 	
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible) {
@@ -31,6 +36,18 @@ public class Furniture implements Cloneable {
 		this.position = position;
 		this.locked = locked;
 		this.visible = visible;
+		
+		try {
+			loadedImage = ImageIO.read(new File(picture));
+		} catch (IOException e) {
+			loadedImage = new BufferedImage(
+					dimension.width, dimension.height,
+					BufferedImage.TYPE_INT_ARGB);
+			Graphics2D bGr = (Graphics2D) loadedImage.getGraphics();
+			bGr.setColor(Color.BLACK);
+			bGr.fillRect(0, 0, dimension.width, dimension.height);
+			bGr.dispose();
+		}
 	}
 
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position) {
@@ -110,6 +127,10 @@ public class Furniture implements Cloneable {
 		this.visible = visible;
 	}
 
+	public Image getLoadedPicture() {
+		return loadedImage;
+	}
+	
 	public boolean contains(int x, int y) {
 		return x >= position.x && x <= position.x + dimension.width && y >= position.y && y <= position.y + dimension.height;
 	}

@@ -153,77 +153,66 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				// (int)furniture.getDimension().getHeight(), null);
 
 				Image img;
-				try {
+				//img = ImageIO.read(new File(furniture.getPicture()));
+				img = furniture.getLoadedPicture();
 
-					/*
-					 * TODO : problème avec la rotation : la forme dépasse du
-					 * carré idée : faire un carré de longueur = à diagonale de
-					 * de la forme
-					 */
+				// int diagonaleImg =
+				// (int)Math.sqrt((int)furniture.getDimension().getWidth() *
+				// (int)furniture.getDimension().getWidth() +
+				// (int)furniture.getDimension().getHeight() *
+				// (int)furniture.getDimension().getHeight());
 
-					img = ImageIO.read(new File(furniture.getPicture()));
+				// Create a buffered image with transparency
+				BufferedImage bimage = new BufferedImage(
+						img.getWidth(null), img.getHeight(null),
+						BufferedImage.TYPE_INT_ARGB);
+				// BufferedImage bimage = new BufferedImage(diagonaleImg,
+				// diagonaleImg, BufferedImage.TYPE_INT_ARGB);
 
-					// int diagonaleImg =
-					// (int)Math.sqrt((int)furniture.getDimension().getWidth() *
-					// (int)furniture.getDimension().getWidth() +
-					// (int)furniture.getDimension().getHeight() *
-					// (int)furniture.getDimension().getHeight());
+				// Draw the image on to the buffered image
+				Graphics2D bGr = bimage.createGraphics();
+				bGr.drawImage(img, 0, 0, null);
+				bGr.dispose();
 
-					// Create a buffered image with transparency
-					BufferedImage bimage = new BufferedImage(
-							img.getWidth(null), img.getHeight(null),
-							BufferedImage.TYPE_INT_ARGB);
-					// BufferedImage bimage = new BufferedImage(diagonaleImg,
-					// diagonaleImg, BufferedImage.TYPE_INT_ARGB);
+				// Drawing the rotated image at the required drawing
+				// locations
+				AffineTransform tx = AffineTransform.getRotateInstance(Math
+						.toRadians(furniture.getOrientation()), furniture
+						.getDimension().getWidth() / 2, furniture
+						.getDimension().getHeight() / 2);
+				AffineTransformOp op = new AffineTransformOp(tx,
+						AffineTransformOp.TYPE_BILINEAR);
+				// g.drawImage(op.filter(bimage, null),
+				// furniture.getPosition().x, furniture.getPosition().y,
+				// diagonaleImg, diagonaleImg, Color.BLUE, null);
+				g.drawImage(op.filter(bimage, null), furniture
+						.getPosition().x, furniture.getPosition().y,
+						(int) furniture.getDimension().getWidth(),
+						(int) furniture.getDimension().getHeight(),
+						Color.BLUE, null);
 
-					// Draw the image on to the buffered image
-					Graphics2D bGr = bimage.createGraphics();
-					bGr.drawImage(img, 0, 0, null);
-					bGr.dispose();
+				if (showMeasurements) {
+					g2.setColor(Color.BLACK);
 
-					// Drawing the rotated image at the required drawing
-					// locations
-					AffineTransform tx = AffineTransform.getRotateInstance(Math
-							.toRadians(furniture.getOrientation()), furniture
-							.getDimension().getWidth() / 2, furniture
-							.getDimension().getHeight() / 2);
-					AffineTransformOp op = new AffineTransformOp(tx,
-							AffineTransformOp.TYPE_BILINEAR);
-					// g.drawImage(op.filter(bimage, null),
-					// furniture.getPosition().x, furniture.getPosition().y,
-					// diagonaleImg, diagonaleImg, Color.BLUE, null);
-					g.drawImage(op.filter(bimage, null), furniture
-							.getPosition().x, furniture.getPosition().y,
-							(int) furniture.getDimension().getWidth(),
-							(int) furniture.getDimension().getHeight(),
-							Color.BLUE, null);
+					// largeur affichée en bas de l'image au milleu
+					g2.drawString(
+							String.valueOf(furniture.getDimension().width),
+							(int) (furniture.getPosition().x + (furniture
+									.getDimension().width - g2
+									.getFontMetrics().stringWidth(
+											String.valueOf(furniture
+													.getDimension().width))) / 2),
+							(int) (furniture.getPosition().y
+									+ furniture.getDimension().height + g2
+									.getFontMetrics().getHeight()));
 
-					if (showMeasurements) {
-						g2.setColor(Color.BLACK);
-
-						// largeur affichée en bas de l'image au milleu
-						g2.drawString(
-								String.valueOf(furniture.getDimension().width),
-								(int) (furniture.getPosition().x + (furniture
-										.getDimension().width - g2
-										.getFontMetrics().stringWidth(
-												String.valueOf(furniture
-														.getDimension().width))) / 2),
-								(int) (furniture.getPosition().y
-										+ furniture.getDimension().height + g2
-										.getFontMetrics().getHeight()));
-
-						// hauteur affichée à droite de l'image au millieu
-						g2.drawString(String
-								.valueOf(furniture.getDimension().height),
-								(int) (furniture.getPosition().x + furniture
-										.getDimension().width),
-								(int) (furniture.getPosition().y + furniture
-										.getDimension().height / 2));
-					}
-
-				} catch (IOException e) {
-					e.printStackTrace();
+					// hauteur affichée à droite de l'image au millieu
+					g2.drawString(String
+							.valueOf(furniture.getDimension().height),
+							(int) (furniture.getPosition().x + furniture
+									.getDimension().width),
+							(int) (furniture.getPosition().y + furniture
+									.getDimension().height / 2));
 				}
 			}
 		}

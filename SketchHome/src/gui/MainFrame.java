@@ -168,6 +168,7 @@ public class MainFrame extends JFrame {
 		btnSelectionTool.setMargin(new Insets(0, 0, 0, 0));
 		btnSelectionTool.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/souris.png")));
 		GridBagConstraints gbc_btnSelectionTool = new GridBagConstraints();
+		gbc_btnSelectionTool.fill = GridBagConstraints.VERTICAL;
 		gbc_btnSelectionTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelectionTool.gridx = 0;
 		gbc_btnSelectionTool.gridy = 0;
@@ -184,6 +185,7 @@ public class MainFrame extends JFrame {
 		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_persoB.png")));
 		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_perso.png")));
 		GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
+		gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
 		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
 		gbc_btnFurniturecreation.gridx = 1;
 		gbc_btnFurniturecreation.gridy = 0;
@@ -201,6 +203,7 @@ public class MainFrame extends JFrame {
 		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
 		btnTextTool.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/texte.png")));
 		GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
+		gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
 		gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
 		gbc_btnTextTool.gridx = 2;
 		gbc_btnTextTool.gridy = 0;
@@ -224,6 +227,7 @@ public class MainFrame extends JFrame {
 		
 		JButton btnZoomplus = new JButton("ZoomPlus");
 		GridBagConstraints gbc_btnZoomplus = new GridBagConstraints();
+		gbc_btnZoomplus.fill = GridBagConstraints.VERTICAL;
 		gbc_btnZoomplus.insets = new Insets(0, 0, 5, 5);
 		gbc_btnZoomplus.gridx = 4;
 		gbc_btnZoomplus.gridy = 0;
@@ -231,6 +235,7 @@ public class MainFrame extends JFrame {
 		
 		JButton btnZoomminus = new JButton("ZoomMinus");
 		GridBagConstraints gbc_btnZoomminus = new GridBagConstraints();
+		gbc_btnZoomminus.fill = GridBagConstraints.VERTICAL;
 		gbc_btnZoomminus.insets = new Insets(0, 0, 5, 0);
 		gbc_btnZoomminus.gridx = 5;
 		gbc_btnZoomminus.gridy = 0;
@@ -247,7 +252,7 @@ public class MainFrame extends JFrame {
 		btnConstructionMode.setMargin(new Insets(0, 0, 0, 0));
 		btnConstructionMode.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/construction.png")));
 		GridBagConstraints gbc_btnConstructionMode = new GridBagConstraints();
-		gbc_btnConstructionMode.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnConstructionMode.fill = GridBagConstraints.BOTH;
 		gbc_btnConstructionMode.gridwidth = 3;
 		gbc_btnConstructionMode.insets = new Insets(0, 0, 5, 5);
 		gbc_btnConstructionMode.gridx = 0;
@@ -262,7 +267,7 @@ public class MainFrame extends JFrame {
 		btnFurnitureMode.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/ameublement.png")));
 		GridBagConstraints gbc_btnFurnitureMode = new GridBagConstraints();
 		gbc_btnFurnitureMode.insets = new Insets(0, 0, 5, 0);
-		gbc_btnFurnitureMode.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFurnitureMode.fill = GridBagConstraints.BOTH;
 		gbc_btnFurnitureMode.gridwidth = 3;
 		gbc_btnFurnitureMode.gridx = 3;
 		gbc_btnFurnitureMode.gridy = 1;
@@ -285,6 +290,7 @@ public class MainFrame extends JFrame {
 		btnBedroom.setMargin(new Insets(0, 0, 0, 0));
 		btnBedroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambre.png")));
 		GridBagConstraints gbc_btnBedroom = new GridBagConstraints();
+		gbc_btnBedroom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnBedroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBedroom.gridx = 0;
 		gbc_btnBedroom.gridy = 2;
@@ -302,6 +308,7 @@ public class MainFrame extends JFrame {
 		});
 		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/bureau.png")));
 		GridBagConstraints gbc_btnOffice = new GridBagConstraints();
+		gbc_btnOffice.fill = GridBagConstraints.VERTICAL;
 		gbc_btnOffice.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOffice.gridx = 1;
 		gbc_btnOffice.gridy = 2;
@@ -314,6 +321,7 @@ public class MainFrame extends JFrame {
 		btnKitchen.setMargin(new Insets(0, 0, 0, 0));
 		btnKitchen.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisine.png")));
 		GridBagConstraints gbc_btnKitchen = new GridBagConstraints();
+		gbc_btnKitchen.fill = GridBagConstraints.VERTICAL;
 		gbc_btnKitchen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnKitchen.gridx = 2;
 		gbc_btnKitchen.gridy = 2;
@@ -326,6 +334,7 @@ public class MainFrame extends JFrame {
 		btnLivingroom.setMargin(new Insets(0, 0, 0, 0));
 		btnLivingroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salon.png")));
 		GridBagConstraints gbc_btnLivingroom = new GridBagConstraints();
+		gbc_btnLivingroom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnLivingroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLivingroom.gridx = 3;
 		gbc_btnLivingroom.gridy = 2;
@@ -338,6 +347,7 @@ public class MainFrame extends JFrame {
 		btnBathroom.setMargin(new Insets(0, 0, 0, 0));
 		btnBathroom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bain.png")));
 		GridBagConstraints gbc_btnBathroom = new GridBagConstraints();
+		gbc_btnBathroom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnBathroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBathroom.gridx = 4;
 		gbc_btnBathroom.gridy = 2;
@@ -350,6 +360,7 @@ public class MainFrame extends JFrame {
 		btnDiningRoom.setMargin(new Insets(0, 0, 0, 0));
 		btnDiningRoom.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_manger.png")));
 		GridBagConstraints gbc_btnDiningRoom = new GridBagConstraints();
+		gbc_btnDiningRoom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 0);
 		gbc_btnDiningRoom.gridx = 5;
 		gbc_btnDiningRoom.gridy = 2;
@@ -366,6 +377,7 @@ public class MainFrame extends JFrame {
 		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_persoB.png")));
 		btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/obje_perso.png")));
 		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
+		gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
 		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCustomfurniture.gridx = 0;
 		gbc_btnCustomfurniture.gridy = 3;
@@ -386,6 +398,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
+		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall.gridx = 0;
 		gbc_btnWall.gridy = 4;
@@ -406,6 +419,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
+		gbc_btnWall2.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall2.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall2.gridx = 1;
 		gbc_btnWall2.gridy = 4;
@@ -422,6 +436,7 @@ public class MainFrame extends JFrame {
 		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetreB.png")));
 		btnWindow.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/fenetre.png")));
 		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
+		gbc_btnWindow.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWindow.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWindow.gridx = 2;
 		gbc_btnWindow.gridy = 4;
@@ -438,6 +453,7 @@ public class MainFrame extends JFrame {
 		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porteB.png")));
 		btnDoor.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porte.png")));
 		GridBagConstraints gbc_btnDoor = new GridBagConstraints();
+		gbc_btnDoor.fill = GridBagConstraints.VERTICAL;
 		gbc_btnDoor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnDoor.gridx = 3;
 		gbc_btnDoor.gridy = 4;
@@ -452,6 +468,7 @@ public class MainFrame extends JFrame {
 		btnStair.setMargin(new Insets(0, 0, 0, 0));
 		btnStair.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/escaliers.png")));
 		GridBagConstraints gbc_btnStair = new GridBagConstraints();
+		gbc_btnStair.fill = GridBagConstraints.VERTICAL;
 		gbc_btnStair.insets = new Insets(0, 0, 0, 5);
 		gbc_btnStair.gridx = 4;
 		gbc_btnStair.gridy = 4;
