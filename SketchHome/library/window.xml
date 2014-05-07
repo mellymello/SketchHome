@@ -1,4 +1,4 @@
-<furnitureLybrary>
+<furnitureLibrary>
 	<furniture>
 		<name>Window1</name>
 		<description>A window</description>
@@ -9,4 +9,4 @@
 		<picture>library/window/window1.jpg</picture>
 		<orientation>0</orientation>
 	</furniture>
-</furnitureLybrary>
+</furnitureLibrary>
