@@ -69,12 +69,13 @@ public class MainFrame extends JFrame {
 	
 	private DrawingBoard pnlDrawingBoard;
 	
-	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "bedroom");
-	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "living room");
-	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," kitchen");
-	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "dining room");
-	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "bathroom");
-	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "office");
+	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom");
+	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room");
+	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen");
+	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room");
+	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom");
+	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
+	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window");
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -490,6 +491,12 @@ public class MainFrame extends JFrame {
 		JButton btnWindow = new JButton("");
 		btnWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ windowLibrary.getName());
+				windowLibrary.loadLibraryContent();
+				showContentOfLibrary(windowLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(windowLibrary);
+				
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
 			}
 		});

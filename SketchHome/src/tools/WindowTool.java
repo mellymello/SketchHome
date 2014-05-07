@@ -19,9 +19,8 @@ public class WindowTool extends FurniturePlacementTool {
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
-		System.out.println("Clicked on WindowTOOL");
+	
 		
-		//detecter le mur et creer la fenetre tmp si elle n'existe pas / fixer la fenetre si elle existe
 		detectedWall = wallDetect(me.getX(), me.getY());
 		
 		if(detectedWall!=null){
@@ -42,19 +41,27 @@ public class WindowTool extends FurniturePlacementTool {
 
 	@Override
 	public void onMousePressed(MouseEvent me) {
-		// TODO Auto-generated method stub
+		drawingBoardContent.setSelectedFurniture(furnitureDetect(me.getX(),
+				me.getY()));
 		
 	}
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-		// TODO Auto-generated method stub
+		if(drawingBoardContent.getSelectedFurniture() != null) {
+			drawingBoardContent.getSelectedFurniture().setPosition(me.getPoint());			
+		}
 		
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-		// TODO Auto-generated method stub
+		detectedWall = wallDetect(me.getX(), me.getY());
+		
+		if(detectedWall ==null && drawingBoardContent.getSelectedFurniture()!=null){
+			
+			drawingBoardContent.getFurnitures().remove(drawingBoardContent.getSelectedFurniture());
+		}
 		
 	}
 
