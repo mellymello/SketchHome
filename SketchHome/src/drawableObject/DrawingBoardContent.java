@@ -12,9 +12,9 @@ public class DrawingBoardContent {
 	private Wall selectedWall;
 	
 	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
-	//the furniture model selected in the library
+	//le modele du meuble selectionné dans la librairie
 	private Furniture selectedModelFurniture;
-	//the furniture selected used in the house plan
+	//le meuble selectionné dans la plan
 	private Furniture selectedFurniture;
 	
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {

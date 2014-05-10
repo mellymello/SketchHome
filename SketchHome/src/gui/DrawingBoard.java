@@ -26,6 +26,7 @@ import tools.FurniturePlacementTool;
 import tools.ITools;
 import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
+import tools.WindowTool;
 
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
@@ -41,6 +42,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			.getInstance();
 	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool
 			.getInstance();
+	
+	private WindowTool windowTool = WindowTool.getInstance();
 
 	private FurnitureLibrary selectedFurnitureLibrary;
 
@@ -64,6 +67,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
 		furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
+		windowTool.setDrawingBoardContent(drawingBoardContent);
 	}
 
 	public void addFurniture(Furniture f) {
@@ -275,6 +279,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	public PolygonalWallTool getPolygonalWallTool() {
 		return polygonalWallTool;
+	}
+	
+	public WindowTool getWindowTool(){
+		return windowTool;
 	}
 
 	public FurniturePlacementTool getFurniturePlacementTool() {

@@ -1,0 +1,12 @@
+<furnitureLibrary>
+	<furniture>
+		<name>Window1</name>
+		<description>A window</description>
+		<dimension>
+			<width>90</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/window/window1.jpg</picture>
+		<orientation>0</orientation>
+	</furniture>
+</furnitureLibrary>

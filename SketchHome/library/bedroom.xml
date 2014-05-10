@@ -1,7 +1,7 @@
-<furnitureLybrary>
+<furnitureLibrary>
 	<furniture>
-		<name>Bed1</name>
-		<description>A bed</description>
+		<name>Bed Double</name>
+		<description>Lit Double</description>
 		<dimension>
 			<width>180</width>
 			<height>210</height>
@@ -11,14 +11,14 @@
 		<color>blue</color>
 	</furniture>
 	<furniture>
-		<name>Chair1</name>
-		<description>A blue chair</description>
+		<name>Bed Simple</name>
+		<description>lit simple</description>
 		<dimension>
-			<width>50</width>
-			<height>60</height>
+			<width>100</width>
+			<height>210</height>
 		</dimension>
-		<picture>library/bedroom/chair1.jpg</picture>
+		<picture>library/bedroom/lit_simple_100_210.png</picture>
 		<orientation>0</orientation>
-		<color>grey</color>
+		<color>white</color>
 	</furniture>
-</furnitureLybrary>
+</furnitureLibrary>

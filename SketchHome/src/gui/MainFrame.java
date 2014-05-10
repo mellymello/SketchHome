@@ -74,11 +74,22 @@ public class MainFrame extends JFrame {
 	private JPanel pnlFurnitureLibrary;
 	
 	private DrawingBoard pnlDrawingBoard;
-	
-	private DefaultMutableTreeNode bedroomJtreeNode = new DefaultMutableTreeNode("Bedroom");
-	private DefaultMutableTreeNode livingroomJtreeNode = new DefaultMutableTreeNode("Living room");
-	
-	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", bedroomJtreeNode);
+
+	private DefaultMutableTreeNode bedRoomJtreeNode = new DefaultMutableTreeNode("Bedroom");
+	private DefaultMutableTreeNode livingRoomJtreeNode = new DefaultMutableTreeNode("Living room");
+	private DefaultMutableTreeNode kitchenJtreeNode = new DefaultMutableTreeNode("Kitchen");
+	private DefaultMutableTreeNode diningRoomJtreeNode = new DefaultMutableTreeNode("Living room");
+	private DefaultMutableTreeNode bathroomLibraryJtreeNode = new DefaultMutableTreeNode("Bathroom");
+	private DefaultMutableTreeNode officeJtreeNode = new DefaultMutableTreeNode("Office");
+	private DefaultMutableTreeNode windowJtreeNode = new DefaultMutableTreeNode("Window");
+
+	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom", bedRoomJtreeNode);
+	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room", livingRoomJtreeNode);
+	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen", kitchenJtreeNode);
+	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room", diningRoomJtreeNode);
+	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom", bathroomLibraryJtreeNode);
+	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office", officeJtreeNode);
+	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -284,7 +295,7 @@ public class MainFrame extends JFrame {
 		JButton btnBedroom = new JButton("");
 		btnBedroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : Bedroom");
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ bedRoomLibrary.getName());
 				bedRoomLibrary.loadLibraryContent();
 				showContentOfLibrary(bedRoomLibrary);
 				
@@ -311,6 +322,12 @@ public class MainFrame extends JFrame {
 		btnOffice.setMargin(new Insets(0, 0, 0, 0));
 		btnOffice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ officeLibrary.getName());
+				officeLibrary.loadLibraryContent();
+				showContentOfLibrary(officeLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(officeLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 				
 			}
 		});
@@ -323,6 +340,17 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnOffice, gbc_btnOffice);
 		
 		JButton btnKitchen = new JButton("");
+		btnKitchen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ kitchenLibrary.getName());
+				kitchenLibrary.loadLibraryContent();
+				showContentOfLibrary(kitchenLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(kitchenLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+				
+			}
+		});
 		btnKitchen.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisineB.png")));
 		btnKitchen.setToolTipText("Kitchen");
 		btnKitchen.setBorderPainted(false);
@@ -336,6 +364,19 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnKitchen, gbc_btnKitchen);
 		
 		JButton btnLivingroom = new JButton("");
+		btnLivingroom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ livingRoomLibrary.getName());
+				livingRoomLibrary.loadLibraryContent();
+				showContentOfLibrary(livingRoomLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(livingRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+				
+			}
+		});
 		btnLivingroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salonB.png")));
 		btnLivingroom.setToolTipText("Living Room");
 		btnLivingroom.setBorderPainted(false);
@@ -349,6 +390,20 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnLivingroom, gbc_btnLivingroom);
 		
 		JButton btnBathroom = new JButton("");
+		btnBathroom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ bathroomLibrary.getName());
+				bathroomLibrary.loadLibraryContent();
+				showContentOfLibrary(bathroomLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(bathroomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+				
+				
+			}
+		});
 		btnBathroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bainB.png")));
 		btnBathroom.setToolTipText("Bath Room");
 		btnBathroom.setBorderPainted(false);
@@ -362,6 +417,20 @@ public class MainFrame extends JFrame {
 		pnlToolsBtn.add(btnBathroom, gbc_btnBathroom);
 		
 		JButton btnDiningRoom = new JButton("");
+		btnDiningRoom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ diningRoomLibrary.getName());
+				diningRoomLibrary.loadLibraryContent();
+				showContentOfLibrary(diningRoomLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(diningRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+				
+				
+			}
+		});
 		btnDiningRoom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_mangerB.png")));
 		btnDiningRoom.setToolTipText("Dining Room");
 		btnDiningRoom.setBorderPainted(false);
@@ -436,6 +505,13 @@ public class MainFrame extends JFrame {
 		JButton btnWindow = new JButton("");
 		btnWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ windowLibrary.getName());
+				windowLibrary.loadLibraryContent();
+				showContentOfLibrary(windowLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(windowLibrary);
+				
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
 			}
 		});
 		btnWindow.setToolTipText("Windows");
@@ -550,8 +626,8 @@ public class MainFrame extends JFrame {
 		
 		
 		DefaultMutableTreeNode rootJtreeNode = new DefaultMutableTreeNode("Placed furnitures");
-		rootJtreeNode.add(bedroomJtreeNode);
-		rootJtreeNode.add(livingroomJtreeNode);
+		rootJtreeNode.add(bedRoomJtreeNode);
+		rootJtreeNode.add(livingRoomJtreeNode);
 		
 		JTree treeUsedObject = new JTree(rootJtreeNode);
 		GridBagConstraints gbc_treeUsedObject = new GridBagConstraints();

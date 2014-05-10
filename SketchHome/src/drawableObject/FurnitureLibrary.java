@@ -19,10 +19,14 @@ import org.w3c.dom.NodeList;
 public class FurnitureLibrary {
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
+	private String name;
+
 	private DefaultMutableTreeNode jTreeNode;
+	 
 	
-	public FurnitureLibrary(String xmlFilePath, DefaultMutableTreeNode jTreeNode) {
+	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
 		this.xmlFilePath = xmlFilePath;
+		this.name = name;
 		this.jTreeNode = jTreeNode;
 		loadLibraryContent();
 	}
@@ -75,8 +79,10 @@ public class FurnitureLibrary {
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
 	}
-
 	public DefaultMutableTreeNode getJTreeNode() {
 		return jTreeNode;
+	}
+	public String getName () {
+		return name;
 	}
 }
