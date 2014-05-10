@@ -1,10 +1,13 @@
 package drawableObject;
 
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.util.LinkedList;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -16,9 +19,11 @@ import org.w3c.dom.NodeList;
 public class FurnitureLibrary {
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
+	private DefaultMutableTreeNode jTreeNode;
 	
-	public FurnitureLibrary(String xmlFilePath) {
+	public FurnitureLibrary(String xmlFilePath, DefaultMutableTreeNode jTreeNode) {
 		this.xmlFilePath = xmlFilePath;
+		this.jTreeNode = jTreeNode;
 		loadLibraryContent();
 	}
 	
@@ -56,7 +61,9 @@ public class FurnitureLibrary {
 								new Point(0, 0),
 								Double.valueOf(eElement.getElementsByTagName("orientation").item(0).getTextContent()),
 								false,
-								true));
+								true,
+								this,
+								Color.getColor(eElement.getElementsByTagName("color").item(0).getTextContent())));
 						
 					}
 				}
@@ -67,5 +74,9 @@ public class FurnitureLibrary {
 
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
+	}
+
+	public DefaultMutableTreeNode getJTreeNode() {
+		return jTreeNode;
 	}
 }

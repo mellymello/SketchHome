@@ -68,6 +68,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	public void addFurniture(Furniture f) {
 		drawingBoardContent.addFurniture(f);
+		//TODO : ne fonctionne pas, utiliser DynamicTree.java
+		f.getLibrary().getJTreeNode().add(f.getJtreeNode());
+		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -189,7 +192,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 						.getPosition().x, furniture.getPosition().y,
 						(int) furniture.getDimension().getWidth(),
 						(int) furniture.getDimension().getHeight(),
-						Color.BLUE, null);
+						furniture.getColor(), null);
 
 				if (showMeasurements) {
 					g2.setColor(Color.BLACK);
@@ -306,5 +309,16 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	public void setSelectedModelFurniture(Furniture furniture) {
 		drawingBoardContent.setSelectedModelFurniture(furniture);
 
+	}
+	
+	public void createPng() {
+		BufferedImage img = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = img.createGraphics();
+		this.paint(g2);
+		try{
+			ImageIO.write(img, "png", new File("test export.png"));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 }
