@@ -22,13 +22,11 @@ public class FurnitureLibrary {
 	private String name;
 
 	private DefaultMutableTreeNode jTreeNode;
-	 
 	
 	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
 		this.xmlFilePath = xmlFilePath;
 		this.name = name;
 		this.jTreeNode = jTreeNode;
-		loadLibraryContent();
 	}
 	
 	//TODO : source : http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
@@ -50,9 +48,9 @@ public class FurnitureLibrary {
 			 
 				NodeList nList = doc.getElementsByTagName("furniture");
 			 
-				for (int temp = 0; temp < nList.getLength(); temp++) {
+				for (int i = 0; i < nList.getLength(); i++) {
 			 
-					Node nNode = nList.item(temp);
+					Node nNode = nList.item(i);
 			 
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 			 
@@ -67,7 +65,7 @@ public class FurnitureLibrary {
 								false,
 								true,
 								this,
-								Color.getColor(eElement.getElementsByTagName("color").item(0).getTextContent())));
+								new Color(Float.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent()))));
 						
 					}
 				}

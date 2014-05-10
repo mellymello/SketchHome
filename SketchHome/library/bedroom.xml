@@ -8,7 +8,11 @@
 		</dimension>
 		<picture>library/bedroom/lit_double_180_210.png</picture>
 		<orientation>0</orientation>
-		<color>blue</color>
+		<color>
+			<red>0</red>
+			<green>1</green>
+			<blue>0</blue>
+		</color>
 	</furniture>
 	<furniture>
 		<name>Bed Simple</name>
@@ -19,6 +23,10 @@
 		</dimension>
 		<picture>library/bedroom/lit_simple_100_210.png</picture>
 		<orientation>0</orientation>
-		<color>white</color>
+		<color>
+			<red>0.5</red>
+			<green>0</green>
+			<blue>1</blue>
+		</color>
 	</furniture>
 </furnitureLibrary>

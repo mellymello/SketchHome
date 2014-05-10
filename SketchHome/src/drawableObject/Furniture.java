@@ -19,9 +19,9 @@ public class Furniture implements Cloneable {
 	private String description;
 	private Dimension dimension;
 	private String picture;
-	//rotation degree
+	//degré de rotation
 	private double orientation;
-	//the upper-left corner position
+	//position du coin supérieur-gauche
 	private Point position;
 	private boolean locked;
 	private boolean visible;

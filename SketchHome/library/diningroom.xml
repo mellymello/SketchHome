@@ -8,7 +8,11 @@
 		</dimension>
 		<picture>library/diningroom/XXX.jpg</picture>
 		<orientation>0</orientation>
-				<color>white</color>
+		<color>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+		</color>
 	</furniture>
 	<furniture>
 		<name>Chair1</name>
@@ -19,6 +23,10 @@
 		</dimension>
 		<picture>library/dining/XXX.jpg</picture>
 		<orientation>0</orientation>
-		<color>white</color>
+		<color>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+		</color>
 	</furniture>
 </furnitureLibrary>

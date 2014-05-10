@@ -13,8 +13,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -28,23 +26,28 @@ import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
 import tools.WindowTool;
 
+/**
+ * JPanel représentant le plan dessiné dans SketchHome.
+ * @author Jollien Dominique
+ */
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
 
-	private ITools selectedTool;
-
 	private DrawingBoardContent drawingBoardContent;
 
+	//si vaut true : on affiche les cotations des éléments du plan
 	private boolean showMeasurements;
 
+	//outils utilisables pour dessiner le plan
 	private SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
-	private PolygonalWallTool polygonalWallTool = PolygonalWallTool
-			.getInstance();
-	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool
-			.getInstance();
-	
+	private PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
+	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
 	private WindowTool windowTool = WindowTool.getInstance();
+	//outil actuellement utilisé
+	//TODO : initialiser à une valeur sinon crée nullPointerException
+	private ITools selectedTool;
 
+	//librairie de meuble actuellement sélectionnée
 	private FurnitureLibrary selectedFurnitureLibrary;
 
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
@@ -54,105 +57,45 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		drawingBoardContent = new DrawingBoardContent(ctrlPointDiameter,
 				wallThickness);
-
 		// this.ctrlPointDiameter = ctrlPointDiameter;
 		// this.wallThickness = wallThickness;
+		
 		this.showMeasurements = true;
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
-		// simpleWallTool.initWalls(walls, ctrlPointDiameter, wallThickness,
-		// drawingBoardContent.getTmpWall());
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
 		furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
 		windowTool.setDrawingBoardContent(drawingBoardContent);
 	}
 
-	public void addFurniture(Furniture f) {
-		drawingBoardContent.addFurniture(f);
-		//TODO : ne fonctionne pas, utiliser DynamicTree.java
-		f.getLibrary().getJTreeNode().add(f.getJtreeNode());
-		repaint();
-	}
+//	public void addFurniture(Furniture f) {
+//		drawingBoardContent.addFurniture(f);
+//		//TODO : ne fonctionne pas, utiliser DynamicTree.java
+//		f.getLibrary().getJTreeNode().add(f.getJtreeNode());
+//		repaint();
+//	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		Graphics2D g2 = (Graphics2D) g;
+
 		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
-
-		// painting the already "fixed" walls
-		// dessiner les mur qui sont "déjà" definitifs
+		// dessiner les mur qui sont déjà fixés
 		for (Wall w : drawingBoardContent.getWalls()) {
-
-			g2.setColor(Color.black);
-
-			g2.draw(w.getWallLine());
-
-			if (showMeasurements) {
-				String wallLength = String.valueOf(w.getWallLength());
-				if (wallLength.length() > wallLength.indexOf(".") + 3) {
-					g2.setColor(Color.blue);
-					g2.drawString(wallLength.substring(0,
-							(wallLength.indexOf(".") + 3)), (int) (((w
-							.getCtrlPointStart().getX() + w.getCtrlPointEnd()
-							.getX()) / 2))
-							- drawingBoardContent.getWallThickness() * 3,
-							(int) ((w.getCtrlPointStart().getY() + w
-									.getCtrlPointEnd().getY()) / 2)
-									- drawingBoardContent.getWallThickness()
-									* 3);
-				}
-			}
-
-			// dessiner les CtrlPoints
-			g2.setColor(Color.red);
-			g2.draw(w.getCtrlPointStart().getCtrlPoint());
-			g2.draw(w.getCtrlPointEnd().getCtrlPoint());
-
+			paintWall(g2, w);
 		}
 
 		// dessiner le tmp wall
 		if (drawingBoardContent.getTmpWall() != null) {
-			g2.setColor(Color.black);
-			g2.draw(drawingBoardContent.getTmpWall().getWallLine());
-
-			if (showMeasurements) {
-				String wallLength = String.valueOf(drawingBoardContent
-						.getTmpWall().getWallLength());
-
-				if (wallLength.length() > wallLength.indexOf(".") + 3) {
-					g2.setColor(Color.blue);
-					g2.drawString(
-							wallLength.substring(0,
-									(wallLength.indexOf(".") + 3)),
-							(int) (((drawingBoardContent.getTmpWall()
-									.getCtrlPointStart().getX() + drawingBoardContent
-									.getTmpWall().getCtrlPointEnd().getX()) / 2) - drawingBoardContent
-									.getWallThickness() * 3),
-							(int) ((drawingBoardContent.getTmpWall()
-									.getCtrlPointStart().getY() + drawingBoardContent
-									.getTmpWall().getCtrlPointEnd().getY()) / 2)
-									- drawingBoardContent.getWallThickness()
-									* 3);
-
-				}
-			}
-
-			g2.setColor(Color.red);
-			g2.draw(drawingBoardContent.getTmpWall().getCtrlPointStart()
-					.getCtrlPoint());
-			g2.draw(drawingBoardContent.getTmpWall().getCtrlPointEnd()
-					.getCtrlPoint());
+			paintWall(g2, drawingBoardContent.getTmpWall());
 		}
 
-		// dessiner les furnitures
-		java.util.ListIterator<Furniture> it = drawingBoardContent
-				.getFurnitures().listIterator();
-		while (it.hasNext()) {
-			Furniture furniture = it.next();
+		// dessiner les meubles
+		for (Furniture furniture : drawingBoardContent.getFurnitures()) {
 			if (furniture.getVisible()) {
 				// g.drawImage(Toolkit.getDefaultToolkit().getImage(furniture.getPicture()),
 				// furniture.getPosition().x, furniture.getPosition().y,
@@ -198,6 +141,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 						(int) furniture.getDimension().getHeight(),
 						furniture.getColor(), null);
 
+				//affichage des cotations
 				if (showMeasurements) {
 					g2.setColor(Color.BLACK);
 
@@ -224,6 +168,38 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			}
 		}
 
+	}
+	
+	/**
+	 * Dessiner un mur sur le plan.
+	 * @param g2 : espace de dessin
+	 * @param w : mur à dessiner
+	 */
+	private void paintWall(Graphics2D g2, Wall w) {
+		g2.setColor(Color.black);
+		g2.draw(w.getWallLine());
+
+		//afficher les cotations
+		if (showMeasurements) {
+			String wallLength = String.valueOf(w.getWallLength());
+			if (wallLength.length() > wallLength.indexOf(".") + 3) {
+				g2.setColor(Color.blue);
+				g2.drawString(wallLength.substring(0,
+						(wallLength.indexOf(".") + 3)), (int) (((w
+						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
+						.getX()) / 2))
+						- drawingBoardContent.getWallThickness() * 3,
+						(int) ((w.getCtrlPointStart().getY() + w
+								.getCtrlPointEnd().getY()) / 2)
+								- drawingBoardContent.getWallThickness()
+								* 3);
+			}
+		}
+
+		// dessiner les CtrlPoints
+		g2.setColor(Color.red);
+		g2.draw(w.getCtrlPointStart().getCtrlPoint());
+		g2.draw(w.getCtrlPointEnd().getCtrlPoint());
 	}
 
 	@Override
@@ -319,6 +295,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	}
 	
+	/**
+	 * Crée un fichier image png du plan dessiné 
+	 */
 	public void createPng() {
 		BufferedImage img = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = img.createGraphics();

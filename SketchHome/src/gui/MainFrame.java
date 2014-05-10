@@ -394,7 +394,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ bathroomLibrary.getName());
+				lblSelectedobjectlibrary.setText("Selected Object Library : " + bathroomLibrary.getName());
 				bathroomLibrary.loadLibraryContent();
 				showContentOfLibrary(bathroomLibrary);
 				
@@ -510,7 +510,6 @@ public class MainFrame extends JFrame {
 				showContentOfLibrary(windowLibrary);
 				
 				pnlDrawingBoard.setSelectedFurnitureLibrary(windowLibrary);
-				
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
 			}
 		});
@@ -629,7 +628,7 @@ public class MainFrame extends JFrame {
 		rootJtreeNode.add(bedRoomJtreeNode);
 		rootJtreeNode.add(livingRoomJtreeNode);
 		
-		JTree treeUsedObject = new JTree(rootJtreeNode);
+		JTree treeUsedObject = new JTree(rootJtreeNode); //TODO : observeur de drawingBoardContent ?
 		GridBagConstraints gbc_treeUsedObject = new GridBagConstraints();
 		gbc_treeUsedObject.fill = GridBagConstraints.BOTH;
 		gbc_treeUsedObject.gridx = 0;
@@ -769,24 +768,29 @@ public class MainFrame extends JFrame {
 		private Furniture furniture;
 		private JLabel lblName;
 		private JComponent miniature;
+		private Dimension miniatureDimension;
 		public FurnitureMiniature(Furniture furniture) {
 			this.furniture = furniture;	
 			
+			addMouseListener(this);
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			
 			lblName = new JLabel(furniture.getName());
 			add(lblName);
 			
+			//gestion de l'image miniaturisée
+			int reducedWidth = furniture.getDimension().width/3;
+			int reducedHeight = furniture.getDimension().height/3;
+			miniatureDimension = new Dimension(reducedWidth < 60 ? 60 : reducedWidth, reducedHeight < 100 ? 100 : reducedHeight);
+			
 			miniature = new JComponent() {
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					g.drawImage(FurnitureMiniature.this.furniture.getLoadedPicture(), 0, 0, 50, 50, FurnitureMiniature.this.furniture.getColor(), null);
+					g.drawImage(FurnitureMiniature.this.furniture.getLoadedPicture(), 0, 0, miniatureDimension.width, miniatureDimension.height, FurnitureMiniature.this.furniture.getColor(), null);
 				}
 			};
-			miniature.setPreferredSize(new Dimension(50, 50));
+			miniature.setPreferredSize(miniatureDimension);
 			add(miniature);
-			
-			addMouseListener(this);
 		}
 		
 		public Dimension getPrefferedSize() {
