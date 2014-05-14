@@ -109,4 +109,8 @@ public class SaveContent
 	{
 		content = dbc;
 	}
+	
+	public void setOpenedFile(File f){
+		this.file=f;
+	}
 }
