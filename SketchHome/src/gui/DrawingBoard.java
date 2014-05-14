@@ -22,6 +22,7 @@ import drawableObject.DrawingBoardContent;
 import drawableObject.Furniture;
 import drawableObject.FurnitureLibrary;
 import drawableObject.Wall;
+import tools.DoorTool;
 import tools.FurniturePlacementTool;
 import tools.ITools;
 import tools.PolygonalWallTool;
@@ -44,6 +45,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			.getInstance();
 	
 	private WindowTool windowTool = WindowTool.getInstance();
+	
+	private DoorTool doorTool = DoorTool.getInstance();
 
 	private FurnitureLibrary selectedFurnitureLibrary;
 
@@ -280,6 +283,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public WindowTool getWindowTool(){
 		return windowTool;
+	}
+	
+	public DoorTool getDoorTool(){
+		return doorTool;
 	}
 
 	public FurniturePlacementTool getFurniturePlacementTool() {

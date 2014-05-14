@@ -76,6 +76,7 @@ public class MainFrame extends JFrame {
 	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom");
 	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
 	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window");
+	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door");
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -518,6 +519,14 @@ public class MainFrame extends JFrame {
 		btnDoor.setMargin(new Insets(0, 0, 0, 0));
 		btnDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblSelectedobjectlibrary.setText("Selected Object Library : "+ doorLibrary.getName());
+				doorLibrary.loadLibraryContent();
+				showContentOfLibrary(doorLibrary);
+				
+				pnlDrawingBoard.setSelectedFurnitureLibrary(doorLibrary);
+				
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getDoorTool());
+			
 			}
 		});
 		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porteB.png")));
