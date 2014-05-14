@@ -82,6 +82,7 @@ public class MainFrame extends JFrame {
 	private DefaultMutableTreeNode bathroomLibraryJtreeNode = new DefaultMutableTreeNode("Bathroom");
 	private DefaultMutableTreeNode officeJtreeNode = new DefaultMutableTreeNode("Office");
 	private DefaultMutableTreeNode windowJtreeNode = new DefaultMutableTreeNode("Window");
+	private DefaultMutableTreeNode doorJtreeNode = new DefaultMutableTreeNode("Door");
 
 	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom", bedRoomJtreeNode);
 	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room", livingRoomJtreeNode);
@@ -90,6 +91,7 @@ public class MainFrame extends JFrame {
 	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom", bathroomLibraryJtreeNode);
 	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office", officeJtreeNode);
 	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
+	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door", doorJtreeNode);
 	
 	public MainFrame() {
 		setTitle("SketchHome");
