@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -49,7 +50,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool.getInstance();
 	//outil actuellement utilisé
 	//TODO : initialiser à une valeur sinon crée nullPointerException
-	private ITools selectedTool;
+	private ITools selectedTool = simpleWallTool;
 
 	//librairie de meuble actuellement sélectionnée
 	private FurnitureLibrary selectedFurnitureLibrary;
@@ -86,6 +87,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		super.paintComponent(g);
 
 		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
 		// dessiner les mur qui sont déjà fixés

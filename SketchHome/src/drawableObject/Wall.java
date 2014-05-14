@@ -1,11 +1,16 @@
 package drawableObject;
 
-import java.awt.Dimension;
-import java.awt.Rectangle;
+
+
 import java.awt.geom.Line2D;
+import java.io.Serializable;
 
-public class Wall {
+public class Wall implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7846324772480602708L;
 	private CtrlPoint startPoint;
 	private CtrlPoint endPoint;
 	private Line2D wallLine;

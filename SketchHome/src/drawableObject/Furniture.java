@@ -8,13 +8,17 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.Position;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
-public class Furniture implements Cloneable {
+public class Furniture implements Cloneable, Serializable {
+	private static final long serialVersionUID = -4108285572677120893L;
 	private static int count = 0;
 	
 	private int id;
@@ -29,7 +33,8 @@ public class Furniture implements Cloneable {
 	private boolean locked;
 	private boolean visible;
 	
-	private Image loadedImage;
+	private transient Image loadedImage;
+	
 	
 	private Color color;
 	
@@ -53,6 +58,7 @@ public class Furniture implements Cloneable {
 		try {
 			loadedImage = ImageIO.read(new File(picture));
 		} catch (IOException e) {
+			//si l'image n'est pas trouvée, on génère une image noire
 			loadedImage = new BufferedImage(
 					dimension.width, dimension.height,
 					BufferedImage.TYPE_INT_ARGB);

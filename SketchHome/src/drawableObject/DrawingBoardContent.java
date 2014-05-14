@@ -83,10 +83,6 @@ public class DrawingBoardContent extends Observable {
 		return placedFurnitures;
 	}
 
-	public void setFurnitures(LinkedList<Furniture> furnitures) {
-		this.placedFurnitures = furnitures;
-	}
-
 	public void addFurniture(Furniture f) {
 		placedFurnitures.add(f);
 		
@@ -102,9 +98,10 @@ public class DrawingBoardContent extends Observable {
 		return walls;
 	}
 
-	public void setWalls(LinkedList<Wall> walls) {
-		this.walls = walls;
+	public void addWall(Wall w) {
+		walls.add(w);
 	}
+	
 
 	public int getWallThickness() {
 		return wallThickness;
