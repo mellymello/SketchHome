@@ -19,6 +19,7 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JTree;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -48,6 +49,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.sql.Savepoint;
 
 import javax.swing.SwingConstants;
 
@@ -93,6 +96,8 @@ public class MainFrame extends JFrame {
 	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
 	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door", doorJtreeNode);
 	
+	private SaveContent saveContent;
+	
 	public MainFrame() {
 		setTitle("SketchHome");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,6 +120,24 @@ public class MainFrame extends JFrame {
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmSaveAs = new JMenuItem("Save as");
+		mntmSaveAs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fs = new JFileChooser();
+				
+				int action = fs.showSaveDialog(null);
+				fs.setMultiSelectionEnabled(false);
+				if (action == JFileChooser.APPROVE_OPTION) {
+					File f =fs.getSelectedFile();
+					saveContent.
+					
+					
+				}
+				
+				
+			}
+		});
 		mnFile.add(mntmSaveAs);
 		
 		JMenuItem mntmExport = new JMenuItem("Export");
@@ -167,7 +190,9 @@ public class MainFrame extends JFrame {
 		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGHT, CTRL_POINT_DIAMETER,WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
-				
+
+		saveContent= new SaveContent(pnlDrawingBoard.getDrawingBoardContent());
+		
 		JPanel pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
