@@ -8,13 +8,19 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.Position;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
-public class Furniture implements Cloneable {
+public class Furniture implements Cloneable, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4108285572677120893L;
 	private String name;
 	private String description;
 	private Dimension dimension;
