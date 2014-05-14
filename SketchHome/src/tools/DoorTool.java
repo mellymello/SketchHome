@@ -24,32 +24,7 @@ public class DoorTool extends FurniturePlacementTool {
 		detectedWall = wallDetect(me.getX(), me.getY());
 		
 		if(detectedWall!=null){
-			//delete furniture with right clic
-			if(me.getButton() == MouseEvent.BUTTON3) {
-				drawingBoardContent.getFurnitures().remove(furnitureDetect(me.getX(),
-						me.getY()));
-			}
-			//placement of furniture
-			else if(drawingBoardContent.getSelectedModelFurniture() != null) {
-				Furniture placedFurniture = drawingBoardContent.getSelectedModelFurniture().clone();
-				placedFurniture.setPosition(me.getPoint());
-				drawingBoardContent.addFurniture(placedFurniture);
-			}
-		}
-		
-	}
-
-	@Override
-	public void onMousePressed(MouseEvent me) {
-		drawingBoardContent.setSelectedFurniture(furnitureDetect(me.getX(),
-				me.getY()));
-		
-	}
-
-	@Override
-	public void onMouseDragged(MouseEvent me) {
-		if(drawingBoardContent.getSelectedFurniture() != null) {
-			drawingBoardContent.getSelectedFurniture().setPosition(me.getPoint());			
+			super.onMouseClicked(me);
 		}
 		
 	}
@@ -62,12 +37,6 @@ public class DoorTool extends FurniturePlacementTool {
 			
 			drawingBoardContent.getFurnitures().remove(drawingBoardContent.getSelectedFurniture());
 		}
-		
-	}
-
-	@Override
-	public void onMouseMoved(MouseEvent me) {
-		// TODO Auto-generated method stub
 		
 	}
 	
