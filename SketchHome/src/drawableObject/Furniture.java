@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
@@ -32,7 +34,8 @@ public class Furniture implements Cloneable, Serializable{
 	private boolean locked;
 	private boolean visible;
 	
-	private Image loadedImage;
+	private transient Image loadedImage;
+	
 	
 	private Color color;
 	
@@ -57,6 +60,7 @@ public class Furniture implements Cloneable, Serializable{
 		try {
 			loadedImage = ImageIO.read(new File(picture));
 		} catch (IOException e) {
+			//si l'image n'est pas trouvée, on génère une image noire
 			loadedImage = new BufferedImage(
 					dimension.width, dimension.height,
 					BufferedImage.TYPE_INT_ARGB);

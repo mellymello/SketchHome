@@ -59,6 +59,7 @@ import javax.swing.SwingConstants;
 
 import drawableObject.Furniture;
 import drawableObject.FurnitureLibrary;
+import features.RestoreContent;
 import features.SaveContent;
 import tools.ITools;
 import tools.TextTool;
@@ -102,6 +103,7 @@ public class MainFrame extends JFrame {
 	
 	private FileFilter extensionFilter;
 	private SaveContent saveContent;
+	private RestoreContent restoreContent;
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -123,7 +125,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				restoreContent.setDrawingBoardContent(pnlDrawingBoard.getDrawingBoardContent());
+//				restoreContent.setDrawingBoardContent(pnlDrawingBoard.getDrawingBoardContent());
 				JFileChooser fc = new JFileChooser();
 				
 		fc.addChoosableFileFilter(extensionFilter);
@@ -248,6 +250,7 @@ public class MainFrame extends JFrame {
 
 		extensionFilter=new FileNameExtensionFilter("Sketch Home File","skt");
 		saveContent= new SaveContent(pnlDrawingBoard.getDrawingBoardContent());
+		restoreContent = new RestoreContent(pnlDrawingBoard.getDrawingBoardContent());
 		
 		JPanel pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));

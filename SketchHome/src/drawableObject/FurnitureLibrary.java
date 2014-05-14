@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,7 +17,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class FurnitureLibrary {
+public class FurnitureLibrary implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6647904402578830435L;
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
 	private String name;

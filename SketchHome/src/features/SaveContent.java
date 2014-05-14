@@ -21,8 +21,8 @@ public class SaveContent
 	private ObjectOutputStream out;
 	
 	private DrawingBoardContent content;
-	LinkedList<Furniture> listFur = new LinkedList<Furniture>();
-	LinkedList<Wall> listWall = new LinkedList<Wall>();
+	LinkedList<Furniture> listFur;
+	LinkedList<Wall> listWall;
 	
 	
 	public SaveContent(DrawingBoardContent dbc)
