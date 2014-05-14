@@ -295,12 +295,7 @@ public class MainFrame extends JFrame {
 		JButton btnBedroom = new JButton("");
 		btnBedroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ bedRoomLibrary.getName());
-				bedRoomLibrary.loadLibraryContent();
-				showContentOfLibrary(bedRoomLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(bedRoomLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+				selectLibrary(bedRoomLibrary);
 			}
 		});
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambreB.png")));
@@ -322,13 +317,7 @@ public class MainFrame extends JFrame {
 		btnOffice.setMargin(new Insets(0, 0, 0, 0));
 		btnOffice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ officeLibrary.getName());
-				officeLibrary.loadLibraryContent();
-				showContentOfLibrary(officeLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(officeLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
-				
+				selectLibrary(officeLibrary);				
 			}
 		});
 		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/bureau.png")));
@@ -342,13 +331,7 @@ public class MainFrame extends JFrame {
 		JButton btnKitchen = new JButton("");
 		btnKitchen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ kitchenLibrary.getName());
-				kitchenLibrary.loadLibraryContent();
-				showContentOfLibrary(kitchenLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(kitchenLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
-				
+				selectLibrary(kitchenLibrary);				
 			}
 		});
 		btnKitchen.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisineB.png")));
@@ -368,13 +351,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ livingRoomLibrary.getName());
-				livingRoomLibrary.loadLibraryContent();
-				showContentOfLibrary(livingRoomLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(livingRoomLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
-				
+				selectLibrary(livingRoomLibrary);
 			}
 		});
 		btnLivingroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salonB.png")));
@@ -394,14 +371,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : " + bathroomLibrary.getName());
-				bathroomLibrary.loadLibraryContent();
-				showContentOfLibrary(bathroomLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(bathroomLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
-				
-				
+				selectLibrary(bathroomLibrary);				
 			}
 		});
 		btnBathroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bainB.png")));
@@ -421,14 +391,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ diningRoomLibrary.getName());
-				diningRoomLibrary.loadLibraryContent();
-				showContentOfLibrary(diningRoomLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(diningRoomLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
-				
-				
+				selectLibrary(diningRoomLibrary);			
 			}
 		});
 		btnDiningRoom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_mangerB.png")));
@@ -505,12 +468,7 @@ public class MainFrame extends JFrame {
 		JButton btnWindow = new JButton("");
 		btnWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ windowLibrary.getName());
-				windowLibrary.loadLibraryContent();
-				showContentOfLibrary(windowLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(windowLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
+				selectLibrary(windowLibrary);
 			}
 		});
 		btnWindow.setToolTipText("Windows");
@@ -742,7 +700,21 @@ public class MainFrame extends JFrame {
 		
 		pack();
 	}
-
+	
+	/**
+	 * Sélection d'une librairie de meuble
+	 * @param furnitureLibrary : librairie de meuble à afficher
+	 */
+	public void selectLibrary(FurnitureLibrary furnitureLibrary) {
+		lblSelectedobjectlibrary.setText("Selected Object Library : "+ furnitureLibrary.getName());
+		furnitureLibrary.loadLibraryContent();
+		showContentOfLibrary(furnitureLibrary);
+		
+		pnlDrawingBoard.setSelectedFurnitureLibrary(furnitureLibrary);
+		pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
+		pnlDrawingBoard.setSelectedModelFurniture(null);
+	}
+	
 	/**
 	 * Remplissage de l'interface graphique avec le contenu d'une librairie de meuble pour permettre sa visualisation.
 	 * @param furnitureLibrary : librairie de meuble à afficher
@@ -754,8 +726,8 @@ public class MainFrame extends JFrame {
 			pnlFurnitureLibrary.add(new FurnitureMiniature(f));
 		}
 		
-		//on doit faire un "validate()" à cause du "removeAll()"
 		pnlFurnitureLibrary.validate();
+		pnlFurnitureLibrary.repaint();
 	}
 	
 	/**
