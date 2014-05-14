@@ -1,10 +1,13 @@
 package drawableObject;
 
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.util.LinkedList;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -16,12 +19,14 @@ import org.w3c.dom.NodeList;
 public class FurnitureLibrary {
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
-	private String name; 
+	private String name;
+
+	private DefaultMutableTreeNode jTreeNode;
 	
-	public FurnitureLibrary(String xmlFilePath, String name) {
+	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
 		this.xmlFilePath = xmlFilePath;
-		loadLibraryContent();
 		this.name = name;
+		this.jTreeNode = jTreeNode;
 	}
 	
 	//TODO : source : http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
@@ -43,9 +48,9 @@ public class FurnitureLibrary {
 			 
 				NodeList nList = doc.getElementsByTagName("furniture");
 			 
-				for (int temp = 0; temp < nList.getLength(); temp++) {
+				for (int i = 0; i < nList.getLength(); i++) {
 			 
-					Node nNode = nList.item(temp);
+					Node nNode = nList.item(i);
 			 
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 			 
@@ -58,7 +63,9 @@ public class FurnitureLibrary {
 								new Point(0, 0),
 								Double.valueOf(eElement.getElementsByTagName("orientation").item(0).getTextContent()),
 								false,
-								true));
+								true,
+								this,
+								new Color(Float.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent()))));
 						
 					}
 				}
@@ -69,6 +76,9 @@ public class FurnitureLibrary {
 
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
+	}
+	public DefaultMutableTreeNode getJTreeNode() {
+		return jTreeNode;
 	}
 	public String getName () {
 		return name;

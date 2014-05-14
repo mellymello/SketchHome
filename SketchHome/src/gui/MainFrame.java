@@ -11,11 +11,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.List;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -37,6 +40,7 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
@@ -52,9 +56,11 @@ import drawableObject.FurnitureLibrary;
 import tools.ITools;
 import tools.TextTool;
 
+import javax.swing.JSplitPane;
+
 public class MainFrame extends JFrame {
 	
-	private static final int WINDOW_HEIGTH = 600;
+	private static final int WINDOW_HEIGHT = 600;
 	private static final int WINDOW_WIDTH = 800;
 	private static final int CTRL_POINT_DIAMETER = 10;
 	private static final int WALL_THICKNESS = 5;
@@ -68,15 +74,22 @@ public class MainFrame extends JFrame {
 	private JPanel pnlFurnitureLibrary;
 	
 	private DrawingBoard pnlDrawingBoard;
-	
-	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom");
-	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room");
-	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen");
-	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room");
-	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom");
-	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
-	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window");
-	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door");
+
+	private DefaultMutableTreeNode bedRoomJtreeNode = new DefaultMutableTreeNode("Bedroom");
+	private DefaultMutableTreeNode livingRoomJtreeNode = new DefaultMutableTreeNode("Living room");
+	private DefaultMutableTreeNode kitchenJtreeNode = new DefaultMutableTreeNode("Kitchen");
+	private DefaultMutableTreeNode diningRoomJtreeNode = new DefaultMutableTreeNode("Living room");
+	private DefaultMutableTreeNode bathroomLibraryJtreeNode = new DefaultMutableTreeNode("Bathroom");
+	private DefaultMutableTreeNode officeJtreeNode = new DefaultMutableTreeNode("Office");
+	private DefaultMutableTreeNode windowJtreeNode = new DefaultMutableTreeNode("Window");
+
+	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom", bedRoomJtreeNode);
+	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room", livingRoomJtreeNode);
+	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen", kitchenJtreeNode);
+	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room", diningRoomJtreeNode);
+	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom", bathroomLibraryJtreeNode);
+	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office", officeJtreeNode);
+	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
 	
 	public MainFrame() {
 		setTitle("SketchHome");
@@ -149,7 +162,7 @@ public class MainFrame extends JFrame {
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGTH, CTRL_POINT_DIAMETER,WALL_THICKNESS);
+		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGHT, CTRL_POINT_DIAMETER,WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 				
@@ -381,7 +394,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ bathroomLibrary.getName());
+				lblSelectedobjectlibrary.setText("Selected Object Library : " + bathroomLibrary.getName());
 				bathroomLibrary.loadLibraryContent();
 				showContentOfLibrary(bathroomLibrary);
 				
@@ -497,7 +510,6 @@ public class MainFrame extends JFrame {
 				showContentOfLibrary(windowLibrary);
 				
 				pnlDrawingBoard.setSelectedFurnitureLibrary(windowLibrary);
-				
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getWindowTool());
 			}
 		});
@@ -619,7 +631,12 @@ public class MainFrame extends JFrame {
 		gbc_separator_1.gridy = 1;
 		pnlObjectTree.add(separator_1, gbc_separator_1);
 		
-		JTree treeUsedObject = new JTree();
+		
+		DefaultMutableTreeNode rootJtreeNode = new DefaultMutableTreeNode("Placed furnitures");
+		rootJtreeNode.add(bedRoomJtreeNode);
+		rootJtreeNode.add(livingRoomJtreeNode);
+		
+		JTree treeUsedObject = new JTree(rootJtreeNode); //TODO : observeur de drawingBoardContent ?
 		GridBagConstraints gbc_treeUsedObject = new GridBagConstraints();
 		gbc_treeUsedObject.fill = GridBagConstraints.BOTH;
 		gbc_treeUsedObject.gridx = 0;
@@ -733,30 +750,64 @@ public class MainFrame extends JFrame {
 		
 		pack();
 	}
-	
+
+	/**
+	 * Remplissage de l'interface graphique avec le contenu d'une librairie de meuble pour permettre sa visualisation.
+	 * @param furnitureLibrary : librairie de meuble à afficher
+	 */
 	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
 		pnlFurnitureLibrary.removeAll();
 		
-		FurnitureMiniature miniature;
 		for (Furniture f : furnitureLibrary.getFurnitures()) {
-			miniature = new FurnitureMiniature(f);
-			miniature.setText(f.getName());
-
-			pnlFurnitureLibrary.add(miniature);
+			pnlFurnitureLibrary.add(new FurnitureMiniature(f));
 		}
 		
-		//because we have performed a "removeAll()" we must use revalidate
+		//on doit faire un "validate()" à cause du "removeAll()"
 		pnlFurnitureLibrary.validate();
 	}
 	
-	//TODO : test, à compléter
-	class FurnitureMiniature extends JLabel implements MouseListener {
+	/**
+	 * Classe servant à représenter graphiquement le contenu d'une librairie.
+	 * Contient une miniature de l'image d'un meuble et son nom.
+	 * Permet la sélection du meuble représenté pour l'utiliser dans le plan. 
+	 * @author Jollien Dominique
+	 */
+	class FurnitureMiniature extends JPanel implements MouseListener {
 		private Furniture furniture;
+		private JLabel lblName;
+		private JComponent miniature;
+		private Dimension miniatureDimension;
 		public FurnitureMiniature(Furniture furniture) {
-			super("");
-			this.furniture = furniture;
+			this.furniture = furniture;	
+			
 			addMouseListener(this);
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			
+			lblName = new JLabel(furniture.getName());
+			add(lblName);
+			
+			//gestion de l'image miniaturisée
+			int reducedWidth = furniture.getDimension().width/3;
+			int reducedHeight = furniture.getDimension().height/3;
+			miniatureDimension = new Dimension(reducedWidth < 60 ? 60 : reducedWidth, reducedHeight < 100 ? 100 : reducedHeight);
+			
+			miniature = new JComponent() {
+				public void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					g.drawImage(FurnitureMiniature.this.furniture.getLoadedPicture(), 0, 0, miniatureDimension.width, miniatureDimension.height, FurnitureMiniature.this.furniture.getColor(), null);
+				}
+			};
+			miniature.setPreferredSize(miniatureDimension);
+			add(miniature);
 		}
+		
+		public Dimension getPrefferedSize() {
+			return new Dimension(300, 300);
+		}
+		
+		/**
+		 * Sur le clic de souris, on sélectionne le meuble pour pouvoir le placer dans le plan.
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			pnlDrawingBoard.setSelectedModelFurniture(furniture);
@@ -770,4 +821,5 @@ public class MainFrame extends JFrame {
 		@Override
 		public void mouseExited(MouseEvent e) {}
 	}
+		
 }

@@ -11,23 +11,30 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.Position;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 public class Furniture implements Cloneable {
 	private String name;
 	private String description;
 	private Dimension dimension;
 	private String picture;
-	//rotation degree
+	//degré de rotation
 	private double orientation;
-	//the upper-left corner position
+	//position du coin supérieur-gauche
 	private Point position;
 	private boolean locked;
 	private boolean visible;
 	
 	private Image loadedImage;
 	
+	private Color color;
 	
-	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible) {
+	private FurnitureLibrary library;
+	private DefaultMutableTreeNode jTreeNode;
+	
+	
+	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color) {
 		this.name = name;
 		this.description = description;
 		this.dimension = dimension;
@@ -36,6 +43,10 @@ public class Furniture implements Cloneable {
 		this.position = position;
 		this.locked = locked;
 		this.visible = visible;
+		this.library = library;
+		this.color = color;
+		
+		this.jTreeNode = new DefaultMutableTreeNode(name);
 		
 		try {
 			loadedImage = ImageIO.read(new File(picture));
@@ -50,8 +61,8 @@ public class Furniture implements Cloneable {
 		}
 	}
 
-	public Furniture(String name, String description, String picture, Dimension dimension, Point position) {
-		this(name, description, picture, dimension, position, 0, false, true);
+	public Furniture(String name, String description, String picture, Dimension dimension, Point position, FurnitureLibrary library, Color color) {
+		this(name, description, picture, dimension, position, 0, false, true, library, color);
 	}
 	
 	public Furniture clone() { 
@@ -133,5 +144,17 @@ public class Furniture implements Cloneable {
 	
 	public boolean contains(int x, int y) {
 		return x >= position.x && x <= position.x + dimension.width && y >= position.y && y <= position.y + dimension.height;
+	}
+
+	public FurnitureLibrary getLibrary() {
+		return library;
+	}
+
+	public DefaultMutableTreeNode getJtreeNode() {
+		return jTreeNode;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 }
