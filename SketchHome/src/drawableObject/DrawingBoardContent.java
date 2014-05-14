@@ -94,4 +94,14 @@ public class DrawingBoardContent {
 	public void setSelectedModelFurniture(Furniture selectedModelFurniture) {
 		this.selectedModelFurniture = selectedModelFurniture;
 	}
+	
+	public void clearContent(){
+		walls.clear();
+		tmpWall=null;
+		selectedCtrlPoint=null;
+		selectedWall=null;
+		placedFurnitures.clear();
+		selectedModelFurniture=null;
+		selectedFurniture=null;
+	}
 }
