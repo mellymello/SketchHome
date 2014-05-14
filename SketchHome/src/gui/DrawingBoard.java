@@ -13,6 +13,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DecimalFormat;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -20,7 +22,6 @@ import drawableObject.DrawingBoardContent;
 import drawableObject.Furniture;
 import drawableObject.FurnitureLibrary;
 import drawableObject.Wall;
-import tools.DoorTool;
 import tools.FurniturePlacementTool;
 import tools.ITools;
 import tools.PolygonalWallTool;
@@ -44,14 +45,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
 	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
 	private WindowTool windowTool = WindowTool.getInstance();
-
-	
-	private DoorTool doorTool = DoorTool.getInstance();
-
 	//outil actuellement utilisé
 	//TODO : initialiser à une valeur sinon crée nullPointerException
 	private ITools selectedTool;
-
 
 	//librairie de meuble actuellement sélectionnée
 	private FurnitureLibrary selectedFurnitureLibrary;
@@ -187,11 +183,11 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		//afficher les cotations
 		if (showMeasurements) {
-			String wallLength = String.valueOf(w.getWallLength());
-			if (wallLength.length() > wallLength.indexOf(".") + 3) {
+			DecimalFormat df = new DecimalFormat("#.00");
+			String wallLength = df.format(w.getWallLength());
+			if (w.getWallLength() > 0) {
 				g2.setColor(Color.blue);
-				g2.drawString(wallLength.substring(0,
-						(wallLength.indexOf(".") + 3)), (int) (((w
+				g2.drawString(wallLength, (int) (((w
 						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
 						.getX()) / 2))
 						- drawingBoardContent.getWallThickness() * 3,
@@ -265,10 +261,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	
 	public WindowTool getWindowTool(){
 		return windowTool;
-	}
-	
-	public DoorTool getDoorTool(){
-		return doorTool;
 	}
 
 	public FurniturePlacementTool getFurniturePlacementTool() {
