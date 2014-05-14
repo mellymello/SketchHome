@@ -13,6 +13,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DecimalFormat;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -181,11 +183,11 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		//afficher les cotations
 		if (showMeasurements) {
-			String wallLength = String.valueOf(w.getWallLength());
-			if (wallLength.length() > wallLength.indexOf(".") + 3) {
+			DecimalFormat df = new DecimalFormat("#.00");
+			String wallLength = df.format(w.getWallLength());
+			if (w.getWallLength() > 0) {
 				g2.setColor(Color.blue);
-				g2.drawString(wallLength.substring(0,
-						(wallLength.indexOf(".") + 3)), (int) (((w
+				g2.drawString(wallLength, (int) (((w
 						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
 						.getX()) / 2))
 						- drawingBoardContent.getWallThickness() * 3,
