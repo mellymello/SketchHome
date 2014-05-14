@@ -18,8 +18,12 @@ public class FurniturePlacementTool extends PlacementTool {
 	public void onMouseClicked(MouseEvent me) {
 		//delete furniture with right clic
 		if(me.getButton() == MouseEvent.BUTTON3) {
-			drawingBoardContent.getFurnitures().remove(furnitureDetect(me.getX(),
-					me.getY()));
+			Furniture f = furnitureDetect(me.getX(),me.getY());
+			if(f != null) {
+				drawingBoardContent.deleteFurniture(f);
+			}
+//			drawingBoardContent.getFurnitures().remove(furnitureDetect(me.getX(),
+//					me.getY()));
 		}
 		//placement of furniture
 		else if(drawingBoardContent.getSelectedModelFurniture() != null) {

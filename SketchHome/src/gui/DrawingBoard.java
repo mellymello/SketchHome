@@ -14,6 +14,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -27,7 +28,7 @@ import tools.FurniturePlacementTool;
 import tools.ITools;
 import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
-import tools.WindowTool;
+import tools.OnWallPlacementTool;
 
 /**
  * JPanel représentant le plan dessiné dans SketchHome.
@@ -45,8 +46,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
 	private PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
 	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
-	private WindowTool windowTool = WindowTool.getInstance();
-	private DoorTool doorTool = DoorTool.getInstance();
+	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool.getInstance();
 	//outil actuellement utilisé
 	//TODO : initialiser à une valeur sinon crée nullPointerException
 	private ITools selectedTool;
@@ -72,15 +72,15 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
 		furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
-		windowTool.setDrawingBoardContent(drawingBoardContent);
+		onWallPlacementTool.setDrawingBoardContent(drawingBoardContent);
+		onWallPlacementTool.setWallTool(simpleWallTool);
 	}
-
-//	public void addFurniture(Furniture f) {
-//		drawingBoardContent.addFurniture(f);
-//		//TODO : ne fonctionne pas, utiliser DynamicTree.java
-//		f.getLibrary().getJTreeNode().add(f.getJtreeNode());
-//		repaint();
-//	}
+	
+	public void addContentObserver(DrawingBoardContentObserver obs) {
+		drawingBoardContent.addAdditionObserver(obs.getAdditionObserver());
+		drawingBoardContent.addDeletionObserver(obs.getDeletionObserver());
+		drawingBoardContent.addModificationObserver(obs.getModificationObserver());
+	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -261,8 +261,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		return polygonalWallTool;
 	}
 	
-	public WindowTool getWindowTool(){
-		return windowTool;
+	public OnWallPlacementTool getonWallPlacementTool(){
+		return onWallPlacementTool;
 	}
 
 	public FurniturePlacementTool getFurniturePlacementTool() {
@@ -311,9 +311,5 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-	}
-
-	public DoorTool getDoorTool() {
-		return doorTool;
 	}
 }

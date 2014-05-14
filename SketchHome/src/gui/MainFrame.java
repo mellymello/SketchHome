@@ -48,6 +48,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.SwingConstants;
 
@@ -57,6 +58,9 @@ import tools.ITools;
 import tools.TextTool;
 
 import javax.swing.JSplitPane;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 public class MainFrame extends JFrame {
 	
@@ -74,26 +78,49 @@ public class MainFrame extends JFrame {
 	private JPanel pnlFurnitureLibrary;
 	
 	private DrawingBoard pnlDrawingBoard;
+	
+	private DynamicTree treePanel;
+	
+//	private DefaultMutableTreeNode bedRoomJtreeNode;
+//	private DefaultMutableTreeNode livingRoomJtreeNode;
+//	private DefaultMutableTreeNode kitchenJtreeNode;
+//	private DefaultMutableTreeNode diningRoomJtreeNode;
+//	private DefaultMutableTreeNode bathroomLibraryJtreeNode;
+//	private DefaultMutableTreeNode officeJtreeNode;
+//	private DefaultMutableTreeNode windowJtreeNode;
+//	private DefaultMutableTreeNode doorJtreeNode;
 
-	private DefaultMutableTreeNode bedRoomJtreeNode = new DefaultMutableTreeNode("Bedroom");
-	private DefaultMutableTreeNode livingRoomJtreeNode = new DefaultMutableTreeNode("Living room");
-	private DefaultMutableTreeNode kitchenJtreeNode = new DefaultMutableTreeNode("Kitchen");
-	private DefaultMutableTreeNode diningRoomJtreeNode = new DefaultMutableTreeNode("Living room");
-	private DefaultMutableTreeNode bathroomLibraryJtreeNode = new DefaultMutableTreeNode("Bathroom");
-	private DefaultMutableTreeNode officeJtreeNode = new DefaultMutableTreeNode("Office");
-	private DefaultMutableTreeNode windowJtreeNode = new DefaultMutableTreeNode("Window");
-	private DefaultMutableTreeNode doorJtreeNode = new DefaultMutableTreeNode("Door");
-
-	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom", bedRoomJtreeNode);
-	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room", livingRoomJtreeNode);
-	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen", kitchenJtreeNode);
-	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room", diningRoomJtreeNode);
-	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom", bathroomLibraryJtreeNode);
-	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office", officeJtreeNode);
-	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
-	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door", doorJtreeNode);
+//	private FurnitureLibrary bedRoomLibrary;
+//	private FurnitureLibrary livingRoomLibrary;
+//	private FurnitureLibrary kitchenLibrary;
+//	private FurnitureLibrary diningRoomLibrary;
+//	private FurnitureLibrary bathroomLibrary;
+//	private FurnitureLibrary officeLibrary;
+//	private FurnitureLibrary windowLibrary;
+//	private FurnitureLibrary doorLibrary;
+	
+	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom");
+	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room");
+	private FurnitureLibrary kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen");
+	private FurnitureLibrary diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room");
+	private FurnitureLibrary bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom");
+	private FurnitureLibrary officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
+	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window");
+	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door");
+	
+	private FurnitureLibrary[] furnitureLibraries = {bedRoomLibrary, livingRoomLibrary, kitchenLibrary, diningRoomLibrary, bathroomLibrary, officeLibrary, windowLibrary, doorLibrary};  
 	
 	public MainFrame() {
+		
+//		bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml", "Bedroom");
+//		livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml", "Living room");
+//		kitchenLibrary = new FurnitureLibrary("library/kitchen.xml"," Kitchen");
+//		diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml", "Dining room");
+//		bathroomLibrary = new FurnitureLibrary("library/bathroom.xml", "Bathroom");
+//		officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
+//		windowLibrary = new FurnitureLibrary("library/window.xml","Window");
+//		doorLibrary = new FurnitureLibrary("library/door.xml","Door");
+		
 		setTitle("SketchHome");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 546);
@@ -298,6 +325,7 @@ public class MainFrame extends JFrame {
 		btnBedroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(bedRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/chambreB.png")));
@@ -319,7 +347,8 @@ public class MainFrame extends JFrame {
 		btnOffice.setMargin(new Insets(0, 0, 0, 0));
 		btnOffice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectLibrary(officeLibrary);				
+				selectLibrary(officeLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnOffice.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/bureau.png")));
@@ -333,7 +362,8 @@ public class MainFrame extends JFrame {
 		JButton btnKitchen = new JButton("");
 		btnKitchen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectLibrary(kitchenLibrary);				
+				selectLibrary(kitchenLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnKitchen.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cuisineB.png")));
@@ -354,6 +384,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(livingRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnLivingroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salonB.png")));
@@ -373,7 +404,8 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectLibrary(bathroomLibrary);				
+				selectLibrary(bathroomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnBathroom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_de_bainB.png")));
@@ -394,6 +426,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(diningRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 			}
 		});
 		btnDiningRoom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_mangerB.png")));
@@ -457,7 +490,6 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getPolygonalWallTool());
-				
 			}
 		});
 		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
@@ -471,6 +503,7 @@ public class MainFrame extends JFrame {
 		btnWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(windowLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getonWallPlacementTool());
 			}
 		});
 		btnWindow.setToolTipText("Windows");
@@ -492,6 +525,7 @@ public class MainFrame extends JFrame {
 		btnDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(doorLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getonWallPlacementTool());
 			}
 		});
 		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porteB.png")));
@@ -557,44 +591,23 @@ public class MainFrame extends JFrame {
 		
 		JPanel pnlObjectTree = new JPanel();
 		pnlTools.add(pnlObjectTree);
-		GridBagLayout gbl_pnlObjectTree = new GridBagLayout();
-		gbl_pnlObjectTree.columnWidths = new int[]{633, 0};
-		gbl_pnlObjectTree.rowHeights = new int[]{14, 0, 107, 0};
-		gbl_pnlObjectTree.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_pnlObjectTree.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		pnlObjectTree.setLayout(gbl_pnlObjectTree);
+		pnlObjectTree.setLayout(new BoxLayout(pnlObjectTree, BoxLayout.Y_AXIS));
 		
 		JLabel lblObjecttree = new JLabel("Used objects");
 		lblObjecttree.setFont(new Font("Tahoma", Font.BOLD, 11));
-		GridBagConstraints gbc_lblObjecttree = new GridBagConstraints();
-		gbc_lblObjecttree.anchor = GridBagConstraints.NORTH;
-		gbc_lblObjecttree.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblObjecttree.insets = new Insets(0, 0, 5, 0);
-		gbc_lblObjecttree.gridx = 0;
-		gbc_lblObjecttree.gridy = 0;
-		pnlObjectTree.add(lblObjecttree, gbc_lblObjecttree);
+		pnlObjectTree.add(lblObjecttree);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(Color.BLACK);
 		separator_1.setForeground(Color.BLACK);
-		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
-		gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
-		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 1;
-		pnlObjectTree.add(separator_1, gbc_separator_1);
+		pnlObjectTree.add(separator_1);
 		
-		
-		DefaultMutableTreeNode rootJtreeNode = new DefaultMutableTreeNode("Placed furnitures");
-		rootJtreeNode.add(bedRoomJtreeNode);
-		rootJtreeNode.add(livingRoomJtreeNode);
-		
-		JTree treeUsedObject = new JTree(rootJtreeNode); //TODO : observeur de drawingBoardContent ?
-		GridBagConstraints gbc_treeUsedObject = new GridBagConstraints();
-		gbc_treeUsedObject.fill = GridBagConstraints.BOTH;
-		gbc_treeUsedObject.gridx = 0;
-		gbc_treeUsedObject.gridy = 2;
-		pnlObjectTree.add(treeUsedObject, gbc_treeUsedObject);
+		treePanel = new DynamicTree();
+		pnlObjectTree.add(treePanel);
+		for (FurnitureLibrary furnitureLibrary : furnitureLibraries) {
+			furnitureLibrary.setJtreeNode(treePanel.addObject(null, furnitureLibrary.getName()));
+		}
+		pnlDrawingBoard.addContentObserver(treePanel);
 		
 		JPanel pnlDescription = new JPanel();
 		pnlTools.add(pnlDescription);
@@ -714,7 +727,6 @@ public class MainFrame extends JFrame {
 		showContentOfLibrary(furnitureLibrary);
 		
 		pnlDrawingBoard.setSelectedFurnitureLibrary(furnitureLibrary);
-		pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getFurniturePlacementTool());
 		pnlDrawingBoard.setSelectedModelFurniture(null);
 	}
 	

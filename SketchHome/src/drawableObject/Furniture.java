@@ -15,6 +15,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
 public class Furniture implements Cloneable {
+	private static int count = 0;
+	
+	private int id;
 	private String name;
 	private String description;
 	private Dimension dimension;
@@ -35,6 +38,7 @@ public class Furniture implements Cloneable {
 	
 	
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color) {
+		this.id = count++;
 		this.name = name;
 		this.description = description;
 		this.dimension = dimension;
@@ -45,8 +49,6 @@ public class Furniture implements Cloneable {
 		this.visible = visible;
 		this.library = library;
 		this.color = color;
-		
-		this.jTreeNode = new DefaultMutableTreeNode(name);
 		
 		try {
 			loadedImage = ImageIO.read(new File(picture));
@@ -152,6 +154,10 @@ public class Furniture implements Cloneable {
 
 	public DefaultMutableTreeNode getJtreeNode() {
 		return jTreeNode;
+	}
+	
+	public void setJTreeNode(DefaultMutableTreeNode jTreeNode) {
+		this.jTreeNode = jTreeNode;
 	}
 
 	public Color getColor() {

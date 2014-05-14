@@ -23,13 +23,18 @@ public class FurnitureLibrary {
 
 	private DefaultMutableTreeNode jTreeNode;
 	
-	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
+	public FurnitureLibrary(String xmlFilePath, String name) {
 		this.xmlFilePath = xmlFilePath;
 		this.name = name;
-		this.jTreeNode = jTreeNode;
+		//this.jTreeNode = new DefaultMutableTreeNode(name);
 	}
 	
-	//TODO : source : http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+//	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
+//		this.xmlFilePath = xmlFilePath;
+//		this.name = name;
+//		this.jTreeNode = jTreeNode;
+//	}
+	
 	/**
 	 * Change the currently used furniture library. Loads a xml File.
 	 * @param libraryFilePath
@@ -82,5 +87,8 @@ public class FurnitureLibrary {
 	}
 	public String getName () {
 		return name;
+	}
+	public void setJtreeNode(DefaultMutableTreeNode jTreeNode) {
+		this.jTreeNode = jTreeNode;		
 	}
 }
