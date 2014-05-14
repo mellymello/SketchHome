@@ -41,6 +41,8 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
@@ -50,12 +52,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Savepoint;
 
 import javax.swing.SwingConstants;
 
 import drawableObject.Furniture;
 import drawableObject.FurnitureLibrary;
+import features.SaveContent;
 import tools.ITools;
 import tools.TextTool;
 
@@ -96,6 +100,7 @@ public class MainFrame extends JFrame {
 	private FurnitureLibrary windowLibrary = new FurnitureLibrary("library/window.xml","Window", windowJtreeNode);
 	private FurnitureLibrary doorLibrary = new FurnitureLibrary("library/door.xml","Door", doorJtreeNode);
 	
+	private FileFilter extensionFilter;
 	private SaveContent saveContent;
 	
 	public MainFrame() {
@@ -114,9 +119,56 @@ public class MainFrame extends JFrame {
 		mnFile.add(mntmNew);
 		
 		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				restoreContent.setDrawingBoardContent(pnlDrawingBoard.getDrawingBoardContent());
+				JFileChooser fc = new JFileChooser();
+				
+		fc.addChoosableFileFilter(extensionFilter);
+		fc.setFileFilter(extensionFilter);
+				fc.addChoosableFileFilter(extensionFilter);
+				
+				int action = fc.showOpenDialog(null);
+				fc.setMultiSelectionEnabled(false);
+				if (action == JFileChooser.APPROVE_OPTION) {
+					File f =fc.getSelectedFile();
+					restoreContent.restore(f);	
+				}
+				
+				
+			}
+		});
+				
+				
 		mnFile.add(mntmOpen);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveContent.setDrawingBoardContent(pnlDrawingBoard.getDrawingBoardContent());
+				
+				try {
+					saveContent.save();
+				} catch (FileNotFoundException e1) {
+					JFileChooser fs = new JFileChooser();
+					
+					fs.addChoosableFileFilter(extensionFilter);
+					fs.setFileFilter(extensionFilter);
+					int action = fs.showSaveDialog(null);
+					fs.setMultiSelectionEnabled(false);
+					if (action == JFileChooser.APPROVE_OPTION) {
+						File f =fs.getSelectedFile();
+						saveContent.saveAs(f);
+					
+					}
+				}
+				
+			}
+		});
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmSaveAs = new JMenuItem("Save as");
@@ -124,13 +176,16 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				saveContent.setDrawingBoardContent(pnlDrawingBoard.getDrawingBoardContent());
 				JFileChooser fs = new JFileChooser();
 				
+				fs.addChoosableFileFilter(extensionFilter);
+				fs.setFileFilter(extensionFilter);
 				int action = fs.showSaveDialog(null);
 				fs.setMultiSelectionEnabled(false);
 				if (action == JFileChooser.APPROVE_OPTION) {
 					File f =fs.getSelectedFile();
-					saveContent.
+					saveContent.saveAs(f);
 					
 					
 				}
@@ -191,6 +246,7 @@ public class MainFrame extends JFrame {
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 
+		extensionFilter=new FileNameExtensionFilter("Sketch Home File","skt");
 		saveContent= new SaveContent(pnlDrawingBoard.getDrawingBoardContent());
 		
 		JPanel pnlTools = new JPanel();
