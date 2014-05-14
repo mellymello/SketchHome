@@ -393,7 +393,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectLibrary(diningRoomLibrary);			
+				selectLibrary(diningRoomLibrary);
 			}
 		});
 		btnDiningRoom.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/salle_a_mangerB.png")));
@@ -491,14 +491,7 @@ public class MainFrame extends JFrame {
 		btnDoor.setMargin(new Insets(0, 0, 0, 0));
 		btnDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblSelectedobjectlibrary.setText("Selected Object Library : "+ doorLibrary.getName());
-				doorLibrary.loadLibraryContent();
-				showContentOfLibrary(doorLibrary);
-				
-				pnlDrawingBoard.setSelectedFurnitureLibrary(doorLibrary);
-				
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard.getDoorTool());
-			
+				selectLibrary(doorLibrary);
 			}
 		});
 		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/porteB.png")));
