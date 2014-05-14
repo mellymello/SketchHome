@@ -79,7 +79,7 @@ public class SaveContent
 		this.file = file;
 		try {
 			fos = new FileOutputStream(file);
-			ObjectOutputStream out = new ObjectOutputStream(fos);
+			out = new ObjectOutputStream(fos);
 			
 		}catch(FileNotFoundException fNFE)
 		{
