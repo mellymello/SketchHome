@@ -23,7 +23,7 @@ public class ExportContent
 		Graphics2D g2 = img.createGraphics();
 		content.paint(g2);
 		try{
-			ImageIO.write(img, "png", new File("test export.png"));
+			ImageIO.write(img, "png", selectedFile);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
