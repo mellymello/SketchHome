@@ -59,6 +59,7 @@ import javax.swing.SwingConstants;
 
 import drawableObject.Furniture;
 import drawableObject.FurnitureLibrary;
+import features.ExportContent;
 import features.RestoreContent;
 import features.SaveContent;
 import tools.ITools;
@@ -127,9 +128,11 @@ public class MainFrame extends JFrame {
 			livingRoomLibrary, kitchenLibrary, diningRoomLibrary,
 			bathroomLibrary, officeLibrary, windowLibrary, doorLibrary };
 
-	private FileNameExtensionFilter extensionFilter;
+	private FileNameExtensionFilter extensionFilterSkt;
+	private FileNameExtensionFilter extensionFilterPng;
 	private SaveContent saveContent;
 	private RestoreContent restoreContent;
+	private ExportContent exportContent;
 
 	public MainFrame() {
 
@@ -168,8 +171,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 
-				fc.addChoosableFileFilter(extensionFilter);
-				fc.setFileFilter(extensionFilter);
+				fc.addChoosableFileFilter(extensionFilterSkt);
+				fc.setFileFilter(extensionFilterSkt);
 
 				int action = fc.showOpenDialog(null);
 				fc.setMultiSelectionEnabled(false);
@@ -195,21 +198,21 @@ public class MainFrame extends JFrame {
 				try {
 					saveContent.save();
 				} catch (FileNotFoundException e1) {
-					JFileChooser fs = new JFileChooser();
+					JFileChooser fc = new JFileChooser();
 
-					fs.addChoosableFileFilter(extensionFilter);
-					fs.setFileFilter(extensionFilter);
-					int action = fs.showSaveDialog(null);
-					fs.setMultiSelectionEnabled(false);
+					fc.addChoosableFileFilter(extensionFilterSkt);
+					fc.setFileFilter(extensionFilterSkt);
+					int action = fc.showSaveDialog(null);
+					fc.setMultiSelectionEnabled(false);
 					if (action == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fs.getSelectedFile();
+						File selectedFile = fc.getSelectedFile();
 						String filePath = selectedFile.getAbsolutePath();
 						//le fichier selectionné est bien un fichier .skt
-						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).compareTo(extensionFilter.getExtensions()[0])==0){
+						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).compareTo(extensionFilterSkt.getExtensions()[0])==0){
 							saveContent.saveAs(selectedFile);
 						}
 						else{
-						File f = new File(filePath.concat(".").concat(extensionFilter.getExtensions()[0]));
+						File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
 						saveContent.saveAs(f);
 
 						}
@@ -227,21 +230,21 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				saveContent.setDrawingBoardContent(pnlDrawingBoard
 						.getDrawingBoardContent());
-				JFileChooser fs = new JFileChooser();
+				JFileChooser fc = new JFileChooser();
 
-				fs.addChoosableFileFilter(extensionFilter);
-				fs.setFileFilter(extensionFilter);
-				int action = fs.showSaveDialog(null);
-				fs.setMultiSelectionEnabled(false);
+				fc.addChoosableFileFilter(extensionFilterSkt);
+				fc.setFileFilter(extensionFilterSkt);
+				int action = fc.showSaveDialog(null);
+				fc.setMultiSelectionEnabled(false);
 				if (action == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fs.getSelectedFile();
+					File selectedFile = fc.getSelectedFile();
 					String filePath = selectedFile.getAbsolutePath();
 					//le fichier selectionné est bien un fichier .skt
-					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).compareTo(extensionFilter.getExtensions()[0])==0){
+					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).compareTo(extensionFilterSkt.getExtensions()[0])==0){
 						saveContent.saveAs(selectedFile);
 					}
 					else{
-					File f = new File(filePath.concat(".").concat(extensionFilter.getExtensions()[0]));
+					File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
 					saveContent.saveAs(f);
 
 					}
@@ -253,7 +256,35 @@ public class MainFrame extends JFrame {
 		mnFile.add(mntmSaveAs);
 
 		JMenuItem mntmExport = new JMenuItem("Export");
+		mntmExport.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				JFileChooser fc = new JFileChooser();
+
+				fc.addChoosableFileFilter(extensionFilterPng);
+				fc.setFileFilter(extensionFilterPng);
+				int action = fc.showSaveDialog(null);
+				fc.setMultiSelectionEnabled(false);
+				if (action == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fc.getSelectedFile();
+					String filePath = selectedFile.getAbsolutePath();
+					//le fichier selectionné est bien un fichier .png
+					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).compareTo(extensionFilterPng.getExtensions()[0])==0){
+						exportContent.createPng(selectedFile);
+					}
+					else{
+					File f = new File(filePath.concat(".").concat(extensionFilterPng.getExtensions()[0]));
+					exportContent.createPng(f);
+
+					}
+				}
+				
+			}
+		});
 		mnFile.add(mntmExport);
+		
 
 		JMenuItem mntmPrint = new JMenuItem("Print");
 		mnFile.add(mntmPrint);
@@ -305,12 +336,14 @@ public class MainFrame extends JFrame {
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 
-		extensionFilter = new FileNameExtensionFilter("Sketch Home File", "skt");
+		extensionFilterSkt = new FileNameExtensionFilter("Sketch Home File", "skt");
+		extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");
 
 		saveContent = new SaveContent(pnlDrawingBoard.getDrawingBoardContent());
 		restoreContent = new RestoreContent(
 				pnlDrawingBoard.getDrawingBoardContent());
-
+		exportContent = new ExportContent(pnlDrawingBoard);
+				
 		JPanel pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
