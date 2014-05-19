@@ -29,10 +29,7 @@ public class PolygonalWallTool extends WallTool {
 								.getWallThickness()));
 					} else {
 						// on peut fixer le tmpWall et l'ajouter dans la liste
-						// des
-						// mur
-						drawingBoardContent.getTmpWall().setEndPoint(me.getX(),
-								me.getY());
+						// des murs
 
 						drawingBoardContent.getWalls().add(
 								drawingBoardContent.getTmpWall());
@@ -143,20 +140,66 @@ public class PolygonalWallTool extends WallTool {
 	@Override
 	public void onMouseDragged(MouseEvent me) {
 
+		Wall tmpSelected = drawingBoardContent.getSelectedWall();
+
 		// déplacer le point de contrôle
 		if (drawingBoardContent.getSelectedCtrlPoint() != null) {
-			drawingBoardContent.getSelectedCtrlPoint().setLocation(me.getX(),
-					me.getY());
+
+			if (tmpSelected != null) {
+
+				if (tmpSelected.getCtrlPointStart() == drawingBoardContent
+						.getSelectedCtrlPoint()) {
+					if (me.isShiftDown()) {
+						drawingBoardContent.getSelectedCtrlPoint()
+								.setLocation(me.getX(),
+										tmpSelected.getCtrlPointEnd().getY());
+					} else if (me.isAltDown()) {
+						drawingBoardContent.getSelectedCtrlPoint()
+								.setLocation(
+										tmpSelected.getCtrlPointEnd().getX(),
+										me.getY());
+					} else {
+
+						drawingBoardContent.getSelectedCtrlPoint().setLocation(
+								me.getX(), me.getY());
+					}
+					drawingBoardContent.getSelectedWall().setNewStartPoint(
+							drawingBoardContent.getSelectedCtrlPoint());
+
+				} else if (tmpSelected.getCtrlPointEnd() == drawingBoardContent
+						.getSelectedCtrlPoint()) {
+					if (me.isShiftDown()) {
+						drawingBoardContent.getSelectedCtrlPoint().setLocation(
+								me.getX(),
+								tmpSelected.getCtrlPointStart().getY());
+					} else if (me.isAltDown()) {
+						drawingBoardContent.getSelectedCtrlPoint().setLocation(
+								tmpSelected.getCtrlPointStart().getX(),
+								me.getY());
+					} else {
+
+						drawingBoardContent.getSelectedCtrlPoint().setLocation(
+								me.getX(), me.getY());
+					}
+					drawingBoardContent.getSelectedWall().setNewEndPoint(
+							drawingBoardContent.getSelectedCtrlPoint());
+
+				}
+
+			}
+
 			for (Wall w : drawingBoardContent.getWalls()) {
 				if (w.getCtrlPointStart() == drawingBoardContent
 						.getSelectedCtrlPoint()) {
 					w.setNewStartPoint(drawingBoardContent
 							.getSelectedCtrlPoint());
+
 				} else if (w.getCtrlPointEnd() == drawingBoardContent
 						.getSelectedCtrlPoint()) {
 					w.setNewEndPoint(drawingBoardContent.getSelectedCtrlPoint());
 				}
 			}
+
 		}
 
 	}
@@ -223,9 +266,19 @@ public class PolygonalWallTool extends WallTool {
 	@Override
 	public void onMouseMoved(MouseEvent me) {
 		if (drawingBoardContent.getTmpWall() != null) {
-
-			drawingBoardContent.getTmpWall().setEndPoint(me.getX(), me.getY());
-
+			if (me.isShiftDown()) {
+				drawingBoardContent.getTmpWall().setEndPoint(
+						me.getX(),
+						drawingBoardContent.getTmpWall().getCtrlPointStart()
+								.getY());
+			} else if (me.isAltDown()) {
+				drawingBoardContent.getTmpWall().setEndPoint(
+						drawingBoardContent.getTmpWall().getCtrlPointStart()
+								.getX(), me.getY());
+			} else {
+				drawingBoardContent.getTmpWall().setEndPoint(me.getX(),
+						me.getY());
+			}
 		}
 
 	}
