@@ -75,6 +75,7 @@ import javax.swing.JSplitPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
+import javax.swing.JScrollBar;
 
 public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 
@@ -789,14 +790,17 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_separator_2.gridx = 0;
 		gbc_separator_2.gridy = 1;
 		pnlObjects.add(separator_2, gbc_separator_2);
-
+		
 		pnlFurnitureLibrary = new JPanel();
+		GridLayout furnitureLibraryLayout = new GridLayout(0,3,0,0);
+		pnlFurnitureLibrary.setLayout(furnitureLibraryLayout);
+		
+		JScrollPane scrollPaneFurnitureLibrary = new JScrollPane(pnlFurnitureLibrary);
 		GridBagConstraints gbc_pnlObjectLibrary = new GridBagConstraints();
 		gbc_pnlObjectLibrary.fill = GridBagConstraints.BOTH;
 		gbc_pnlObjectLibrary.gridx = 0;
 		gbc_pnlObjectLibrary.gridy = 2;
-		pnlObjects.add(pnlFurnitureLibrary, gbc_pnlObjectLibrary);
-		pnlFurnitureLibrary.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlObjects.add(scrollPaneFurnitureLibrary, gbc_pnlObjectLibrary);
 
 		JPanel pnlObjectTree = new JPanel();
 		pnlTools.add(pnlObjectTree);
@@ -984,13 +988,17 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		btnModifyFurniture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Furniture f = pnlDrawingBoard.getDrawingBoardContent().getSelectedFurniture();
-				f.setName(txtName.getText());
-				f.setDescription(txtDescription.getText());
-				f.setDimension(new Dimension(Integer.valueOf(txtWidth.getText()), Integer.valueOf(txtHeight.getText())));
-				f.setOrientation(Double.valueOf(txtRotation.getText()));
-				f.setColor(lblColor.getBackground());
-				f.setLocked(checkBoxLocked.isSelected());
-				f.getJtreeNode().setUserObject(f.getName());
+				if(!f.getLocked() || !checkBoxLocked.isSelected()) {
+					f.setName(txtName.getText());
+					f.setDescription(txtDescription.getText());
+					f.setDimension(new Dimension(Integer.valueOf(txtWidth.getText()), Integer.valueOf(txtHeight.getText())));
+					f.setOrientation(Double.valueOf(txtRotation.getText()));
+					f.setColor(lblColor.getBackground());
+					f.setLocked(checkBoxLocked.isSelected());
+					f.getJtreeNode().setUserObject(f.getName());
+					
+					repaint();
+				}
 			}
 		});
 		GridBagConstraints gbc_btnModifyFurniture = new GridBagConstraints();
@@ -1030,7 +1038,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 	 *            : librairie de meuble à afficher
 	 */
 	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
-		pnlFurnitureLibrary.removeAll();
+		pnlFurnitureLibrary.removeAll();		
 
 		for (Furniture f : furnitureLibrary.getFurnitures()) {
 			pnlFurnitureLibrary.add(new FurnitureMiniature(f));
@@ -1063,10 +1071,9 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 			add(lblName);
 
 			// gestion de l'image miniaturisée
-			int reducedWidth = furniture.getDimension().width / 3;
-			int reducedHeight = furniture.getDimension().height / 3;
-			miniatureDimension = new Dimension(reducedWidth < 60 ? 60
-					: reducedWidth, reducedHeight < 100 ? 100 : reducedHeight);
+			int reducedWidth = furniture.getDimension().width > 80 ? 80 : furniture.getDimension().width;
+			int reducedHeight = furniture.getDimension().height > 80 ? 80 : furniture.getDimension().height;
+			miniatureDimension = new Dimension(reducedWidth, reducedHeight);
 
 			miniature = new JComponent() {
 				public void paintComponent(Graphics g) {

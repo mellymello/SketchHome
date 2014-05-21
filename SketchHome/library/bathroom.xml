@@ -179,4 +179,19 @@
 			<blue>255</blue>
 		</color>
 	</furniture>
+		<furniture>
+		<name>Cabinet3</name>
+		<description>A big cabinet</description>
+		<dimension>
+			<width>40</width>
+			<height>37</height>
+		</dimension>
+		<picture>library/bathroom/armoire_sdb_60_37.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
 </furnitureLibrary>
