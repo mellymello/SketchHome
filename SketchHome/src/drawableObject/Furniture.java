@@ -55,18 +55,11 @@ public class Furniture implements Cloneable, Serializable {
 		this.library = library;
 		this.color = color;
 		
-		try {
-			loadedImage = ImageIO.read(new File(picture));
-		} catch (IOException e) {
-			//si l'image n'est pas trouvée, on génère une image noire
-			loadedImage = new BufferedImage(
-					dimension.width, dimension.height,
-					BufferedImage.TYPE_INT_ARGB);
-			Graphics2D bGr = (Graphics2D) loadedImage.getGraphics();
-			bGr.setColor(Color.BLACK);
-			bGr.fillRect(0, 0, dimension.width, dimension.height);
-			bGr.dispose();
-		}
+
+		this.jTreeNode = new DefaultMutableTreeNode(name);
+		
+		loadImage();
+
 	}
 
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position, FurnitureLibrary library, Color color) {
@@ -147,6 +140,11 @@ public class Furniture implements Cloneable, Serializable {
 	}
 
 	public Image getLoadedPicture() {
+		//car si on fait "open" dans le fichier de sauvegarde il y a  pas les
+		//images et donc nous devons la charger depuis la "base de donnée"
+		if(loadedImage==null){
+			loadImage();
+		}
 		return loadedImage;
 	}
 	
@@ -168,5 +166,20 @@ public class Furniture implements Cloneable, Serializable {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	private void loadImage(){
+		try {
+			loadedImage = ImageIO.read(new File(picture));
+		} catch (IOException e) {
+			//si l'image n'est pas trouvée, on génère une image noire
+			loadedImage = new BufferedImage(
+					dimension.width, dimension.height,
+					BufferedImage.TYPE_INT_ARGB);
+			Graphics2D bGr = (Graphics2D) loadedImage.getGraphics();
+			bGr.setColor(Color.BLACK);
+			bGr.fillRect(0, 0, dimension.width, dimension.height);
+			bGr.dispose();
+		}
 	}
 }

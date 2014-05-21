@@ -127,6 +127,17 @@ public class DrawingBoardContent extends Observable {
 		this.selectedModelFurniture = selectedModelFurniture;
 	}
 
+	
+	public void clearContent(){
+		walls.clear();
+		tmpWall=null;
+		selectedCtrlPoint=null;
+		selectedWall=null;
+		placedFurnitures.clear();
+		selectedModelFurniture=null;
+		selectedFurniture=null;
+}
+
 	public void addAdditionObserver(Observer obs) {
 		additionObservable.addObserver(obs);
 	}

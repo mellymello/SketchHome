@@ -35,6 +35,10 @@ public class RestoreContent
 	{
 		openFile(f);
 		Object o;
+		
+		//nettoyage des vieux objets
+		content.clearContent();
+		
 		try {
 			while((o=in.readObject()) != null)
 			{
