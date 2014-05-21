@@ -1,32 +1,182 @@
 <furnitureLibrary>
 	<furniture>
-		<name>Bed1</name>
-		<description>A bed</description>
+		<name>Toilet1</name>
+		<description>A toilet with reservoir</description>
 		<dimension>
-			<width>90</width>
-			<height>60</height>
+			<width>38</width>
+			<height>70</height>
 		</dimension>
-		<picture>library/bathroom/XXX.jpg</picture>
+		<picture>library/bathroom/toilettes_38_70.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 	<furniture>
-		<name>Chair1</name>
-		<description>A blue chair</description>
+		<name>Toilet2</name>
+		<description>A toilet</description>
 		<dimension>
-			<width>50</width>
-			<height>60</height>
+			<width>38</width>
+			<height>70</height>
 		</dimension>
-		<picture>library/bathroom/XXX.jpg</picture>
+		<picture>library/bathroom/toilettes_38_60.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Radiator</name>
+		<description>A radiator</description>
+		<dimension>
+			<width>50</width>
+			<height>10</height>
+		</dimension>
+		<picture>library/bathroom/radiateur_50_10.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Shower1</name>
+		<description>A corner shower</description>
+		<dimension>
+			<width>90</width>
+			<height>90</height>
+		</dimension>
+		<picture>library/bathroom/douche_ronde_90_90.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Shower2</name>
+		<description>A square shower</description>
+		<dimension>
+			<width>90</width>
+			<height>90</height>
+		</dimension>
+		<picture>library/bathroom/douche_carree_90_90.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Bath1</name>
+		<description>A small bath</description>
+		<dimension>
+			<width>170</width>
+			<height>75</height>
+		</dimension>
+		<picture>library/bathroom/baignoire_170_75.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Bath2</name>
+		<description>A bath</description>
+		<dimension>
+			<width>185</width>
+			<height>85</height>
+		</dimension>
+		<picture>library/bathroom/baignoire_185_85.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Bath3</name>
+		<description>A corner bath</description>
+		<dimension>
+			<width>140</width>
+			<height>140</height>
+		</dimension>
+		<picture>library/bathroom/baignoire_angle_ovale_140_140.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Sink</name>
+		<description>A sink</description>
+		<dimension>
+			<width>60</width>
+			<height>50</height>
+		</dimension>
+		<picture>library/bathroom/lavabo_60_50.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Cabinet1</name>
+		<description>A small cabinet</description>
+		<dimension>
+			<width>40</width>
+			<height>19</height>
+		</dimension>
+		<picture>library/bathroom/armoire_sdb_40_19.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Cabinet2</name>
+		<description>A cabinet</description>
+		<dimension>
+			<width>40</width>
+			<height>37</height>
+		</dimension>
+		<picture>library/bathroom/armoire_sdb_40_37.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Cabinet3</name>
+		<description>A big cabinet</description>
+		<dimension>
+			<width>40</width>
+			<height>37</height>
+		</dimension>
+		<picture>library/bathroom/armoire_sdb_60_37.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 </furnitureLibrary>

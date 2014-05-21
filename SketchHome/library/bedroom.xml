@@ -1,22 +1,7 @@
 <furnitureLibrary>
 	<furniture>
-		<name>Bed Double</name>
-		<description>Lit Double</description>
-		<dimension>
-			<width>180</width>
-			<height>210</height>
-		</dimension>
-		<picture>library/bedroom/lit_double_180_210.png</picture>
-		<orientation>0</orientation>
-		<color>
-			<red>0</red>
-			<green>1</green>
-			<blue>0</blue>
-		</color>
-	</furniture>
-	<furniture>
-		<name>Bed Simple</name>
-		<description>lit simple</description>
+		<name>Single Bed</name>
+		<description>A single bed</description>
 		<dimension>
 			<width>100</width>
 			<height>210</height>
@@ -24,9 +9,84 @@
 		<picture>library/bedroom/lit_simple_100_210.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>0.5</red>
-			<green>0</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Double Bed</name>
+		<description>A double bed</description>
+		<dimension>
+			<width>180</width>
+			<height>210</height>
+		</dimension>
+		<picture>library/bedroom/lit_double_180_210.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Baby Bed</name>
+		<description>A baby bed</description>
+		<dimension>
+			<width>78</width>
+			<height>135</height>
+		</dimension>
+		<picture>library/bedroom/lit_bebe_78_135.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Bedside Table</name>
+		<description>A baby bed</description>
+		<dimension>
+			<width>45</width>
+			<height>40</height>
+		</dimension>
+		<picture>library/bedroom/table_chevet_45_40.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Chest of Drawers</name>
+		<description>A chest of drawers</description>
+		<dimension>
+			<width>60</width>
+			<height>40</height>
+		</dimension>
+		<picture>library/bedroom/commode_60_40.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Wardrobe</name>
+		<description>A wardrobe</description>
+		<dimension>
+			<width>100</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/bedroom/armoire1_100_60.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 </furnitureLibrary>

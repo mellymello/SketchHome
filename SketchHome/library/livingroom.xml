@@ -1,32 +1,47 @@
 <furnitureLibrary>
 	<furniture>
-		<name>Bed1</name>
-		<description>A bed</description>
+		<name>Couch1</name>
+		<description>A couch with two places</description>
 		<dimension>
-			<width>90</width>
-			<height>60</height>
+			<width>175</width>
+			<height>85</height>
 		</dimension>
-		<picture>library/livingroom/XXX.jpg</picture>
+		<picture>library/livingroom/canape_175_85.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 	<furniture>
-		<name>Chair1</name>
-		<description>A blue chair</description>
+		<name>Couch2</name>
+		<description>A couch with three places</description>
 		<dimension>
-			<width>50</width>
-			<height>60</height>
+			<width>215</width>
+			<height>85</height>
 		</dimension>
-		<picture>library/livingroom/XXX.jpg</picture>
+		<picture>library/livingroom/canape_215_85.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Armchair</name>
+		<description>An armchair</description>
+		<dimension>
+			<width>70</width>
+			<height>85</height>
+		</dimension>
+		<picture>library/livingroom/fauteuil_70_85.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 </furnitureLibrary>
