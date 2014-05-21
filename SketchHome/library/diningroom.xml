@@ -1,32 +1,77 @@
 <furnitureLibrary>
 	<furniture>
-		<name>Bed1</name>
-		<description>A bed</description>
+		<name>Stool</name>
+		<description>A round stool</description>
 		<dimension>
-			<width>90</width>
-			<height>60</height>
+			<width>35</width>
+			<height>35</height>
 		</dimension>
-		<picture>library/diningroom/XXX.jpg</picture>
+		<picture>library/diningroom/tabouret_rond_35_35.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 	<furniture>
-		<name>Chair1</name>
-		<description>A blue chair</description>
+		<name>Chair</name>
+		<description>A square chair</description>
 		<dimension>
-			<width>50</width>
-			<height>60</height>
+			<width>45</width>
+			<height>50</height>
 		</dimension>
-		<picture>library/dining/XXX.jpg</picture>
+		<picture>library/diningroom/chaise_carre_45_50.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Table1</name>
+		<description>A rectangular table</description>
+		<dimension>
+			<width>180</width>
+			<height>85</height>
+		</dimension>
+		<picture>library/diningroom/table_180_85.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Table2</name>
+		<description>A round table</description>
+		<dimension>
+			<width>90</width>
+			<height>90</height>
+		</dimension>
+		<picture>library/diningroom/table_ronde_90_90.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Table3</name>
+		<description>A round corner table</description>
+		<dimension>
+			<width>150</width>
+			<height>85</height>
+		</dimension>
+		<picture>library/diningroom/table_arrondi_150_85.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 </furnitureLibrary>
