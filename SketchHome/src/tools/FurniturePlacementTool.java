@@ -22,8 +22,6 @@ public class FurniturePlacementTool extends PlacementTool {
 			if(f != null) {
 				drawingBoardContent.deleteFurniture(f);
 			}
-//			drawingBoardContent.getFurnitures().remove(furnitureDetect(me.getX(),
-//					me.getY()));
 		}
 		//placement of furniture
 		else if(drawingBoardContent.getSelectedModelFurniture() != null) {

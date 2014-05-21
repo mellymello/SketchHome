@@ -78,9 +78,12 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 	
 	public void addContentObserver(DrawingBoardContentObserver obs) {
-		drawingBoardContent.addAdditionObserver(obs.getAdditionObserver());
-		drawingBoardContent.addDeletionObserver(obs.getDeletionObserver());
-		drawingBoardContent.addModificationObserver(obs.getModificationObserver());
+		if(obs.getAdditionObserver() != null)
+			drawingBoardContent.addAdditionObserver(obs.getAdditionObserver());
+		if(obs.getDeletionObserver() != null)
+			drawingBoardContent.addDeletionObserver(obs.getDeletionObserver());
+		if(obs.getModificationObserver() != null)
+			drawingBoardContent.addModificationObserver(obs.getModificationObserver());
 	}
 
 	public void paintComponent(Graphics g) {

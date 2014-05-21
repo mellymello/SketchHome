@@ -192,6 +192,8 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
 		@Override
 		public void update(Observable o, Object arg) {
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
+			
+			//System.out.println("a");
 		}
     	
     }

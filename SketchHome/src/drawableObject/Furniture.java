@@ -163,6 +163,10 @@ public class Furniture implements Cloneable, Serializable {
 	public void setJTreeNode(DefaultMutableTreeNode jTreeNode) {
 		this.jTreeNode = jTreeNode;
 	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public Color getColor() {
 		return color;
