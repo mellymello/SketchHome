@@ -55,6 +55,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Savepoint;
@@ -68,6 +72,7 @@ import drawableObject.FurnitureLibrary;
 import features.ExportContent;
 import features.RestoreContent;
 import features.SaveContent;
+import features.Print;
 import tools.ITools;
 import tools.TextTool;
 
@@ -300,6 +305,23 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 
 		JMenuItem mntmPrint = new JMenuItem("Print");
 		mnFile.add(mntmPrint);
+		mntmPrint.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PrinterJob printJob = PrinterJob.getPrinterJob();
+				printJob.setPrintable(new Print(pnlDrawingBoard));
+				boolean ok = printJob.printDialog();
+				if (ok) {
+					try {
+					    printJob.print();
+					} catch (PrinterException e1) {             
+					    e1.printStackTrace();
+					}
+				}
+				
+			}
+		});
 
 		JMenu mnObject = new JMenu("Object");
 		menuBar.add(mnObject);
