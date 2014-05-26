@@ -381,6 +381,7 @@ public class MainFrame extends JFrame {
 		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
 		btnFurniturecreation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new FornitureCreation();
 			}
 		});
 		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
