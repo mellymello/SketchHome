@@ -1,17 +1,32 @@
 <furnitureLibrary>
 	<furniture>
 		<name>Window1</name>
-		<description>A window</description>
+		<description>A large window</description>
 		<dimension>
-			<width>90</width>
-			<height>60</height>
+			<width>120</width>
+			<height>10</height>
 		</dimension>
-		<picture>library/window/window1.jpg</picture>
+		<picture>library/window/fenetre_120_10.png</picture>
 		<orientation>0</orientation>
 		<color>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Window2</name>
+		<description>A window</description>
+		<dimension>
+			<width>60</width>
+			<height>10</height>
+		</dimension>
+		<picture>library/window/fenetre_60_10.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
 		</color>
 	</furniture>
 </furnitureLibrary>

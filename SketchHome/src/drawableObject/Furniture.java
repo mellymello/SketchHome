@@ -130,6 +130,11 @@ public class Furniture implements Cloneable, Serializable {
 	public void setPosition(Point position) {
 		this.position = position;
 	}
+	
+	public void setPosition(int x, int y) {
+		this.position.x = x;
+		this.position.y = y;
+	}
 
 	public void setLocked(boolean locked) {
 		this.locked = locked;
@@ -162,6 +167,10 @@ public class Furniture implements Cloneable, Serializable {
 	
 	public void setJTreeNode(DefaultMutableTreeNode jTreeNode) {
 		this.jTreeNode = jTreeNode;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public Color getColor() {

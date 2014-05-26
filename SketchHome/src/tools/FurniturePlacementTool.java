@@ -13,6 +13,8 @@ import drawableObject.Wall;
 public class FurniturePlacementTool extends PlacementTool {
 	
 	private static FurniturePlacementTool instance;
+	private int relX;
+	private int relY;
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
@@ -42,8 +44,10 @@ public class FurniturePlacementTool extends PlacementTool {
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-		if(drawingBoardContent.getSelectedFurniture() != null) {
-			drawingBoardContent.getSelectedFurniture().setPosition(me.getPoint());			
+		if(drawingBoardContent.getSelectedFurniture() != null && !drawingBoardContent.getSelectedFurniture().getLocked()) {
+			drawingBoardContent.getSelectedFurniture().setPosition(
+					me.getPoint().x - relX,
+					me.getPoint().y - relY);
 		}
 	}
 
@@ -51,6 +55,10 @@ public class FurniturePlacementTool extends PlacementTool {
 	public void onMousePressed(MouseEvent me) {
 		drawingBoardContent.setSelectedFurniture(furnitureDetect(me.getX(),
 				me.getY()));
+		if(drawingBoardContent.getSelectedFurniture() != null) {
+			relX = me.getX() - drawingBoardContent.getSelectedFurniture().getPosition().x;
+			relY = me.getY() - drawingBoardContent.getSelectedFurniture().getPosition().y;
+		}
 	}
 	
 	public Furniture furnitureDetect(int x, int y) {

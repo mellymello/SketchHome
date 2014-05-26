@@ -75,7 +75,7 @@ public class FurnitureLibrary implements Serializable {
 								false,
 								true,
 								this,
-								new Color(Float.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Float.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent()))));
+								new Color(Integer.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent()))));
 						
 					}
 				}

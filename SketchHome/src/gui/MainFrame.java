@@ -18,6 +18,8 @@ import java.awt.List;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JTree;
@@ -41,6 +43,8 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,9 +55,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Savepoint;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.SwingConstants;
 
@@ -62,6 +72,7 @@ import drawableObject.FurnitureLibrary;
 import features.ExportContent;
 import features.RestoreContent;
 import features.SaveContent;
+import features.Print;
 import tools.ITools;
 import tools.TextTool;
 
@@ -69,8 +80,9 @@ import javax.swing.JSplitPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
+import javax.swing.JScrollBar;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 
 	private static final int WINDOW_HEIGHT = 600;
 	private static final int WINDOW_WIDTH = 800;
@@ -81,6 +93,7 @@ public class MainFrame extends JFrame {
 	private JFormattedTextField txtWidth;
 	private JFormattedTextField txtHeight;
 	private JFormattedTextField txtRotation;
+	private JTextField txtDescription;
 
 	private JLabel lblSelectedobjectlibrary;
 	private JPanel pnlFurnitureLibrary;
@@ -133,6 +146,10 @@ public class MainFrame extends JFrame {
 	private SaveContent saveContent;
 	private RestoreContent restoreContent;
 	private ExportContent exportContent;
+	private JLabel lblColor;
+	
+	private ModificationListener modificationListener = new ModificationListener();
+	private JCheckBox checkBoxLocked;
 
 	public MainFrame() {
 
@@ -152,7 +169,7 @@ public class MainFrame extends JFrame {
 
 		setTitle("SketchHome");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 546);
+		setBounds(100, 100, 1124, 679);
 		setVisible(true);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -288,6 +305,23 @@ public class MainFrame extends JFrame {
 
 		JMenuItem mntmPrint = new JMenuItem("Print");
 		mnFile.add(mntmPrint);
+		mntmPrint.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PrinterJob printJob = PrinterJob.getPrinterJob();
+				printJob.setPrintable(new Print(pnlDrawingBoard));
+				boolean ok = printJob.printDialog();
+				if (ok) {
+					try {
+					    printJob.print();
+					} catch (PrinterException e1) {             
+					    e1.printStackTrace();
+					}
+				}
+				
+			}
+		});
 
 		JMenu mnObject = new JMenu("Object");
 		menuBar.add(mnObject);
@@ -779,14 +813,17 @@ public class MainFrame extends JFrame {
 		gbc_separator_2.gridx = 0;
 		gbc_separator_2.gridy = 1;
 		pnlObjects.add(separator_2, gbc_separator_2);
-
+		
 		pnlFurnitureLibrary = new JPanel();
+		GridLayout furnitureLibraryLayout = new GridLayout(0,3,0,0);
+		pnlFurnitureLibrary.setLayout(furnitureLibraryLayout);
+		
+		JScrollPane scrollPaneFurnitureLibrary = new JScrollPane(pnlFurnitureLibrary);
 		GridBagConstraints gbc_pnlObjectLibrary = new GridBagConstraints();
 		gbc_pnlObjectLibrary.fill = GridBagConstraints.BOTH;
 		gbc_pnlObjectLibrary.gridx = 0;
 		gbc_pnlObjectLibrary.gridy = 2;
-		pnlObjects.add(pnlFurnitureLibrary, gbc_pnlObjectLibrary);
-		pnlFurnitureLibrary.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlObjects.add(scrollPaneFurnitureLibrary, gbc_pnlObjectLibrary);
 
 		JPanel pnlObjectTree = new JPanel();
 		pnlTools.add(pnlObjectTree);
@@ -819,15 +856,15 @@ public class MainFrame extends JFrame {
 				0.0 };
 		pnlDescription.setLayout(gbl_pnlDescription);
 
-		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 11));
-		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
-		gbc_lblDescription.gridwidth = 2;
-		gbc_lblDescription.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblDescription.insets = new Insets(0, 0, 5, 0);
-		gbc_lblDescription.gridx = 0;
-		gbc_lblDescription.gridy = 0;
-		pnlDescription.add(lblDescription, gbc_lblDescription);
+		JLabel lblFurnitureProperties = new JLabel("Properties");
+		lblFurnitureProperties.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_lblProperties = new GridBagConstraints();
+		gbc_lblProperties.gridwidth = 2;
+		gbc_lblProperties.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblProperties.insets = new Insets(0, 0, 5, 0);
+		gbc_lblProperties.gridx = 0;
+		gbc_lblProperties.gridy = 0;
+		pnlDescription.add(lblFurnitureProperties, gbc_lblProperties);
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
@@ -858,13 +895,32 @@ public class MainFrame extends JFrame {
 		gbc_txtName.gridy = 2;
 		pnlDescription.add(txtName, gbc_txtName);
 		txtName.setColumns(10);
+		
+		JLabel lblDescription = new JLabel("Description");
+		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
+		gbc_lblDescription.anchor = GridBagConstraints.WEST;
+		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDescription.gridx = 0;
+		gbc_lblDescription.gridy = 3;
+		pnlDescription.add(lblDescription, gbc_lblDescription);
+
+		txtDescription = new JTextField();
+		lblDescription.setLabelFor(txtDescription);
+		GridBagConstraints gbc_txtDescription= new GridBagConstraints();
+		gbc_txtDescription.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtDescription.anchor = GridBagConstraints.NORTH;
+		gbc_txtDescription.insets = new Insets(0, 0, 5, 0);
+		gbc_txtDescription.gridx = 1;
+		gbc_txtDescription.gridy = 3;
+		pnlDescription.add(txtDescription, gbc_txtDescription);
+		txtDescription.setColumns(10);
 
 		JLabel lblWidth = new JLabel("Width");
 		GridBagConstraints gbc_lblWidth = new GridBagConstraints();
 		gbc_lblWidth.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWidth.anchor = GridBagConstraints.WEST;
 		gbc_lblWidth.gridx = 0;
-		gbc_lblWidth.gridy = 3;
+		gbc_lblWidth.gridy = 4;
 		pnlDescription.add(lblWidth, gbc_lblWidth);
 
 		txtWidth = new JFormattedTextField();
@@ -874,7 +930,7 @@ public class MainFrame extends JFrame {
 		gbc_txtWidth.insets = new Insets(0, 0, 5, 0);
 		gbc_txtWidth.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtWidth.gridx = 1;
-		gbc_txtWidth.gridy = 3;
+		gbc_txtWidth.gridy = 4;
 		pnlDescription.add(txtWidth, gbc_txtWidth);
 		txtWidth.setColumns(10);
 
@@ -883,7 +939,7 @@ public class MainFrame extends JFrame {
 		gbc_lblHeight.anchor = GridBagConstraints.WEST;
 		gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHeight.gridx = 0;
-		gbc_lblHeight.gridy = 4;
+		gbc_lblHeight.gridy = 5;
 		pnlDescription.add(lblHeight, gbc_lblHeight);
 
 		txtHeight = new JFormattedTextField();
@@ -893,7 +949,7 @@ public class MainFrame extends JFrame {
 		gbc_txtHeight.insets = new Insets(0, 0, 5, 0);
 		gbc_txtHeight.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtHeight.gridx = 1;
-		gbc_txtHeight.gridy = 4;
+		gbc_txtHeight.gridy = 5;
 		pnlDescription.add(txtHeight, gbc_txtHeight);
 		txtHeight.setColumns(10);
 
@@ -902,7 +958,7 @@ public class MainFrame extends JFrame {
 		gbc_lblRotation.anchor = GridBagConstraints.WEST;
 		gbc_lblRotation.insets = new Insets(0, 0, 0, 5);
 		gbc_lblRotation.gridx = 0;
-		gbc_lblRotation.gridy = 5;
+		gbc_lblRotation.gridy = 6;
 		pnlDescription.add(lblRotation, gbc_lblRotation);
 
 		txtRotation = new JFormattedTextField();
@@ -911,9 +967,72 @@ public class MainFrame extends JFrame {
 		gbc_txtRotation.anchor = GridBagConstraints.NORTH;
 		gbc_txtRotation.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtRotation.gridx = 1;
-		gbc_txtRotation.gridy = 5;
+		gbc_txtRotation.gridy = 6;
 		pnlDescription.add(txtRotation, gbc_txtRotation);
 		txtRotation.setColumns(10);
+		
+		lblColor = new JLabel("Background color");
+		lblColor.setOpaque(true);
+		GridBagConstraints gbc_lblColor = new GridBagConstraints();
+		gbc_lblColor.anchor = GridBagConstraints.WEST;
+		gbc_lblColor.insets = new Insets(0, 0, 0, 5);
+		gbc_lblColor.gridx = 0;
+		gbc_lblColor.gridy = 7;
+		pnlDescription.add(lblColor, gbc_lblColor);
+
+		
+		JButton btnBackgroundColor = new JButton("BackgroundColor");
+		btnBackgroundColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color bgColor = JColorChooser.showDialog(MainFrame.this, "Choisir une couleur de fond", lblColor.getBackground());
+				if (bgColor != null){
+					lblColor.setBackground(bgColor);
+				}
+			}
+		});
+		GridBagConstraints gbc_btnBackgroundColor = new GridBagConstraints();
+		gbc_btnBackgroundColor.anchor = GridBagConstraints.NORTH;
+		gbc_btnBackgroundColor.insets = new Insets(0, 0, 0, 5);
+		gbc_btnBackgroundColor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnBackgroundColor.gridx = 1;
+		gbc_btnBackgroundColor.gridy = 7;
+		pnlDescription.add(btnBackgroundColor, gbc_btnBackgroundColor);
+		
+		checkBoxLocked = new JCheckBox("Locked");
+		GridBagConstraints gbc_checkBoxLocked = new GridBagConstraints();
+		gbc_checkBoxLocked.anchor = GridBagConstraints.NORTH;
+		gbc_checkBoxLocked.insets = new Insets(0, 0, 0, 5);
+		gbc_checkBoxLocked.fill = GridBagConstraints.HORIZONTAL;
+		gbc_checkBoxLocked.gridx = 0;
+		gbc_checkBoxLocked.gridy = 8;
+		pnlDescription.add(checkBoxLocked, gbc_checkBoxLocked);
+		
+		JButton btnModifyFurniture = new JButton("Modify");
+		btnModifyFurniture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Furniture f = pnlDrawingBoard.getDrawingBoardContent().getSelectedFurniture();
+				if(!f.getLocked() || !checkBoxLocked.isSelected()) {
+					f.setName(txtName.getText());
+					f.setDescription(txtDescription.getText());
+					f.setDimension(new Dimension(Integer.valueOf(txtWidth.getText()), Integer.valueOf(txtHeight.getText())));
+					f.setOrientation(Double.valueOf(txtRotation.getText()));
+					f.setColor(lblColor.getBackground());
+					f.setLocked(checkBoxLocked.isSelected());
+					f.getJtreeNode().setUserObject(f.getName());
+					
+					repaint();
+				}
+			}
+		});
+		GridBagConstraints gbc_btnModifyFurniture = new GridBagConstraints();
+		gbc_btnModifyFurniture.anchor = GridBagConstraints.NORTH;
+		gbc_btnModifyFurniture.insets = new Insets(0, 0, 0, 5);
+		gbc_btnModifyFurniture.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnModifyFurniture.gridx = 1;
+		gbc_btnModifyFurniture.gridy = 8;
+		pnlDescription.add(btnModifyFurniture, gbc_btnModifyFurniture);
+		
+		pnlDrawingBoard.addContentObserver(this);
 
 		pack();
 	}
@@ -942,7 +1061,7 @@ public class MainFrame extends JFrame {
 	 *            : librairie de meuble à afficher
 	 */
 	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
-		pnlFurnitureLibrary.removeAll();
+		pnlFurnitureLibrary.removeAll();		
 
 		for (Furniture f : furnitureLibrary.getFurnitures()) {
 			pnlFurnitureLibrary.add(new FurnitureMiniature(f));
@@ -975,10 +1094,9 @@ public class MainFrame extends JFrame {
 			add(lblName);
 
 			// gestion de l'image miniaturisée
-			int reducedWidth = furniture.getDimension().width / 3;
-			int reducedHeight = furniture.getDimension().height / 3;
-			miniatureDimension = new Dimension(reducedWidth < 60 ? 60
-					: reducedWidth, reducedHeight < 100 ? 100 : reducedHeight);
+			int reducedWidth = furniture.getDimension().width > 80 ? 80 : furniture.getDimension().width;
+			int reducedHeight = furniture.getDimension().height > 80 ? 80 : furniture.getDimension().height;
+			miniatureDimension = new Dimension(reducedWidth, reducedHeight);
 
 			miniature = new JComponent() {
 				public void paintComponent(Graphics g) {
@@ -1023,5 +1141,39 @@ public class MainFrame extends JFrame {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
+
+	@Override
+	public Observer getAdditionObserver() {
+		return null;
+	}
+
+	@Override
+	public Observer getDeletionObserver() {
+		return null;
+	}
+
+	@Override
+	public Observer getModificationObserver() {
+		return modificationListener;
+	}
+	
+    private class ModificationListener implements Observer {
+
+		@Override
+		public void update(Observable o, Object arg) {
+			/*
+			 * Remplissage des contrôles d'édition du meuble
+			 */
+			Furniture f = ((Furniture)arg);
+			lblColor.setBackground(f.getColor());
+			txtDescription.setText(f.getDescription());
+			txtRotation.setText(String.valueOf(f.getOrientation()));
+			txtName.setText(f.getName());
+			txtWidth.setText(String.valueOf(f.getDimension().width));
+			txtHeight.setText(String.valueOf(f.getDimension().height));
+			checkBoxLocked.setSelected(f.getLocked());
+		}
+    	
+    }
 
 }
