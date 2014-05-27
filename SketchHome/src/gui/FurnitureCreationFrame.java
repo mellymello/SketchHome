@@ -31,7 +31,7 @@ import tools.DrawRectangleTool;
 import tools.DrawTriangleTool;
 import tools.ITools;
 
-public class FornitureCreation extends JFrame {
+public class FurnitureCreationFrame extends JFrame {
 
 	private DrawingPanel dp;
 	private ToolPanel toolPanel;
@@ -45,7 +45,7 @@ public class FornitureCreation extends JFrame {
 	private DrawTriangleTool drawTrinagle;
 	
 
-	public FornitureCreation() {
+	public FurnitureCreationFrame() {
 		setPreferredSize(new Dimension(500, 400));
 		setTitle("Forniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -104,27 +104,27 @@ public class FornitureCreation extends JFrame {
 			line = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/line.png")));
+									.getResource("/gui/img/furnitureCreationIcon/line.png")));
 			rectangle = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/rectangle.png")));
+									.getResource("/gui/img/furnitureCreationIcon/rectangle.png")));
 			ellipse = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/ellipse.png")));
+									.getResource("/gui/img/furnitureCreationIcon/ellipse.png")));
 			triangle = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/triangle.png")));
+									.getResource("/gui/img/furnitureCreationIcon/triangle.png")));
 			pencil = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/pencil.png")));
+									.getResource("/gui/img/furnitureCreationIcon/pencil.png")));
 			colors = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/fornitureCreationIcon/colors.png")));
+									.getResource("/gui/img/furnitureCreationIcon/colors.png")));
 
 			
 			line.addActionListener(new ActionListener() {

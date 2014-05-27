@@ -150,6 +150,9 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 	
 	private ModificationListener modificationListener = new ModificationListener();
 	private JCheckBox checkBoxLocked;
+	private JPanel pnlTools;
+	private JPanel pnlFurnitureProperties;
+	private JPanel pnlObjectTree;
 
 	public MainFrame() {
 
@@ -341,22 +344,48 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		JMenu mnDisplay = new JMenu("Display");
 		menuBar.add(mnDisplay);
 
-		JMenuItem mntmMeasurements = new JMenuItem("Measurements");
-		mntmMeasurements.setIcon(new ImageIcon(MainFrame.class
+		JMenuItem mntmShowMeasurements = new JMenuItem("Measurements");
+		mntmShowMeasurements.setIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/cotations.png")));
-		mntmMeasurements.addActionListener(new ActionListener() {
+		mntmShowMeasurements.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlDrawingBoard.toggleShowMeasurements();
 				pnlDrawingBoard.repaint();
 			}
 		});
-		mnDisplay.add(mntmMeasurements);
+		mnDisplay.add(mntmShowMeasurements);
 
-		JMenuItem mntmObjectTree = new JMenuItem("Object tree");
-		mnDisplay.add(mntmObjectTree);
+		JMenuItem mntmShowObjectTree = new JMenuItem("Object tree");
+		mntmShowObjectTree.addActionListener(new ActionListener() {
+			boolean objectTreeVisible = true;
+			public void actionPerformed(ActionEvent e) {
+				if(objectTreeVisible) {
+					pnlTools.remove(pnlObjectTree);
+				} else {
+					pnlTools.add(pnlObjectTree);
+				}
+				objectTreeVisible = !objectTreeVisible;
+				pack();
+				repaint();
+			}
+		});
+		mnDisplay.add(mntmShowObjectTree);
 
-		JMenuItem mntmDescription = new JMenuItem("Description");
-		mnDisplay.add(mntmDescription);
+		JMenuItem mntmShowProperties = new JMenuItem("Properties");
+		mntmShowProperties.addActionListener(new ActionListener() {
+			boolean propertiesVisible = true;
+			public void actionPerformed(ActionEvent e) {
+				if(propertiesVisible) {
+					pnlTools.remove(pnlFurnitureProperties);
+				} else {
+					pnlTools.add(pnlFurnitureProperties);
+				}
+				propertiesVisible = !propertiesVisible;
+				pack();
+				repaint();
+			}
+		});
+		mnDisplay.add(mntmShowProperties);
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -378,7 +407,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 				pnlDrawingBoard.getDrawingBoardContent());
 		exportContent = new ExportContent(pnlDrawingBoard);
 				
-		JPanel pnlTools = new JPanel();
+		pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
 		pnlTools.setLayout(new GridLayout(4, 1, 0, 0));
@@ -415,7 +444,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
 		btnFurniturecreation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new FornitureCreation();
+				new FurnitureCreationFrame();
 			}
 		});
 		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
@@ -825,7 +854,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_pnlObjectLibrary.gridy = 2;
 		pnlObjects.add(scrollPaneFurnitureLibrary, gbc_pnlObjectLibrary);
 
-		JPanel pnlObjectTree = new JPanel();
+		pnlObjectTree = new JPanel();
 		pnlTools.add(pnlObjectTree);
 		pnlObjectTree.setLayout(new BoxLayout(pnlObjectTree, BoxLayout.Y_AXIS));
 
@@ -846,15 +875,15 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		}
 		pnlDrawingBoard.addContentObserver(treePanel);
 
-		JPanel pnlDescription = new JPanel();
-		pnlTools.add(pnlDescription);
+		pnlFurnitureProperties = new JPanel();
+		pnlTools.add(pnlFurnitureProperties);
 		GridBagLayout gbl_pnlDescription = new GridBagLayout();
 		gbl_pnlDescription.columnWidths = new int[] { 27, 86 };
 		gbl_pnlDescription.rowHeights = new int[] { 0, 0, 20, 0, 0, 0 };
 		gbl_pnlDescription.columnWeights = new double[] { 0.0, 1.0 };
 		gbl_pnlDescription.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0 };
-		pnlDescription.setLayout(gbl_pnlDescription);
+		pnlFurnitureProperties.setLayout(gbl_pnlDescription);
 
 		JLabel lblFurnitureProperties = new JLabel("Properties");
 		lblFurnitureProperties.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -864,7 +893,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblProperties.insets = new Insets(0, 0, 5, 0);
 		gbc_lblProperties.gridx = 0;
 		gbc_lblProperties.gridy = 0;
-		pnlDescription.add(lblFurnitureProperties, gbc_lblProperties);
+		pnlFurnitureProperties.add(lblFurnitureProperties, gbc_lblProperties);
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
@@ -875,7 +904,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_separator.insets = new Insets(0, 0, 5, 0);
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 1;
-		pnlDescription.add(separator, gbc_separator);
+		pnlFurnitureProperties.add(separator, gbc_separator);
 
 		JLabel lblName = new JLabel("Name");
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
@@ -883,7 +912,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblName.gridx = 0;
 		gbc_lblName.gridy = 2;
-		pnlDescription.add(lblName, gbc_lblName);
+		pnlFurnitureProperties.add(lblName, gbc_lblName);
 
 		txtName = new JTextField();
 		lblName.setLabelFor(txtName);
@@ -893,7 +922,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_txtName.insets = new Insets(0, 0, 5, 0);
 		gbc_txtName.gridx = 1;
 		gbc_txtName.gridy = 2;
-		pnlDescription.add(txtName, gbc_txtName);
+		pnlFurnitureProperties.add(txtName, gbc_txtName);
 		txtName.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description");
@@ -902,7 +931,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 3;
-		pnlDescription.add(lblDescription, gbc_lblDescription);
+		pnlFurnitureProperties.add(lblDescription, gbc_lblDescription);
 
 		txtDescription = new JTextField();
 		lblDescription.setLabelFor(txtDescription);
@@ -912,7 +941,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_txtDescription.insets = new Insets(0, 0, 5, 0);
 		gbc_txtDescription.gridx = 1;
 		gbc_txtDescription.gridy = 3;
-		pnlDescription.add(txtDescription, gbc_txtDescription);
+		pnlFurnitureProperties.add(txtDescription, gbc_txtDescription);
 		txtDescription.setColumns(10);
 
 		JLabel lblWidth = new JLabel("Width");
@@ -921,7 +950,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblWidth.anchor = GridBagConstraints.WEST;
 		gbc_lblWidth.gridx = 0;
 		gbc_lblWidth.gridy = 4;
-		pnlDescription.add(lblWidth, gbc_lblWidth);
+		pnlFurnitureProperties.add(lblWidth, gbc_lblWidth);
 
 		txtWidth = new JFormattedTextField();
 		lblWidth.setLabelFor(txtWidth);
@@ -931,7 +960,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_txtWidth.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtWidth.gridx = 1;
 		gbc_txtWidth.gridy = 4;
-		pnlDescription.add(txtWidth, gbc_txtWidth);
+		pnlFurnitureProperties.add(txtWidth, gbc_txtWidth);
 		txtWidth.setColumns(10);
 
 		JLabel lblHeight = new JLabel("Height");
@@ -940,7 +969,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHeight.gridx = 0;
 		gbc_lblHeight.gridy = 5;
-		pnlDescription.add(lblHeight, gbc_lblHeight);
+		pnlFurnitureProperties.add(lblHeight, gbc_lblHeight);
 
 		txtHeight = new JFormattedTextField();
 		lblHeight.setLabelFor(txtHeight);
@@ -950,7 +979,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_txtHeight.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtHeight.gridx = 1;
 		gbc_txtHeight.gridy = 5;
-		pnlDescription.add(txtHeight, gbc_txtHeight);
+		pnlFurnitureProperties.add(txtHeight, gbc_txtHeight);
 		txtHeight.setColumns(10);
 
 		JLabel lblRotation = new JLabel("Rotation angle");
@@ -959,7 +988,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblRotation.insets = new Insets(0, 0, 0, 5);
 		gbc_lblRotation.gridx = 0;
 		gbc_lblRotation.gridy = 6;
-		pnlDescription.add(lblRotation, gbc_lblRotation);
+		pnlFurnitureProperties.add(lblRotation, gbc_lblRotation);
 
 		txtRotation = new JFormattedTextField();
 		lblRotation.setLabelFor(txtRotation);
@@ -968,7 +997,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_txtRotation.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtRotation.gridx = 1;
 		gbc_txtRotation.gridy = 6;
-		pnlDescription.add(txtRotation, gbc_txtRotation);
+		pnlFurnitureProperties.add(txtRotation, gbc_txtRotation);
 		txtRotation.setColumns(10);
 		
 		lblColor = new JLabel("Background color");
@@ -978,7 +1007,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_lblColor.insets = new Insets(0, 0, 0, 5);
 		gbc_lblColor.gridx = 0;
 		gbc_lblColor.gridy = 7;
-		pnlDescription.add(lblColor, gbc_lblColor);
+		pnlFurnitureProperties.add(lblColor, gbc_lblColor);
 
 		
 		JButton btnBackgroundColor = new JButton("BackgroundColor");
@@ -996,7 +1025,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_btnBackgroundColor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnBackgroundColor.gridx = 1;
 		gbc_btnBackgroundColor.gridy = 7;
-		pnlDescription.add(btnBackgroundColor, gbc_btnBackgroundColor);
+		pnlFurnitureProperties.add(btnBackgroundColor, gbc_btnBackgroundColor);
 		
 		checkBoxLocked = new JCheckBox("Locked");
 		GridBagConstraints gbc_checkBoxLocked = new GridBagConstraints();
@@ -1005,7 +1034,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_checkBoxLocked.fill = GridBagConstraints.HORIZONTAL;
 		gbc_checkBoxLocked.gridx = 0;
 		gbc_checkBoxLocked.gridy = 8;
-		pnlDescription.add(checkBoxLocked, gbc_checkBoxLocked);
+		pnlFurnitureProperties.add(checkBoxLocked, gbc_checkBoxLocked);
 		
 		JButton btnModifyFurniture = new JButton("Modify");
 		btnModifyFurniture.addActionListener(new ActionListener() {
@@ -1030,7 +1059,7 @@ public class MainFrame extends JFrame  implements  DrawingBoardContentObserver {
 		gbc_btnModifyFurniture.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnModifyFurniture.gridx = 1;
 		gbc_btnModifyFurniture.gridy = 8;
-		pnlDescription.add(btnModifyFurniture, gbc_btnModifyFurniture);
+		pnlFurnitureProperties.add(btnModifyFurniture, gbc_btnModifyFurniture);
 		
 		pnlDrawingBoard.addContentObserver(this);
 

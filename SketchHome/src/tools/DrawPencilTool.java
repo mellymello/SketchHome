@@ -1,6 +1,6 @@
 package tools;
 
-import gui.FornitureCreation;
+import gui.FurnitureCreationFrame;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
