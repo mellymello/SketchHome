@@ -29,8 +29,6 @@ public class RestoreContent
 		content = dbc;
 	}
 	
-	
-	
 	public void restore (File f)
 	{
 		openFile(f);
@@ -63,8 +61,6 @@ public class RestoreContent
 		}
 	}
 		
-	
-	
 	public void openFile(File file)
 	{
 		this.file = file;

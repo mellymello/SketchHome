@@ -33,7 +33,6 @@ import tools.OnWallPlacementTool;
 
 /**
  * JPanel représentant le plan dessiné dans SketchHome.
- * @author Jollien Dominique
  */
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
@@ -49,7 +48,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
 	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool.getInstance();
 	//outil actuellement utilisé
-	//TODO : initialiser à une valeur sinon crée nullPointerException
 	private ITools selectedTool = simpleWallTool;
 
 	//librairie de meuble actuellement sélectionnée
