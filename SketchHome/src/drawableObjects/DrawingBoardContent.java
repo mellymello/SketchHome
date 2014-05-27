@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Représente le contenu d'un plan dans SketchHome *
+ * Représente le contenu d'un plan dans SketchHome
  */
 public class DrawingBoardContent extends Observable {
 	

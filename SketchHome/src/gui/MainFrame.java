@@ -47,6 +47,8 @@ import fileFeatures.ContentExporter;
 import fileFeatures.ContentRestorer;
 import fileFeatures.ContentSaver;
 import fileFeatures.Printer;
+import java.awt.Component;
+import javax.swing.SwingConstants;
 
 /**
  * Interface graphique de l'application SketchHome
@@ -320,7 +322,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		//controle pour la création d'un objet personnalisé
 		JMenuItem mntmCreateNew = new JMenuItem("Create new");
-		mntmCreateNew.add(mntmPrint);
+		mnObject.add(mntmCreateNew);
 		mntmPrint.addActionListener(new ActionListener() {
 			
 			@Override
@@ -424,6 +426,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		contentSaver = new ContentSaver(pnlDrawingBoard.getDrawingBoardContent());
 		contentRestorer = new ContentRestorer(pnlDrawingBoard.getDrawingBoardContent());
 		contentExport = new ContentExporter(pnlDrawingBoard);
+		pnlDrawingBoard.setLayout(null);
 				
 		/*
 		 * Controles pour utiliser les outils
@@ -431,12 +434,13 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
-		pnlTools.setLayout(new GridLayout(4, 1, 0, 0));
 
 		/*
 		 * Boutons pour utiliser les outils
 		 */
+		pnlTools.setLayout(new BoxLayout(pnlTools, BoxLayout.Y_AXIS));
 		JPanel pnlToolsBtn = new JPanel();
+		pnlToolsBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		pnlTools.add(pnlToolsBtn);
 		GridBagLayout gbl_pnlToolsBtn = new GridBagLayout();
 		gbl_pnlToolsBtn.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
@@ -864,10 +868,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		 * Controles pour la sélection de meubles dans la librairie sélectionnée 
 		 */
 		JPanel pnlObjects = new JPanel();
+		pnlObjects.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		pnlTools.add(pnlObjects);
 		GridBagLayout gbl_pnlObjects = new GridBagLayout();
-		gbl_pnlObjects.columnWidths = new int[] { 633, 0 };
-		gbl_pnlObjects.rowHeights = new int[] { 14, 0, 107, 0 };
+		gbl_pnlObjects.columnWidths = new int[] { 323, 0 };
+		gbl_pnlObjects.rowHeights = new int[] { 22, 14, 107, 0 };
 		gbl_pnlObjects.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gbl_pnlObjects.rowWeights = new double[] { 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
@@ -880,18 +885,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_lblSelectedobjectlibrary.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblSelectedobjectlibrary.insets = new Insets(0, 0, 5, 0);
 		gbc_lblSelectedobjectlibrary.gridx = 0;
-		gbc_lblSelectedobjectlibrary.gridy = 0;
+		gbc_lblSelectedobjectlibrary.gridy = 1;
 		pnlObjects.add(lblSelectedobjectlibrary, gbc_lblSelectedobjectlibrary);
-
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setForeground(Color.BLACK);
-		separator_2.setBackground(Color.BLACK);
-		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
-		gbc_separator_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_2.insets = new Insets(0, 0, 5, 0);
-		gbc_separator_2.gridx = 0;
-		gbc_separator_2.gridy = 1;
-		pnlObjects.add(separator_2, gbc_separator_2);
 		
 		//JPanel d'affichage de la librairie sélectionnée
 		pnlFurnitureLibrary = new JPanel();
@@ -909,17 +904,13 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		 * Controles pour afficher les objets utilisés dans le plan
 		 */
 		pnlObjectTree = new JPanel();
+		pnlObjectTree.setAlignmentX(1.0f);
 		pnlTools.add(pnlObjectTree);
-		pnlObjectTree.setLayout(new BoxLayout(pnlObjectTree, BoxLayout.Y_AXIS));
+		pnlObjectTree.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblObjecttree = new JLabel("Used objects");
-		lblObjecttree.setFont(new Font("Tahoma", Font.BOLD, 11));
-		pnlObjectTree.add(lblObjecttree);
-
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBackground(Color.BLACK);
-		separator_1.setForeground(Color.BLACK);
-		pnlObjectTree.add(separator_1);
+		JLabel lblObjectTree = new JLabel("Used objects");
+		lblObjectTree.setFont(new Font("Tahoma", Font.BOLD, 11));
+		pnlObjectTree.add(lblObjectTree, BorderLayout.NORTH);
 
 		//DynamicTree permettant d'afficher les objets utilisés dans le plan
 		DynamicTree treePanel = new DynamicTree();
@@ -934,11 +925,12 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		 * Controle permettant de modifier les propriétés du meuble actuellement sélectionné dans le plan
 		 */
 		pnlFurnitureProperties = new JPanel();
+		pnlFurnitureProperties.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		pnlTools.add(pnlFurnitureProperties);
 		GridBagLayout gbl_pnlDescription = new GridBagLayout();
 		gbl_pnlDescription.columnWidths = new int[] { 27, 86 };
 		gbl_pnlDescription.rowHeights = new int[] { 0, 0, 20, 0, 0, 0 };
-		gbl_pnlDescription.columnWeights = new double[] { 0.0, 1.0 };
+		gbl_pnlDescription.columnWeights = new double[] { 1.0, 1.0 };
 		gbl_pnlDescription.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0 };
 		pnlFurnitureProperties.setLayout(gbl_pnlDescription);
@@ -1096,8 +1088,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		});
 		GridBagConstraints gbc_btnBackgroundColor = new GridBagConstraints();
 		gbc_btnBackgroundColor.anchor = GridBagConstraints.NORTH;
-		gbc_btnBackgroundColor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBackgroundColor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnBackgroundColor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBackgroundColor.gridx = 1;
 		gbc_btnBackgroundColor.gridy = 7;
 		pnlFurnitureProperties.add(btnBackgroundColor, gbc_btnBackgroundColor);
