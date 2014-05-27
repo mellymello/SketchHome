@@ -3,10 +3,13 @@ package tools;
 import java.awt.event.MouseEvent;
 
 import drawableObject.DrawingBoardContent;
+import drawableObject.FurnitureCreationContent;
 
 public abstract class ITools {
 	
 	DrawingBoardContent drawingBoardContent;
+	
+	FurnitureCreationContent furnitureCreationContent;
 
 	public abstract void onMouseClicked(MouseEvent me);
 	public abstract void onMousePressed(MouseEvent me);
@@ -16,5 +19,9 @@ public abstract class ITools {
 	
 	public void setDrawingBoardContent(DrawingBoardContent drawingBoardContent) {
 		this.drawingBoardContent = drawingBoardContent;
+	}
+	
+	public void setFurnitureCreationContent(FurnitureCreationContent furnitureCreationContent){
+		this.furnitureCreationContent = furnitureCreationContent;
 	}
 }
