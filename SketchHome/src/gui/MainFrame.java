@@ -94,10 +94,12 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			"library/window.xml", "Window");
 	private FurnitureLibrary doorLibrary = new FurnitureLibrary(
 			"library/door.xml", "Door");
+	private FurnitureLibrary customLibrary = new FurnitureLibrary(
+			"library/custom.xml", "Custom furnitures");
 
 	private FurnitureLibrary[] furnitureLibraries = { bedRoomLibrary,
 			livingRoomLibrary, kitchenLibrary, diningRoomLibrary,
-			bathroomLibrary, officeLibrary, windowLibrary, doorLibrary };
+			bathroomLibrary, officeLibrary, windowLibrary, doorLibrary, customLibrary };
 
 	private FileNameExtensionFilter extensionFilterSkt = new FileNameExtensionFilter("Sketch Home File", "skt");
 	private FileNameExtensionFilter extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");;
@@ -163,7 +165,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pnlDrawingBoard.clearContent();
+				pnlDrawingBoard.getDrawingBoardContent().clearContent();
 				contentSaver.setOpenedFile(null);
 				repaint();
 			}
@@ -187,6 +189,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					File f = fc.getSelectedFile();
 					contentRestorer.restore(f);
 					contentSaver.setOpenedFile(f);
+					setTitle("SketchHome - " + f.getName());
 					repaint();
 				}
 			}
@@ -218,10 +221,12 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 						//le fichier selectionné est bien un fichier .skt
 						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterSkt.getExtensions()[0])){
 							contentSaver.saveAs(selectedFile);
+							setTitle("SketchHome - " + selectedFile.getName());
 						}
 						else {
 							File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
 							contentSaver.saveAs(f);
+							setTitle("SketchHome - " + f.getName());
 						}
 					}
 				}
@@ -250,12 +255,13 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					//le fichier selectionné est bien un fichier .skt
 					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterSkt.getExtensions()[0])){
 						contentSaver.saveAs(selectedFile);
+						setTitle("SketchHome - " + selectedFile.getName());
 					}
 					else{
 						File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
 						contentSaver.saveAs(f);
+						setTitle("SketchHome - " + f.getName());
 					}
-
 				}
 
 			}
@@ -419,7 +425,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlDrawingBoard.setBackground(Color.WHITE);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
 
-		//TODO : WHY ?
 		/*
 		 * outils pour sauvegarder/ouvrir/exporter des fichiers représentant le plan
 		 */
@@ -700,7 +705,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnBathroom.setIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/salle_de_bain.png")));
 		GridBagConstraints gbc_btnBathroom = new GridBagConstraints();
-		gbc_btnBathroom.fill = GridBagConstraints.VERTICAL;
+		gbc_btnBathroom.fill = GridBagConstraints.BOTH;
 		gbc_btnBathroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBathroom.gridx = 4;
 		gbc_btnBathroom.gridy = 2;
@@ -725,7 +730,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnDiningRoom.setIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/salle_a_manger.png")));
 		GridBagConstraints gbc_btnDiningRoom = new GridBagConstraints();
-		gbc_btnDiningRoom.fill = GridBagConstraints.VERTICAL;
+		gbc_btnDiningRoom.fill = GridBagConstraints.BOTH;
 		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 0);
 		gbc_btnDiningRoom.gridx = 5;
 		gbc_btnDiningRoom.gridy = 2;
@@ -733,11 +738,14 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		//sélection de la librairie objets personnalisés
 		JButton btnCustomfurniture = new JButton("");
-		btnCustomfurniture.setToolTipText("Furniture creation");
+		btnCustomfurniture.setToolTipText("Custom furnitures");
 		btnCustomfurniture.setBorderPainted(false);
 		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
 		btnCustomfurniture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				selectLibrary(customLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
 			}
 		});
 		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
@@ -766,7 +774,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			public void actionPerformed(ActionEvent arg0) {
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
 						.getSimpleWallTool());
-
+				showContentOfLibrary(null);
 			}
 		});
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
@@ -791,6 +799,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			public void actionPerformed(ActionEvent arg0) {
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
 						.getPolygonalWallTool());
+				showContentOfLibrary(null);
 			}
 		});
 		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
@@ -858,7 +867,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnStair.setIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/escaliers.png")));
 		GridBagConstraints gbc_btnStair = new GridBagConstraints();
-		gbc_btnStair.fill = GridBagConstraints.VERTICAL;
+		gbc_btnStair.fill = GridBagConstraints.BOTH;
 		gbc_btnStair.insets = new Insets(0, 0, 0, 5);
 		gbc_btnStair.gridx = 4;
 		gbc_btnStair.gridy = 4;
@@ -1071,7 +1080,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		lblColor = new JLabel("Background color");
 		lblColor.setOpaque(true);
 		GridBagConstraints gbc_lblColor = new GridBagConstraints();
-		gbc_lblColor.anchor = GridBagConstraints.WEST;
+		gbc_lblColor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblColor.insets = new Insets(0, 0, 0, 5);
 		gbc_lblColor.gridx = 0;
 		gbc_lblColor.gridy = 7;
@@ -1148,7 +1157,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				+ furnitureLibrary.getName());
 		furnitureLibrary.loadLibraryContent();
 		showContentOfLibrary(furnitureLibrary);
-
+	
 		pnlDrawingBoard.setSelectedFurnitureLibrary(furnitureLibrary);
 		pnlDrawingBoard.setSelectedModelFurniture(null);
 	}

@@ -13,6 +13,9 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+/**
+ * Représente un meuble.
+ */
 public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;
 	private static int count = 0;
@@ -29,8 +32,7 @@ public class Furniture implements Cloneable, Serializable {
 	private boolean locked;
 	private boolean visible;
 	
-	private transient Image loadedImage;
-	
+	private transient Image loadedPicture;
 	
 	private Color color;
 	
@@ -54,7 +56,7 @@ public class Furniture implements Cloneable, Serializable {
 
 		this.jTreeNode = new DefaultMutableTreeNode(name);
 		
-		loadImage();
+		loadPicture();
 
 	}
 
@@ -141,12 +143,12 @@ public class Furniture implements Cloneable, Serializable {
 	}
 
 	public Image getLoadedPicture() {
-		//car si on fait "open" dans le fichier de sauvegarde il y a  pas les
-		//images et donc nous devons la charger depuis la "base de donnée"
-		if(loadedImage==null){
-			loadImage();
+		//car si on fait "open" dans le fichier de sauvegarde il n'y a pas les
+		//images et donc nous devons la charger depuis la librairie
+		if(loadedPicture==null){
+			loadPicture();
 		}
-		return loadedImage;
+		return loadedPicture;
 	}
 	
 	public boolean contains(int x, int y) {
@@ -173,15 +175,15 @@ public class Furniture implements Cloneable, Serializable {
 		return color;
 	}
 	
-	private void loadImage(){
+	private void loadPicture(){
 		try {
-			loadedImage = ImageIO.read(new File(picture));
+			loadedPicture = ImageIO.read(new File(picture));
 		} catch (IOException e) {
 			//si l'image n'est pas trouvée, on génère une image noire
-			loadedImage = new BufferedImage(
+			loadedPicture = new BufferedImage(
 					dimension.width, dimension.height,
 					BufferedImage.TYPE_INT_ARGB);
-			Graphics2D bGr = (Graphics2D) loadedImage.getGraphics();
+			Graphics2D bGr = (Graphics2D) loadedPicture.getGraphics();
 			bGr.setColor(Color.BLACK);
 			bGr.fillRect(0, 0, dimension.width, dimension.height);
 			bGr.dispose();

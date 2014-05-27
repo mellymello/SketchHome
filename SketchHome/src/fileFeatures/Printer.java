@@ -9,7 +9,7 @@ import java.awt.print.PrinterException;
 
 import javax.swing.JPanel;
 
-public class Printer implements Printable{
+public class Printer implements Printable {
 
 	private JPanel panelToPrint = null;
 	
