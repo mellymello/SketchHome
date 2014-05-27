@@ -1,4 +1,4 @@
-package drawableObject;
+package drawableObjects;
 
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;

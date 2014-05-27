@@ -1,4 +1,4 @@
-package drawableObject;
+package drawableObjects;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,14 +8,10 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.Position;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 
 public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;

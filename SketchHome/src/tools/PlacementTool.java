@@ -2,7 +2,7 @@ package tools;
 
 import java.awt.event.MouseEvent;
 
-import drawableObject.Furniture;
+import drawableObjects.Furniture;
 
 public abstract class PlacementTool extends ITools {
 	

@@ -41,12 +41,12 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import drawableObject.Furniture;
-import drawableObject.FurnitureLibrary;
-import features.ExportContent;
-import features.Print;
-import features.RestoreContent;
-import features.SaveContent;
+import drawableObjects.Furniture;
+import drawableObjects.FurnitureLibrary;
+import fileFeatures.ContentExporter;
+import fileFeatures.ContentRestorer;
+import fileFeatures.ContentSaver;
+import fileFeatures.Printer;
 
 /**
  * Interface graphique de l'application SketchHome
@@ -99,9 +99,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 	private FileNameExtensionFilter extensionFilterSkt = new FileNameExtensionFilter("Sketch Home File", "skt");
 	private FileNameExtensionFilter extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");;
-	private SaveContent saveContent;
-	private RestoreContent restoreContent;
-	private ExportContent exportContent;
+	private ContentSaver contentSaver;
+	private ContentRestorer contentRestorer;
+	private ContentExporter contentExport;
 	
 	private ModificationListener modificationListener = new ModificationListener();
 	private DrawingBoard pnlDrawingBoard;
@@ -157,6 +157,15 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		//controle pour la création d'un nouveau plan
 		JMenuItem mntmNew = new JMenuItem("New");
+		mntmNew.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pnlDrawingBoard.clearContent();
+				contentSaver.setOpenedFile(null);
+				repaint();
+			}
+		});
 		mnFile.add(mntmNew);
 
 		//controle pour l'ouverture d'un fichier sauvegardé
@@ -174,8 +183,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				fc.setMultiSelectionEnabled(false);
 				if (action == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
-					restoreContent.restore(f);
-					saveContent.setOpenedFile(f);
+					contentRestorer.restore(f);
+					contentSaver.setOpenedFile(f);
+					repaint();
 				}
 			}
 		});
@@ -188,11 +198,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveContent.setDrawingBoardContent(pnlDrawingBoard
-						.getDrawingBoardContent());
+//				contentSaver.setDrawingBoardContent(pnlDrawingBoard
+//						.getDrawingBoardContent());
 
 				try {
-					saveContent.save();
+					contentSaver.save();
 				} catch (FileNotFoundException e1) {
 					JFileChooser fc = new JFileChooser();
 
@@ -205,11 +215,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 						String filePath = selectedFile.getAbsolutePath();
 						//le fichier selectionné est bien un fichier .skt
 						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterSkt.getExtensions()[0])){
-							saveContent.saveAs(selectedFile);
+							contentSaver.saveAs(selectedFile);
 						}
 						else {
 							File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
-							saveContent.saveAs(f);
+							contentSaver.saveAs(f);
 						}
 					}
 				}
@@ -224,8 +234,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveContent.setDrawingBoardContent(pnlDrawingBoard
-						.getDrawingBoardContent());
+//				contentSaver.setDrawingBoardContent(pnlDrawingBoard
+//						.getDrawingBoardContent());
 				JFileChooser fc = new JFileChooser();
 
 				fc.addChoosableFileFilter(extensionFilterSkt);
@@ -237,11 +247,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					String filePath = selectedFile.getAbsolutePath();
 					//le fichier selectionné est bien un fichier .skt
 					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterSkt.getExtensions()[0])){
-						saveContent.saveAs(selectedFile);
+						contentSaver.saveAs(selectedFile);
 					}
 					else{
 						File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
-						saveContent.saveAs(f);
+						contentSaver.saveAs(f);
 					}
 
 				}
@@ -268,11 +278,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					String filePath = selectedFile.getAbsolutePath();
 					//le fichier selectionné est bien un fichier .png
 					if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterPng.getExtensions()[0])){
-						exportContent.createPng(selectedFile);
+						contentExport.createPng(selectedFile);
 					}
 					else{
 						File f = new File(filePath.concat(".").concat(extensionFilterPng.getExtensions()[0]));
-						exportContent.createPng(f);
+						contentExport.createPng(f);
 					}
 				}
 				
@@ -289,7 +299,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PrinterJob printJob = PrinterJob.getPrinterJob();
-				printJob.setPrintable(new Print(pnlDrawingBoard));
+				printJob.setPrintable(new Printer(pnlDrawingBoard));
 				boolean ok = printJob.printDialog();
 				if (ok) {
 					try {
@@ -411,9 +421,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		/*
 		 * outils pour sauvegarder/ouvrir/exporter des fichiers représentant le plan
 		 */
-		saveContent = new SaveContent(pnlDrawingBoard.getDrawingBoardContent());
-		restoreContent = new RestoreContent(pnlDrawingBoard.getDrawingBoardContent());
-		exportContent = new ExportContent(pnlDrawingBoard);
+		contentSaver = new ContentSaver(pnlDrawingBoard.getDrawingBoardContent());
+		contentRestorer = new ContentRestorer(pnlDrawingBoard.getDrawingBoardContent());
+		contentExport = new ContentExporter(pnlDrawingBoard);
 				
 		/*
 		 * Controles pour utiliser les outils

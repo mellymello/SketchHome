@@ -1,7 +1,6 @@
-package drawableObject;
+package drawableObjects;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
@@ -17,10 +16,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Représente une librairie de meuble.
+ */
 public class FurnitureLibrary implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 6647904402578830435L;
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
@@ -31,31 +31,27 @@ public class FurnitureLibrary implements Serializable {
 	public FurnitureLibrary(String xmlFilePath, String name) {
 		this.xmlFilePath = xmlFilePath;
 		this.name = name;
-		//this.jTreeNode = new DefaultMutableTreeNode(name);
 	}
 	
-//	public FurnitureLibrary(String xmlFilePath, String name, DefaultMutableTreeNode jTreeNode) {
-//		this.xmlFilePath = xmlFilePath;
-//		this.name = name;
-//		this.jTreeNode = jTreeNode;
-//	}
-	
 	/**
-	 * Change the currently used furniture library. Loads a xml File.
-	 * @param libraryFilePath
+	 * Chargement du contenu de la librairie en lisant son fichier XML.
 	 */
 	public void loadLibraryContent() {
 		libraryContent.clear();
 		try {
+				/*
+				 * ouverture du fichier xml
+				 */
 				File fXmlFile = new File(xmlFilePath);
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 			 
-				//optional, but recommended
-				//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 				doc.getDocumentElement().normalize();
 			 
+				/*
+				 * Lecture des noeuds "furniture"
+				 */
 				NodeList nList = doc.getElementsByTagName("furniture");
 			 
 				for (int i = 0; i < nList.getLength(); i++) {
@@ -84,14 +80,20 @@ public class FurnitureLibrary implements Serializable {
 	    }
 	}
 
+	/**
+	 * @return nom de la librairie de meuble
+	 */
+	public String getName () {
+		return name;
+	}
+	/**
+	 * @return contenu de la librairie de meuble
+	 */
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
 	}
 	public DefaultMutableTreeNode getJTreeNode() {
 		return jTreeNode;
-	}
-	public String getName () {
-		return name;
 	}
 	public void setJtreeNode(DefaultMutableTreeNode jTreeNode) {
 		this.jTreeNode = jTreeNode;		

@@ -1,22 +1,25 @@
-package drawableObject;
+package drawableObjects;
 
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Représente le contenu d'un plan dans SketchHome *
+ */
 public class DrawingBoardContent extends Observable {
 	
 	private LinkedList<Wall> walls = new LinkedList<Wall>();
 	private Wall tmpWall;
 	private CtrlPoint selectedCtrlPoint;
+	private Wall selectedWall;
 	private int ctrlPointDiameter;
 	private int wallThickness;
-	private Wall selectedWall;
 	
 	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
 	//le modèle du meuble sélectionné dans la librairie
-	private Furniture selectedModelFurniture;
-	//le meuble sélectionné dans la plan
+	private Furniture selectedFurnitureModel;
+	//le meuble sélectionné dans le plan
 	private Furniture selectedFurniture;
 	
 	private class ModificationObservable extends Observable {
@@ -45,6 +48,18 @@ public class DrawingBoardContent extends Observable {
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {
 		this.ctrlPointDiameter = ctrlPointDiameter;
 		this.setWallThickness(wallThickness);
+	}
+	
+	public void addAdditionObserver(Observer obs) {
+		additionObservable.addObserver(obs);
+	}
+	
+	public void addDeletionObserver(Observer obs) {
+		deletionObservable.addObserver(obs);
+	}
+	
+	public void addModificationObserver(Observer obs) {
+		modificationObservable.addObserver(obs);
 	}
 	
 	public Wall getTmpWall() {
@@ -85,7 +100,6 @@ public class DrawingBoardContent extends Observable {
 
 	public void addFurniture(Furniture f) {
 		placedFurnitures.add(f);
-		
 		additionObservable.sendNotify(f);
 	}
 
@@ -120,34 +134,21 @@ public class DrawingBoardContent extends Observable {
 		modificationObservable.sendNotify(selectedFurniture);
 	}
 
-	public Furniture getSelectedModelFurniture() {
-		return selectedModelFurniture;
+	public Furniture getSelectedFurnitureModel() {
+		return selectedFurnitureModel;
 	}
 
-	public void setSelectedModelFurniture(Furniture selectedModelFurniture) {
-		this.selectedModelFurniture = selectedModelFurniture;
+	public void setSelectedFurnitureModel(Furniture selectedlFurnitureModel) {
+		this.selectedFurnitureModel = selectedlFurnitureModel;
 	}
 
-	
 	public void clearContent(){
 		walls.clear();
 		tmpWall=null;
 		selectedCtrlPoint=null;
 		selectedWall=null;
 		placedFurnitures.clear();
-		selectedModelFurniture=null;
+		selectedFurnitureModel=null;
 		selectedFurniture=null;
-}
-
-	public void addAdditionObserver(Observer obs) {
-		additionObservable.addObserver(obs);
-	}
-	
-	public void addDeletionObserver(Observer obs) {
-		deletionObservable.addObserver(obs);
-	}
-	
-	public void addModificationObserver(Observer obs) {
-		modificationObservable.addObserver(obs);
 	}
 }

@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 
 import com.sun.media.sound.FFT;
 
-import drawableObject.CtrlPoint;
-import drawableObject.Furniture;
-import drawableObject.Wall;
+import drawableObjects.CtrlPoint;
+import drawableObjects.Furniture;
+import drawableObjects.Wall;
 
 public class FurniturePlacementTool extends PlacementTool {
 	
@@ -28,8 +28,8 @@ public class FurniturePlacementTool extends PlacementTool {
 //					me.getY()));
 		}
 		//placement of furniture
-		else if(drawingBoardContent.getSelectedModelFurniture() != null) {
-			Furniture placedFurniture = drawingBoardContent.getSelectedModelFurniture().clone();
+		else if(drawingBoardContent.getSelectedFurnitureModel() != null) {
+			Furniture placedFurniture = drawingBoardContent.getSelectedFurnitureModel().clone();
 			placedFurniture.setPosition(me.getPoint());
 			drawingBoardContent.addFurniture(placedFurniture);
 		}

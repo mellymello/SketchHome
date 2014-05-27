@@ -21,8 +21,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import drawableObject.FurnitureCreationContent;
-import drawableObject.Wall;
+import drawableObjects.FurnitureCreationContent;
+import drawableObjects.Wall;
 import sun.java2d.loops.DrawLine;
 import tools.DrawEllipseTool;
 import tools.DrawLineTool;
@@ -47,12 +47,12 @@ public class FurnitureCreationFrame extends JFrame {
 
 	public FurnitureCreationFrame() {
 		setPreferredSize(new Dimension(500, 400));
-		setTitle("Forniture Creator");
+		setTitle("Furniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		setLayout(new BorderLayout());
 		
-		// creation des outil de travaille
+		// creation des outil de travail
 		drawEllipse = DrawEllipseTool.getInstance();
 		drawLine = DrawLineTool.getInstance();
 		drawPencil = DrawPencilTool.getInstance();

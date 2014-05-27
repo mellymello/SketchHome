@@ -1,7 +1,7 @@
 package tools;
 
-import drawableObject.CtrlPoint;
-import drawableObject.Wall;
+import drawableObjects.CtrlPoint;
+import drawableObjects.Wall;
 
 public abstract class WallTool extends IDrawingTool {
 	

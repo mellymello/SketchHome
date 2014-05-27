@@ -1,4 +1,4 @@
-package features;
+package fileFeatures;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,14 +7,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
-import javax.swing.JFileChooser;
-
-import drawableObject.DrawingBoardContent;
-import drawableObject.Furniture;
-import drawableObject.Wall;
+import drawableObjects.DrawingBoardContent;
+import drawableObjects.Furniture;
+import drawableObjects.Wall;
 
 
-public class SaveContent
+public class ContentSaver
 {
 	private File file;
 	private FileOutputStream fos = null;
@@ -25,7 +23,7 @@ public class SaveContent
 	LinkedList<Wall> listWall;
 	
 	
-	public SaveContent(DrawingBoardContent dbc)
+	public ContentSaver(DrawingBoardContent dbc)
 	{
 		content = dbc;
 	}
@@ -39,7 +37,6 @@ public class SaveContent
 		try {
 			save();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -58,7 +55,6 @@ public class SaveContent
 			try {
 				out.writeObject(f);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -68,7 +64,6 @@ public class SaveContent
 			try {
 				out.writeObject(w);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -80,12 +75,9 @@ public class SaveContent
 		try {
 			fos = new FileOutputStream(file);
 			out = new ObjectOutputStream(fos);
-			
-		}catch(FileNotFoundException fNFE)
-		{
+		}catch(FileNotFoundException fNFE) {
 			fNFE.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -101,14 +93,13 @@ public class SaveContent
 				out.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void setDrawingBoardContent (DrawingBoardContent dbc)
-	{
-		content = dbc;
-	}
+//	public void setDrawingBoardContent (DrawingBoardContent dbc)
+//	{
+//		content = dbc;
+//	}
 	
 	public void setOpenedFile(File f){
 		this.file=f;

@@ -52,8 +52,8 @@ import javax.swing.tree.TreeSelectionModel;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 
-import drawableObject.DrawingBoardContent;
-import drawableObject.Furniture;
+import drawableObjects.DrawingBoardContent;
+import drawableObjects.Furniture;
 
 /**
  * Classe utilisant un JTreee et permettant sa modification en cours de programme.
@@ -73,7 +73,6 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
         
         rootNode = new DefaultMutableTreeNode("Used furnitures");
         treeModel = new DefaultTreeModel(rootNode);
-        treeModel.addTreeModelListener(new MyTreeModelListener());
         tree = new JTree(treeModel);
         tree.setEditable(false);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -141,32 +140,6 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
         }
         return childNode;
     }
-
-    class MyTreeModelListener implements TreeModelListener {
-        public void treeNodesChanged(TreeModelEvent e) {
-            DefaultMutableTreeNode node;
-            node = (DefaultMutableTreeNode)(e.getTreePath().getLastPathComponent());
-
-            /*
-             * If the event lists children, then the changed
-             * node is the child of the node we've already
-             * gotten.  Otherwise, the changed node and the
-             * specified node are the same.
-             */
-
-                int index = e.getChildIndices()[0];
-                node = (DefaultMutableTreeNode)(node.getChildAt(index));
-
-            System.out.println("The user has finished editing the node.");
-            System.out.println("New value: " + node.getUserObject());
-        }
-        public void treeNodesInserted(TreeModelEvent e) {
-        }
-        public void treeNodesRemoved(TreeModelEvent e) {
-        }
-        public void treeStructureChanged(TreeModelEvent e) {
-        }
-    }
     
     private class AdditionListener implements Observer {
 
@@ -192,8 +165,6 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
 		@Override
 		public void update(Observable o, Object arg) {
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
-			
-			//System.out.println("a");
 		}
     	
     }

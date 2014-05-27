@@ -20,10 +20,10 @@ import java.util.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import drawableObject.DrawingBoardContent;
-import drawableObject.Furniture;
-import drawableObject.FurnitureLibrary;
-import drawableObject.Wall;
+import drawableObjects.DrawingBoardContent;
+import drawableObjects.Furniture;
+import drawableObjects.FurnitureLibrary;
+import drawableObjects.Wall;
 import tools.DoorTool;
 import tools.FurniturePlacementTool;
 import tools.ITools;
@@ -37,6 +37,7 @@ import tools.OnWallPlacementTool;
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
 
+	//contenu du plan
 	private DrawingBoardContent drawingBoardContent;
 
 	//si vaut true : on affiche les cotations des éléments du plan
@@ -60,8 +61,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		drawingBoardContent = new DrawingBoardContent(ctrlPointDiameter,
 				wallThickness);
-		// this.ctrlPointDiameter = ctrlPointDiameter;
-		// this.wallThickness = wallThickness;
 		
 		this.showMeasurements = true;
 
@@ -84,21 +83,25 @@ public class DrawingBoard extends JPanel implements MouseListener,
 			drawingBoardContent.addModificationObserver(obs.getModificationObserver());
 	}
 
+	/**
+	 * Méthode réalisant l'affichage du plan
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		Graphics2D g2 = (Graphics2D) g;
 		
+		//activation de l'anti-aliasing
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
-		// dessiner les mur qui sont déjà fixés
+		// dessiner les murs qui sont déjà fixés
 		for (Wall w : drawingBoardContent.getWalls()) {
 			paintWall(g2, w);
 		}
 
-		// dessiner le tmp wall
+		// dessiner le mur en cours de tracement
 		if (drawingBoardContent.getTmpWall() != null) {
 			paintWall(g2, drawingBoardContent.getTmpWall());
 		}
@@ -185,6 +188,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	 * @param w : mur à dessiner
 	 */
 	private void paintWall(Graphics2D g2, Wall w) {
+		//dessiner le mur
 		g2.setColor(Color.black);
 		g2.draw(w.getWallLine());
 
@@ -254,6 +258,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		repaint();
 	}
 
+	/**
+	 * Activer ou désactiver l'affichage des cotations dans le plan
+	 */
 	public void toggleShowMeasurements() {
 		showMeasurements = !showMeasurements;
 	}
@@ -300,21 +307,12 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	public void setSelectedModelFurniture(Furniture furniture) {
-		drawingBoardContent.setSelectedModelFurniture(furniture);
+		drawingBoardContent.setSelectedFurnitureModel(furniture);
 
 	}
-	
-	/**
-	 * Crée un fichier image png du plan dessiné 
-	 */
-	public void createPng() {
-		BufferedImage img = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = img.createGraphics();
-		this.paint(g2);
-		try{
-			ImageIO.write(img, "png", new File("test export.png"));
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+
+	public void clearContent() {
+		drawingBoardContent.clearContent();		
 	}
+
 }

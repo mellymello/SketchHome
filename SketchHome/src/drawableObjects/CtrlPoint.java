@@ -1,17 +1,19 @@
-package drawableObject;
+package drawableObjects;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
+/**
+ * Représente un point de contrôle sur un mur.
+ */
 public class CtrlPoint extends Point2D implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3100241430946391451L;
+	//position
 	private double x;
 	private double y;
+	//représentation graphique
 	private Ellipse2D ctrlPoint;
 	private double diameter;
 

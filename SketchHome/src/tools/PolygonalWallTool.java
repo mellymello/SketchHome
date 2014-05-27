@@ -2,8 +2,8 @@ package tools;
 
 import java.awt.event.MouseEvent;
 
-import drawableObject.CtrlPoint;
-import drawableObject.Wall;
+import drawableObjects.CtrlPoint;
+import drawableObjects.Wall;
 
 public class PolygonalWallTool extends WallTool {
 

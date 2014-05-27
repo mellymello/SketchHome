@@ -1,4 +1,4 @@
-package features;
+package fileFeatures;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -7,11 +7,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class ExportContent 
+public class ContentExporter 
 {
 	private JPanel content;
 	
-	public ExportContent (JPanel p)
+	public ContentExporter (JPanel p)
 	{
 		content = p;
 	}

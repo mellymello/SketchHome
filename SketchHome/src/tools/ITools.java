@@ -2,8 +2,8 @@ package tools;
 
 import java.awt.event.MouseEvent;
 
-import drawableObject.DrawingBoardContent;
-import drawableObject.FurnitureCreationContent;
+import drawableObjects.DrawingBoardContent;
+import drawableObjects.FurnitureCreationContent;
 
 public abstract class ITools {
 	

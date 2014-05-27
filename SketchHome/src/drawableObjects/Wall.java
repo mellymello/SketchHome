@@ -1,15 +1,16 @@
-package drawableObject;
+package drawableObjects;
 
 
 
 import java.awt.geom.Line2D;
 import java.io.Serializable;
 
+/**
+ * Représente un mur tracable sur le plan.
+ *
+ */
 public class Wall implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7846324772480602708L;
 	private CtrlPoint startPoint;
 	private CtrlPoint endPoint;

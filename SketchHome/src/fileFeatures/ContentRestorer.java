@@ -1,21 +1,17 @@
-package features;
+package fileFeatures;
 
-import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
-import drawableObject.DrawingBoardContent;
-import drawableObject.Furniture;
-import drawableObject.Wall;
+import drawableObjects.DrawingBoardContent;
+import drawableObjects.Furniture;
+import drawableObjects.Wall;
 
-public class RestoreContent 
+public class ContentRestorer 
 {
 	File file;
 	DrawingBoardContent content;
@@ -24,7 +20,7 @@ public class RestoreContent
 	
 	LinkedList<Wall> listWall = new LinkedList<Wall>();
 	
-	public RestoreContent (DrawingBoardContent dbc)
+	public ContentRestorer (DrawingBoardContent dbc)
 	{
 		content = dbc;
 	}
@@ -34,9 +30,10 @@ public class RestoreContent
 		openFile(f);
 		Object o;
 		
-		//nettoyage des vieux objets
+		//suppression des objets actuels
 		content.clearContent();
 		
+		//importation des objets du fichier
 		try {
 			while((o=in.readObject()) != null)
 			{
@@ -55,7 +52,6 @@ public class RestoreContent
 		} catch (IOException e) {
 			closeFile();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			closeFile();
 		}
@@ -72,7 +68,6 @@ public class RestoreContent
 		{
 			fNFE.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -88,7 +83,6 @@ public class RestoreContent
 				in.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
