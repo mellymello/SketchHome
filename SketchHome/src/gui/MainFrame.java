@@ -329,7 +329,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//controle pour la création d'un objet personnalisé
 		JMenuItem mntmCreateNew = new JMenuItem("Create new");
 		mnObject.add(mntmCreateNew);
-		mntmPrint.addActionListener(new ActionListener() {
+		mntmCreateNew.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
