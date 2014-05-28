@@ -1,45 +1,50 @@
 package tools;
 
-import gui.FurnitureCreationFrame;
-
+import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
+
 
 public class DrawPencilTool extends IDragDrawTool {
 
 	private static DrawPencilTool instance;
 
-
 	private DrawPencilTool() {
 
 	}
 
-	@Override
-	public void onMouseClicked(MouseEvent me) {
-		System.out.println("pencil gogogo");
-
-	}
-
-	@Override
-	public void onMousePressed(MouseEvent me) {
-
-	}
-
-	@Override
 	public void onMouseDragged(MouseEvent me) {
 
+		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
+		
+
 	}
 
-	@Override
+	public void onMousePressed(MouseEvent me) {
+
+		furnitureCreationContent.getPoints().clear();
+		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
+		
+
+	}
+
 	public void onMouseReleased(MouseEvent me) {
+//
+//		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
+//		furnitureCreationContent.getPoints().clear();
 
 
 	}
 
-	@Override
 	public void onMouseMoved(MouseEvent me) {
-		// TODO Auto-generated method stub
+	}
 
+	public void onMouseClicked(MouseEvent me) {
+	}
+
+	public void onMouseEntered(MouseEvent me) {
+	}
+
+	public void onMouseExited(MouseEvent me) {
 	}
 
 	public static DrawPencilTool getInstance() {

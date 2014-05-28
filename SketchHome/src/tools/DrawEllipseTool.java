@@ -8,7 +8,6 @@ import java.awt.geom.Ellipse2D;
 public class DrawEllipseTool extends IDragDrawTool {
 
 	private static DrawEllipseTool instance;
-	private Ellipse2D tmpEllipse;
 
 	private DrawEllipseTool() {
 
@@ -16,32 +15,30 @@ public class DrawEllipseTool extends IDragDrawTool {
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
-		System.out.println("Ellipse gogogo");
-
+		
 	}
 
 	@Override
 	public void onMousePressed(MouseEvent me) {
-		if (tmpEllipse == null) {
-			tmpEllipse = new Ellipse2D.Double(me.getX(), me.getY(), 0, 0);
-			furnitureCreationContent.setTmpEllipse(tmpEllipse);
-		}
+		furnitureCreationContent.getEllipses().add(new Ellipse2D.Double(me.getX(), me.getY(), 0, 0));
+			
+		
 	}
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-//		if(tmpEllipse != null){
-//			tmpEllipse.setFrame(tmpEllipse.getX(), tmpEllipse.getY(), w, h);
-//		}
+		if(furnitureCreationContent.getEllipses() != null){
+			Ellipse2D tmp = furnitureCreationContent.getEllipses().get(furnitureCreationContent.getEllipses().size()-1);
+			furnitureCreationContent.getEllipses().get(furnitureCreationContent.getEllipses().size()-1).setFrame(tmp.getX(), tmp.getY(), me.getX(), me.getY());
+		}
 
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-		if(tmpEllipse != null){
-			tmpEllipse.setFrame(tmpEllipse.getX(), tmpEllipse.getY(), me.getX(), me.getY());
-			furnitureCreationContent.setTmpEllipse(tmpEllipse);
-			furnitureCreationContent.addEllipse(tmpEllipse);
+		if(furnitureCreationContent.getEllipses() != null){
+			Ellipse2D tmp = furnitureCreationContent.getEllipses().get(furnitureCreationContent.getEllipses().size()-1);
+			furnitureCreationContent.getEllipses().get(furnitureCreationContent.getEllipses().size()-1).setFrame(tmp.getX(), tmp.getY(), me.getX(), me.getY());
 		}
 
 	}

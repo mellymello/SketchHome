@@ -201,6 +201,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseDragged(MouseEvent me) {
+		System.out.println("passing Drag");
 		selectedTool.onMouseDragged(me);
 
 		repaint();
