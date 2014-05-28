@@ -749,9 +749,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		});
 		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_persoB.png")));
+				.getResource("/gui/img/librairieCustomB.png")));
 		btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_perso.png")));
+				.getResource("/gui/img/librairieCustom.png")));
 		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
 		gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
 		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 5);
