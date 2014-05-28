@@ -47,7 +47,9 @@ import fileFeatures.ContentExporter;
 import fileFeatures.ContentRestorer;
 import fileFeatures.ContentSaver;
 import fileFeatures.Printer;
+
 import java.awt.Component;
+
 import javax.swing.SwingConstants;
 
 /**
@@ -320,6 +322,17 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		});
 
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFile.add(mntmExit);
+		mntmExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
+		
 		/*
 		 * Menu d'opération sur l'objet actuellement sélectionné 
 		 */
@@ -417,6 +430,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		});
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		
 
 		
 		//affichage du plan
