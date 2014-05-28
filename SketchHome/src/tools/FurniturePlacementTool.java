@@ -60,9 +60,9 @@ public class FurniturePlacementTool extends PlacementTool {
 	}
 	
 	public Furniture furnitureDetect(int x, int y) {
-		for (Furniture f : drawingBoardContent.getFurnitures()) {
-			if (f.contains(x,y)) {
-				return f;
+		for (int i = drawingBoardContent.getFurnitures().size()-1; i >= 0; i--) {
+			if (drawingBoardContent.getFurnitures().get(i).contains(x,y)) {
+				return drawingBoardContent.getFurnitures().get(i);
 			}
 		}
 		return null;

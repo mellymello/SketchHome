@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -152,7 +156,21 @@ public class Furniture implements Cloneable, Serializable {
 	}
 	
 	public boolean contains(int x, int y) {
-		return x >= position.x && x <= position.x + dimension.width && y >= position.y && y <= position.y + dimension.height;
+		Polygon p = new Polygon();
+		/* * redéfinition du polygone conteneur de l'image */ 
+		int furnitureCenterX = position.x + dimension.width /2; 
+		int furnitureCenterY = position.y + dimension.height /2; 
+		AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(orientation), furnitureCenterX, furnitureCenterY); 
+		Rectangle r = new Rectangle(position.x, position.y, dimension.width, dimension.height); 
+		//parcours des "boundaries" du rectangle de l'image auquel on applique la rotation et construction du polygone représentant l'image trournée avec chaque coins des "boundaries" 
+		PathIterator i = r.getPathIterator(at); 
+		while (!i.isDone()) { 
+			double[] xy = new double[2]; 
+			i.currentSegment(xy); 
+			p.addPoint((int)xy[0], (int)xy[1]); 
+			i.next(); 
+			}
+		return p.contains(new Point(x, y));
 	}
 
 	public FurnitureLibrary getLibrary() {

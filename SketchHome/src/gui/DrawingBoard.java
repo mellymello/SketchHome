@@ -7,12 +7,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -34,26 +36,29 @@ import tools.SimpleWallTool;
 import tools.OnWallPlacementTool;
 
 /**
- * JPanel représentant le plan dessiné dans SketchHome.
+ * JPanel reprÃ©sentant le plan dessinÃ© dans SketchHome.
  */
 public class DrawingBoard extends JPanel implements MouseListener,
 		MouseMotionListener {
 
-	//contenu du plan
+	// contenu du plan
 	private DrawingBoardContent drawingBoardContent;
 
-	//si vaut true : on affiche les cotations des éléments du plan
+	// si vaut true : on affiche les cotations des Ã©lÃ©ments du plan
 	private boolean showMeasurements;
 
-	//outils utilisables pour dessiner le plan
+	// outils utilisables pour dessiner le plan
 	private SimpleWallTool simpleWallTool = SimpleWallTool.getInstance();
-	private PolygonalWallTool polygonalWallTool = PolygonalWallTool.getInstance();
-	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool.getInstance();
-	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool.getInstance();
-	//outil actuellement utilisé
+	private PolygonalWallTool polygonalWallTool = PolygonalWallTool
+			.getInstance();
+	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool
+			.getInstance();
+	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool
+			.getInstance();
+	// outil actuellement utilisÃ©
 	private ITools selectedTool = simpleWallTool;
 
-	//librairie de meuble actuellement sélectionnée
+	// librairie de meuble actuellement sÃ©lectionnÃ©e
 	private FurnitureLibrary selectedFurnitureLibrary;
 
 	public DrawingBoard(int width, int height, int ctrlPointDiameter,
@@ -63,7 +68,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		drawingBoardContent = new DrawingBoardContent(ctrlPointDiameter,
 				wallThickness);
-		
+
 		this.showMeasurements = true;
 
 		addMouseListener(this);
@@ -75,18 +80,19 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		onWallPlacementTool.setDrawingBoardContent(drawingBoardContent);
 		onWallPlacementTool.setWallTool(simpleWallTool);
 	}
-	
+
 	public void addContentObserver(DrawingBoardContentObserver obs) {
-		if(obs.getAdditionObserver() != null)
+		if (obs.getAdditionObserver() != null)
 			drawingBoardContent.addAdditionObserver(obs.getAdditionObserver());
-		if(obs.getDeletionObserver() != null)
+		if (obs.getDeletionObserver() != null)
 			drawingBoardContent.addDeletionObserver(obs.getDeletionObserver());
-		if(obs.getModificationObserver() != null)
-			drawingBoardContent.addModificationObserver(obs.getModificationObserver());
+		if (obs.getModificationObserver() != null)
+			drawingBoardContent.addModificationObserver(obs
+					.getModificationObserver());
 	}
 
 	/**
-	 * Méthode réalisant l'affichage du plan
+	 * MÃ©thode rÃ©alisant l'affichage du plan
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -98,7 +104,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2.setStroke(new BasicStroke(drawingBoardContent.getWallThickness()));
-		// dessiner les murs qui sont déjà fixés
+		// dessiner les murs qui sont dÃ©jÃ  fixÃ©s
 		for (Wall w : drawingBoardContent.getWalls()) {
 			paintWall(g2, w);
 		}
@@ -111,163 +117,79 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		// dessiner les meubles
 		for (Furniture furniture : drawingBoardContent.getFurnitures()) {
 			if (furniture.getVisible()) {
-				//version sans rotation
-//				g.drawImage(furniture.getLoadedPicture(),
-//				 furniture.getPosition().x, furniture.getPosition().y,
-//				 (int)furniture.getDimension().getWidth(),
-//				 (int)furniture.getDimension().getHeight(),
-//				 furniture.getColor(), null);
-
-				Image img;
-				img = furniture.getLoadedPicture();
-
-				// int diagonaleImg =
-				// (int)Math.sqrt((int)furniture.getDimension().getWidth() *
-				// (int)furniture.getDimension().getWidth() +
-				// (int)furniture.getDimension().getHeight() *
-				// (int)furniture.getDimension().getHeight());
-
-				// Create a buffered image with transparency
-//				BufferedImage bimage = new BufferedImage(
-//						img.getWidth(null), img.getHeight(null),
-//						BufferedImage.TYPE_INT_ARGB);
-				// BufferedImage bimage = new BufferedImage(diagonaleImg,
-				// diagonaleImg, BufferedImage.TYPE_INT_ARGB);
-
-				// Draw the image on to the buffered image
-//				Graphics2D bGr = bimage.createGraphics();
-//				bGr.drawImage(img, 0, 0, null);
-//				bGr.dispose();
-
-				// Drawing the rotated image at the required drawing
-				// locations
-//				AffineTransform tx = AffineTransform.getRotateInstance(Math
-//						.toRadians(furniture.getOrientation()), furniture
-//						.getDimension().getWidth() / 2, furniture
-//						.getDimension().getHeight() / 2);
-//				AffineTransformOp op = new AffineTransformOp(tx,
-//						AffineTransformOp.TYPE_BILINEAR);
-				// g.drawImage(op.filter(bimage, null),
-				// furniture.getPosition().x, furniture.getPosition().y,
-				// diagonaleImg, diagonaleImg, Color.BLUE, null);
-//				g.drawImage(op.filter(bimage, null), furniture
-//						.getPosition().x, furniture.getPosition().y,
-//						(int) furniture.getDimension().getWidth(),
-//						(int) furniture.getDimension().getHeight(),
-//						furniture.getColor(), null);
-				 
-				//TODO : rotation ok mais dimension non
-//				AffineTransform transf = new AffineTransform(); 
-//				transf.translate(furniture.getPosition().x,furniture.getPosition().y); 
-//				transf.rotate(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth() / 2, furniture.getDimension().getHeight() / 2);
-//				g2.drawImage(img, transf, null);
-				
-				
-				//TODO : VERSION QUI FONTIONNE ENFIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!! T-T
 				/*
-				 * Affichage de l'image du meuble en y appliquant une rotation
-				 */
+				* Affichage de l'image du meuble en y appliquant une rotation
+				*/
+				//copie de l'image dans un BufferedImage de travail 
 				BufferedImage bimage = new BufferedImage((int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), BufferedImage.TYPE_INT_ARGB);
 				Graphics2D tempG2D = bimage.createGraphics();
-				tempG2D.drawImage(img,
-						 0, 0,
-						 (int)furniture.getDimension().getWidth(),
-						 (int)furniture.getDimension().getHeight(),
-						 furniture.getColor(), null);
+				tempG2D.drawImage(furniture.getLoadedPicture(),
+				0, 0,
+				(int)furniture.getDimension().getWidth(),
+				(int)furniture.getDimension().getHeight(),
+				furniture.getColor(), null);
 				tempG2D.dispose();
 
+				//copie avec rotation du BufferedImage dans le Graphics d'affichage
 				AffineTransform transf = new AffineTransform(); 
 				transf.translate(furniture.getPosition().x,furniture.getPosition().y); 
 				transf.rotate(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth() / 2, furniture.getDimension().getHeight() / 2);
 				g2.drawImage(bimage, transf, null);
-				
-//				BufferedImage bimage = new BufferedImage((int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), BufferedImage.TYPE_INT_ARGB);
-//				Graphics2D g6 = bimage.createGraphics();
-//				g6.drawImage(img, transf, null);
-//				g6.dispose();
-//				
-//				//g2.drawImage(bimage, null, furniture.getPosition().x, furniture.getPosition().y);
-//				g2.drawImage(bimage, furniture
-//				.getPosition().x, furniture.getPosition().y,
-//				(int) furniture.getDimension().getWidth(),
-//				(int) furniture.getDimension().getHeight(),
-//				furniture.getColor(), null);
-
-				
-				//http://flyingdogz.wordpress.com/2008/02/11/image-rotate-in-java-2-easier-to-use/
-				
-//			    double sin = Math.abs(Math.sin(Math.toRadians(furniture.getOrientation()))), cos = Math.abs(Math.cos(Math.toRadians(furniture.getOrientation())));
-//			    int w = img.getWidth(null), h = img.getHeight(null);
-//			    int neww = (int)Math.floor(w*cos+h*sin), newh = (int)Math.floor(h*cos+w*sin);
-//			    BufferedImage result = new BufferedImage(neww, newh, Transparency.TRANSLUCENT);
-//			    Graphics2D g4 = result.createGraphics();
-//			    g4.translate((neww-w)/2, (newh-h)/2);
-//			    g4.rotate(Math.toRadians(furniture.getOrientation()), w/2, h/2);
-//			    g4.drawRenderedImage((BufferedImage)img, null);
-//			    g4.dispose();
-//
-//			    g2.drawImage(result, furniture.getPosition().x, furniture.getPosition().y, neww, newh, furniture.getColor(), null);
-				
-				//TODO : retour au point de départ -_-
-//				BufferedImage rotatedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-//				Graphics2D g3 = (Graphics2D) rotatedImage.getGraphics();
-//				AffineTransform transf = new AffineTransform(); 
-//				transf.rotate(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth() / 2, furniture.getDimension().getHeight() / 2);
-//				g3.drawImage(img, transf, null);
-//				
-//				g2.drawImage(rotatedImage, furniture.getPosition().x, furniture.getPosition().y, furniture.getDimension().width, furniture.getDimension().height, null);
-				
-				
+				 
+				int furnitureCenterX = furniture.getPosition().x + furniture.getDimension().width /2;
+				int furnitureCenterY = furniture.getPosition().y + furniture.getDimension().height /2;
+				 
+				System.out.println("position : " + furnitureCenterX + " " + furnitureCenterY);
 
 				//affichage des cotations
 				if (showMeasurements) {
-					g2.setColor(Color.BLACK);
+				//largeur affichÃ©e en haut au millieu de l'image
+				   Point2D initialWidthMeasurementPosition = new Point(furniture.getPosition().x + furniture.getDimension().width / 2, furniture.getPosition().y);
+				   Point2D widthMeasurementPosition = new Point2D.Double();
+				   //hauteur affichÃ©e Ã  droite au millieu de l'image
+				   Point2D initialHeightMeasurementPosition = new Point(furniture.getPosition().x + furniture.getDimension().width, furniture.getPosition().y + furniture.getDimension().height / 2);
+				   Point2D heightMeasurementPosition = new Point2D.Double();
+				    
+				   //rotation des positions d'affichage des cotations
+				   AffineTransform transformationMeasurementPoint = new AffineTransform(); 
+				   transformationMeasurementPoint.rotate(Math.toRadians(furniture.getOrientation()), furnitureCenterX, furnitureCenterY);
+				   transformationMeasurementPoint.transform ( initialWidthMeasurementPosition, widthMeasurementPosition );
+				   transformationMeasurementPoint.transform ( initialHeightMeasurementPosition, heightMeasurementPosition );
 
-					// largeur affichée en bas de l'image au milleu
-					g2.drawString(
-							String.valueOf(furniture.getDimension().width),
-							(int) (furniture.getPosition().x + (furniture.getDimension().width - g2.getFontMetrics().stringWidth(String.valueOf(furniture.getDimension().width))) / 2
-									),
-							(int) (furniture.getPosition().y
-									+ furniture.getDimension().height + g2
-									.getFontMetrics().getHeight()));
-
-					//TODO : version trafiquée qui ne fonctionne pas
-					// hauteur affichée à droite de l'image au millieu
-					g2.drawString(
-							String.valueOf(furniture.getDimension().height),
-							(int) (furniture.getPosition().x + Math.cos(Math.toRadians(furniture.getOrientation())) * furniture.getDimension().width),
-							(int) (furniture.getPosition().y + Math.sin(Math.toRadians(furniture.getOrientation())) * furniture.getDimension().height) / 2);
+				   g2.setColor(Color.BLACK);
+				   g2.drawString(String.valueOf(furniture.getDimension().width),(int)widthMeasurementPosition.getX(),(int)widthMeasurementPosition.getY());
+				   g2.drawString(String.valueOf(furniture.getDimension().height),(int)heightMeasurementPosition.getX(),(int)heightMeasurementPosition.getY());
 				}
 			}
 		}
-
 	}
-	
+
 	/**
 	 * Dessiner un mur sur le plan.
-	 * @param g2 : espace de dessin
-	 * @param w : mur à dessiner
+	 * 
+	 * @param g2
+	 *            : espace de dessin
+	 * @param w
+	 *            : mur Ã  dessiner
 	 */
 	private void paintWall(Graphics2D g2, Wall w) {
-		//dessiner le mur
+		// dessiner le mur
 		g2.setColor(Color.black);
 		g2.draw(w.getWallLine());
 
-		//afficher les cotations
+		// afficher les cotations
 		if (showMeasurements) {
 			DecimalFormat df = new DecimalFormat("#.00");
 			String wallLength = df.format(w.getWallLength());
 			if (w.getWallLength() > 0) {
 				g2.setColor(Color.blue);
-				g2.drawString(wallLength, (int) (((w
-						.getCtrlPointStart().getX() + w.getCtrlPointEnd()
-						.getX()) / 2))
-						- drawingBoardContent.getWallThickness() * 3,
+				g2.drawString(wallLength,
+						(int) (((w.getCtrlPointStart().getX() + w
+								.getCtrlPointEnd().getX()) / 2))
+								- drawingBoardContent.getWallThickness() * 3,
 						(int) ((w.getCtrlPointStart().getY() + w
 								.getCtrlPointEnd().getY()) / 2)
-								- drawingBoardContent.getWallThickness()
-								* 3);
+								- drawingBoardContent.getWallThickness() * 3);
 			}
 		}
 
@@ -321,7 +243,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	/**
-	 * Activer ou désactiver l'affichage des cotations dans le plan
+	 * Activer ou dÃ©sactiver l'affichage des cotations dans le plan
 	 */
 	public void toggleShowMeasurements() {
 		showMeasurements = !showMeasurements;
@@ -334,8 +256,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	public PolygonalWallTool getPolygonalWallTool() {
 		return polygonalWallTool;
 	}
-	
-	public OnWallPlacementTool getonWallPlacementTool(){
+
+	public OnWallPlacementTool getonWallPlacementTool() {
 		return onWallPlacementTool;
 	}
 
