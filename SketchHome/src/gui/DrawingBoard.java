@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.event.MouseEvent;
@@ -139,7 +140,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				int furnitureCenterX = furniture.getPosition().x + furniture.getDimension().width /2;
 				int furnitureCenterY = furniture.getPosition().y + furniture.getDimension().height /2;
 				 
-				System.out.println("position : " + furnitureCenterX + " " + furnitureCenterY);
+				if (furniture.getSelected()) {
+					g2.setColor(Color.BLUE);
+					g2.drawPolygon(furniture.getPathPolygon());
+				}
 
 				//affichage des cotations
 				if (showMeasurements) {

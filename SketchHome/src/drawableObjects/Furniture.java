@@ -35,6 +35,7 @@ public class Furniture implements Cloneable, Serializable {
 	private Point position;
 	private boolean locked;
 	private boolean visible;
+	private boolean isSelected;
 	
 	private transient Image loadedPicture;
 	
@@ -156,6 +157,10 @@ public class Furniture implements Cloneable, Serializable {
 	}
 	
 	public boolean contains(int x, int y) {
+		return getPathPolygon().contains(new Point(x, y));
+	}
+	
+	public Polygon getPathPolygon() {
 		Polygon p = new Polygon();
 		/* * redéfinition du polygone conteneur de l'image */ 
 		int furnitureCenterX = position.x + dimension.width /2; 
@@ -164,13 +169,22 @@ public class Furniture implements Cloneable, Serializable {
 		Rectangle r = new Rectangle(position.x, position.y, dimension.width, dimension.height); 
 		//parcours des "boundaries" du rectangle de l'image auquel on applique la rotation et construction du polygone représentant l'image trournée avec chaque coins des "boundaries" 
 		PathIterator i = r.getPathIterator(at); 
-		while (!i.isDone()) { 
-			double[] xy = new double[2]; 
-			i.currentSegment(xy); 
-			p.addPoint((int)xy[0], (int)xy[1]); 
-			i.next(); 
+		while (!i.isDone()) {
+			double[] xy = new double[2];
+			i.currentSegment(xy);
+			if (!(xy[0] == 0 && xy[1] == 0)) {
+				p.addPoint((int)xy[0], (int)xy[1]);
 			}
-		return p.contains(new Point(x, y));
+			i.next(); 
+		}
+		return p;
+	}
+	
+	public boolean getSelected() {
+		return isSelected;
+	}
+	public void setSelected(boolean selected) {
+		this.isSelected = selected;
 	}
 
 	public FurnitureLibrary getLibrary() {

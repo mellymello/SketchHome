@@ -1,5 +1,6 @@
 package drawableObjects;
 
+import java.awt.Polygon;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -130,7 +131,11 @@ public class DrawingBoardContent extends Observable {
 	}
 
 	public void setSelectedFurniture(Furniture selectedFurniture) {
+		if (this.selectedFurniture != null) {
+			this.selectedFurniture.setSelected(false);
+		}
 		this.selectedFurniture = selectedFurniture;
+		this.selectedFurniture.setSelected(true);
 		modificationObservable.sendNotify(selectedFurniture);
 	}
 
