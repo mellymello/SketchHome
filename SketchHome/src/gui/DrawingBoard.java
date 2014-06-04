@@ -11,6 +11,8 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -40,7 +42,7 @@ import tools.OnWallPlacementTool;
  * JPanel représentant le plan dessiné dans SketchHome.
  */
 public class DrawingBoard extends JPanel implements MouseListener,
-		MouseMotionListener {
+		MouseMotionListener, KeyListener {
 
 	// contenu du plan
 	private DrawingBoardContent drawingBoardContent;
@@ -74,6 +76,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addKeyListener(this);
+		setFocusable(true);
 
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
@@ -97,7 +101,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		//activation de l'anti-aliasing
@@ -205,7 +209,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseDragged(MouseEvent me) {
-		System.out.println("passing Drag");
 		selectedTool.onMouseDragged(me);
 
 		repaint();
@@ -221,6 +224,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		selectedTool.onMouseClicked(me);
+		
+		//on a besoin du focus pour détecter les touches claviers
+		requestFocus();
 
 		repaint();
 	}
@@ -236,7 +242,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	@Override
 	public void mousePressed(MouseEvent me) {
 		selectedTool.onMousePressed(me);
-
+		
+		//on a besoin du focus pour détecter les touches claviers
+		requestFocus();
+		
 		repaint();
 	}
 
@@ -298,5 +307,29 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	public void setSelectedModelFurniture(Furniture furniture) {
 		drawingBoardContent.setSelectedFurnitureModel(furniture);
 
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		//supprimer le meuble avec la touche delete
+		if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+			if(drawingBoardContent.getSelectedFurniture() != null) {
+				drawingBoardContent.deleteFurniture(drawingBoardContent.getSelectedFurniture());
+				repaint();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+
+	public void modifyFurniture(Furniture f) {
+		drawingBoardContent.getModificationObservable().sendNotify(f);
 	}
 }

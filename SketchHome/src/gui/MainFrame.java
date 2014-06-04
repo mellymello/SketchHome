@@ -50,8 +50,6 @@ import fileFeatures.Printer;
 
 import java.awt.Component;
 
-import javax.swing.SwingConstants;
-
 /**
  * Interface graphique de l'application SketchHome
  */
@@ -61,24 +59,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 	private static final int WINDOW_WIDTH = 800;
 	private static final int CTRL_POINT_DIAMETER = 10;
 	private static final int WALL_THICKNESS = 5;
-
-	// private DefaultMutableTreeNode bedRoomJtreeNode;
-	// private DefaultMutableTreeNode livingRoomJtreeNode;
-	// private DefaultMutableTreeNode kitchenJtreeNode;
-	// private DefaultMutableTreeNode diningRoomJtreeNode;
-	// private DefaultMutableTreeNode bathroomLibraryJtreeNode;
-	// private DefaultMutableTreeNode officeJtreeNode;
-	// private DefaultMutableTreeNode windowJtreeNode;
-	// private DefaultMutableTreeNode doorJtreeNode;
-
-	// private FurnitureLibrary bedRoomLibrary;
-	// private FurnitureLibrary livingRoomLibrary;
-	// private FurnitureLibrary kitchenLibrary;
-	// private FurnitureLibrary diningRoomLibrary;
-	// private FurnitureLibrary bathroomLibrary;
-	// private FurnitureLibrary officeLibrary;
-	// private FurnitureLibrary windowLibrary;
-	// private FurnitureLibrary doorLibrary;
 
 	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary(
 			"library/bedroom.xml", "Bedroom");
@@ -96,6 +76,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			"library/window.xml", "Window");
 	private FurnitureLibrary doorLibrary = new FurnitureLibrary(
 			"library/door.xml", "Door");
+	private FurnitureLibrary stairLibrary = new FurnitureLibrary(
+			"library/stair.xml", "Stair");
 	private FurnitureLibrary customLibrary = new FurnitureLibrary(
 			"library/custom.xml", "Custom furnitures");
 
@@ -130,20 +112,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 	public MainFrame() {
 
-		// bedRoomLibrary = new FurnitureLibrary("library/bedroom.xml",
-		// "Bedroom");
-		// livingRoomLibrary = new FurnitureLibrary("library/livingroom.xml",
-		// "Living room");
-		// kitchenLibrary = new
-		// FurnitureLibrary("library/kitchen.xml"," Kitchen");
-		// diningRoomLibrary = new FurnitureLibrary("library/diningroom.xml",
-		// "Dining room");
-		// bathroomLibrary = new FurnitureLibrary("library/bathroom.xml",
-		// "Bathroom");
-		// officeLibrary = new FurnitureLibrary("library/office.xml", "Office");
-		// windowLibrary = new FurnitureLibrary("library/window.xml","Window");
-		// doorLibrary = new FurnitureLibrary("library/door.xml","Door");
-
 		setTitle("SketchHome");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1124, 679);
@@ -167,6 +135,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setTitle("SketchHome");
 				pnlDrawingBoard.getDrawingBoardContent().clearContent();
 				contentSaver.setOpenedFile(null);
 				repaint();
@@ -328,7 +297,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				System.exit(0);
 			}
 		});
@@ -452,10 +420,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlTools.add(pnlToolsBtn);
 		GridBagLayout gbl_pnlToolsBtn = new GridBagLayout();
 		gbl_pnlToolsBtn.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_pnlToolsBtn.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+		gbl_pnlToolsBtn.rowHeights = new int[] { 0, 0, 0, 0 };
 		gbl_pnlToolsBtn.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0 };
-		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
 
@@ -518,7 +486,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
 		//outils pour zomme avant dans l'affichage du plan 
-		JButton btnZoomplus = new JButton("");
+		JButton btnZoomplus = new JButton("Zoom +");
 		btnZoomplus.setToolTipText("Zoom avant");
 		btnZoomplus.setBorderPainted(false);
 		btnZoomplus.setMargin(new Insets(0, 0, 0, 0));
@@ -540,7 +508,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		});
 		
 		//outils pour zomme arrière dans l'affichage du plan
-		JButton btnZoomminus = new JButton("");
+		JButton btnZoomminus = new JButton("Zoom -");
 		btnZoomminus.setToolTipText("Zoom arrière");
 		btnZoomminus.setBorderPainted(false);
 		btnZoomminus.setMargin(new Insets(0, 0, 0, 0));
@@ -561,7 +529,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnBedroom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnBedroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBedroom.gridx = 0;
-		gbc_btnBedroom.gridy = 2;
+		gbc_btnBedroom.gridy = 1;
 		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
 
 		//sélection de la librairie Office
@@ -584,7 +552,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnOffice.fill = GridBagConstraints.VERTICAL;
 		gbc_btnOffice.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOffice.gridx = 1;
-		gbc_btnOffice.gridy = 2;
+		gbc_btnOffice.gridy = 1;
 		pnlToolsBtn.add(btnOffice, gbc_btnOffice);
 
 		//sélection de la librairie Kitchen
@@ -607,7 +575,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnKitchen.fill = GridBagConstraints.VERTICAL;
 		gbc_btnKitchen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnKitchen.gridx = 2;
-		gbc_btnKitchen.gridy = 2;
+		gbc_btnKitchen.gridy = 1;
 		pnlToolsBtn.add(btnKitchen, gbc_btnKitchen);
 
 		//sélection de la librairie Living Room
@@ -632,7 +600,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnLivingroom.fill = GridBagConstraints.VERTICAL;
 		gbc_btnLivingroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLivingroom.gridx = 3;
-		gbc_btnLivingroom.gridy = 2;
+		gbc_btnLivingroom.gridy = 1;
 		pnlToolsBtn.add(btnLivingroom, gbc_btnLivingroom);
 
 		//sélection de la librairie Bathroom
@@ -657,7 +625,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnBathroom.fill = GridBagConstraints.BOTH;
 		gbc_btnBathroom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBathroom.gridx = 4;
-		gbc_btnBathroom.gridy = 2;
+		gbc_btnBathroom.gridy = 1;
 		pnlToolsBtn.add(btnBathroom, gbc_btnBathroom);
 
 		//sélection de la librairie Dinig room
@@ -682,7 +650,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnDiningRoom.fill = GridBagConstraints.BOTH;
 		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDiningRoom.gridx = 5;
-		gbc_btnDiningRoom.gridy = 2;
+		gbc_btnDiningRoom.gridy = 1;
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
 
 		//outils pour tracer des murs simples
@@ -704,33 +672,33 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		});
 		
-				//sélection de la librairie objets personnalisés
-				JButton btnCustomfurniture = new JButton("");
-				btnCustomfurniture.setToolTipText("Custom furnitures");
-				btnCustomfurniture.setBorderPainted(false);
-				btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
-				btnCustomfurniture.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selectLibrary(customLibrary);
-						pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-								.getFurniturePlacementTool());
-					}
-				});
-				btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/librairieCustomB.png")));
-				btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/librairieCustom.png")));
-				GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
-				gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
-				gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 0);
-				gbc_btnCustomfurniture.gridx = 6;
-				gbc_btnCustomfurniture.gridy = 2;
-				pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
+		//sélection de la librairie objets personnalisés
+		JButton btnCustomfurniture = new JButton("");
+		btnCustomfurniture.setToolTipText("Custom furnitures");
+		btnCustomfurniture.setBorderPainted(false);
+		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
+		btnCustomfurniture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(customLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
+		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/librairieCustomB.png")));
+		btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/librairieCustom.png")));
+		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
+		gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
+		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 0);
+		gbc_btnCustomfurniture.gridx = 6;
+		gbc_btnCustomfurniture.gridy = 1;
+		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
 		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall.gridx = 0;
-		gbc_btnWall.gridy = 4;
+		gbc_btnWall.gridy = 2;
 		pnlToolsBtn.add(btnWall, gbc_btnWall);
 
 		//pour tracer des murs continus
@@ -755,7 +723,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnWall2.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall2.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWall2.gridx = 1;
-		gbc_btnWall2.gridy = 4;
+		gbc_btnWall2.gridy = 2;
 		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
 
 		//sélection de la librairie fenêtre
@@ -778,7 +746,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnWindow.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWindow.insets = new Insets(0, 0, 0, 5);
 		gbc_btnWindow.gridx = 2;
-		gbc_btnWindow.gridy = 4;
+		gbc_btnWindow.gridy = 2;
 		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
 
 		//sélection de la librairie porte
@@ -801,11 +769,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnDoor.fill = GridBagConstraints.VERTICAL;
 		gbc_btnDoor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnDoor.gridx = 3;
-		gbc_btnDoor.gridy = 4;
+		gbc_btnDoor.gridy = 2;
 		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
 
 		//sélection de la librairie escalier
 		JButton btnStair = new JButton("");
+		btnStair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(stairLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
 		btnStair.setBorderPainted(false);
 		btnStair.setMargin(new Insets(0, 0, 0, 0));
 		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class
@@ -819,7 +794,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnStair.fill = GridBagConstraints.BOTH;
 		gbc_btnStair.insets = new Insets(0, 0, 0, 5);
 		gbc_btnStair.gridx = 4;
-		gbc_btnStair.gridy = 4;
+		gbc_btnStair.gridy = 2;
 		pnlToolsBtn.add(btnStair, gbc_btnStair);
 
 		/*
@@ -1078,6 +1053,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					f.setLocked(checkBoxLocked.isSelected());
 					f.getJtreeNode().setUserObject(f.getName());
 					
+					pnlDrawingBoard.modifyFurniture(f);
+					
 					repaint();
 				}
 			}
@@ -1237,5 +1214,4 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		}
     	
     }
-
 }

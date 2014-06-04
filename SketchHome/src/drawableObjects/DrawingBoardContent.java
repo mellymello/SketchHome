@@ -23,7 +23,7 @@ public class DrawingBoardContent extends Observable {
 	//le meuble sélectionné dans le plan
 	private Furniture selectedFurniture;
 	
-	private class ModificationObservable extends Observable {
+	public class ModificationObservable extends Observable {
 		public void sendNotify(Furniture modifiedFurniture) {
 			setChanged();
 			notifyObservers(modifiedFurniture);
@@ -61,6 +61,10 @@ public class DrawingBoardContent extends Observable {
 	
 	public void addModificationObserver(Observer obs) {
 		modificationObservable.addObserver(obs);
+	}
+	
+	public ModificationObservable getModificationObservable() {
+		return modificationObservable;
 	}
 	
 	public Wall getTmpWall() {
@@ -154,7 +158,9 @@ public class DrawingBoardContent extends Observable {
 		tmpWall=null;
 		selectedCtrlPoint=null;
 		selectedWall=null;
-		placedFurnitures.clear();
+		while(placedFurnitures.size() > 0) {
+			deleteFurniture(placedFurnitures.getFirst());
+		}
 		selectedFurnitureModel=null;
 		selectedFurniture=null;
 	}
