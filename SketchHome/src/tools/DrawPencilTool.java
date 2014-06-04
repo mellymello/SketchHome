@@ -21,7 +21,7 @@ public class DrawPencilTool extends IDragDrawTool {
 
 	public void onMousePressed(MouseEvent me) {
 
-		furnitureCreationContent.getPoints().clear();
+//		furnitureCreationContent.getPoints().clear();
 		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
 		
 
