@@ -135,8 +135,10 @@ public class DrawingBoardContent extends Observable {
 			this.selectedFurniture.setSelected(false);
 		}
 		this.selectedFurniture = selectedFurniture;
-		this.selectedFurniture.setSelected(true);
-		modificationObservable.sendNotify(selectedFurniture);
+		if(selectedFurniture != null) {
+			selectedFurniture.setSelected(true);
+			modificationObservable.sendNotify(selectedFurniture);
+		}
 	}
 
 	public Furniture getSelectedFurnitureModel() {

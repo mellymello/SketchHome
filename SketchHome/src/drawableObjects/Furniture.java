@@ -24,7 +24,7 @@ public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;
 	private static int count = 0;
 	
-	private int id;
+	private int id; //TODO : delete ?
 	private String name;
 	private String description;
 	private Dimension dimension;
@@ -35,6 +35,7 @@ public class Furniture implements Cloneable, Serializable {
 	private Point position;
 	private boolean locked;
 	private boolean visible;
+	
 	private boolean isSelected;
 	
 	private transient Image loadedPicture;
@@ -160,6 +161,9 @@ public class Furniture implements Cloneable, Serializable {
 		return getPathPolygon().contains(new Point(x, y));
 	}
 	
+	/**
+	 * @return un polygon représentant le rectangle de sélection de l'image
+	 */
 	public Polygon getPathPolygon() {
 		Polygon p = new Polygon();
 		/* * redéfinition du polygone conteneur de l'image */ 

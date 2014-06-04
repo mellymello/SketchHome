@@ -13,20 +13,22 @@ import drawableObjects.Wall;
 public class FurniturePlacementTool extends PlacementTool {
 	
 	private static FurniturePlacementTool instance;
+	//position relative de la souris par rapport au coin haut-gauche de l'objet
+	//utilisé pour déplacer les meubles
 	private int relX;
 	private int relY;
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
-		//delete furniture with right clic
+		//suppression d'un meuble avec le clic droit
 		if(me.getButton() == MouseEvent.BUTTON3) {
 			Furniture f = furnitureDetect(me.getX(),me.getY());
 			if(f != null && !f.getLocked()) {
 				drawingBoardContent.deleteFurniture(f);
 			}
 		}
-		//placement of furniture
-		else if(drawingBoardContent.getSelectedFurnitureModel() != null) {
+		//placement d'un meuble, on ne peut pas les superposer
+		else if(drawingBoardContent.getSelectedFurnitureModel() != null && furnitureDetect(me.getX(), me.getY()) == null) {
 			Furniture placedFurniture = drawingBoardContent.getSelectedFurnitureModel().clone();
 			placedFurniture.setPosition(me.getPoint());
 			drawingBoardContent.addFurniture(placedFurniture);
