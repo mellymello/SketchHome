@@ -351,18 +351,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		});
 		mnObject.add(mntmCreateNew);
 
-		//controle pour cacher un objet
-		JMenuItem mntmHide = new JMenuItem("Hide");
-		mnObject.add(mntmHide);
-
-		//controle pour dupliquer un objet
-		JMenuItem mntmCopy = new JMenuItem("Copy");
-		mnObject.add(mntmCopy);
-
-		//controle pour supprimer un objet
-		JMenuItem mntmDelete = new JMenuItem("Delete");
-		mnObject.add(mntmDelete);
-
 		/*
 		 * Menu d'opération sur l'interface du programme
 		 */
@@ -463,10 +451,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlToolsBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		pnlTools.add(pnlToolsBtn);
 		GridBagLayout gbl_pnlToolsBtn = new GridBagLayout();
-		gbl_pnlToolsBtn.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
+		gbl_pnlToolsBtn.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
 		gbl_pnlToolsBtn.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
 		gbl_pnlToolsBtn.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0 };
+				0.0, 0.0 };
 		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
@@ -528,84 +516,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnTextTool.gridx = 2;
 		gbc_btnTextTool.gridy = 0;
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
-
-		//outils pour le placement d'images
-		//TODO : déplacer dans creationFurnitureFrame ?
-		JButton btnImageTool = new JButton("");
-		btnImageTool.setToolTipText("Image");
-		btnImageTool.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnImageTool.setBorderPainted(false);
-		btnImageTool.setMargin(new Insets(0, 0, 0, 0));
-		btnImageTool.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/outil_imageB.png")));
-		btnImageTool.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/outil_image.png")));
-		GridBagConstraints gbc_btnImageTool = new GridBagConstraints();
-		gbc_btnImageTool.insets = new Insets(0, 0, 5, 5);
-		gbc_btnImageTool.gridx = 3;
-		gbc_btnImageTool.gridy = 0;
-		pnlToolsBtn.add(btnImageTool, gbc_btnImageTool);
-
+		
 		//outils pour zomme avant dans l'affichage du plan 
-		//TODO : supprimer ?
-		JButton btnZoomplus = new JButton("ZoomPlus");
+		JButton btnZoomplus = new JButton("");
+		btnZoomplus.setToolTipText("Zoom avant");
+		btnZoomplus.setBorderPainted(false);
+		btnZoomplus.setMargin(new Insets(0, 0, 0, 0));
 		GridBagConstraints gbc_btnZoomplus = new GridBagConstraints();
 		gbc_btnZoomplus.fill = GridBagConstraints.VERTICAL;
 		gbc_btnZoomplus.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZoomplus.gridx = 4;
+		gbc_btnZoomplus.gridx = 3;
 		gbc_btnZoomplus.gridy = 0;
 		pnlToolsBtn.add(btnZoomplus, gbc_btnZoomplus);
-
-		//outils pour zomme arrière dans l'affichage du plan
-		//TODO : supprimer ?
-		JButton btnZoomminus = new JButton("ZoomMinus");
-		GridBagConstraints gbc_btnZoomminus = new GridBagConstraints();
-		gbc_btnZoomminus.fill = GridBagConstraints.VERTICAL;
-		gbc_btnZoomminus.insets = new Insets(0, 0, 5, 0);
-		gbc_btnZoomminus.gridx = 5;
-		gbc_btnZoomminus.gridy = 0;
-		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
-
-		//TODO : supprimer ?
-		JButton btnConstructionMode = new JButton("");
-		btnConstructionMode.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/constructionB.png")));
-		btnConstructionMode.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnConstructionMode.setToolTipText("Construction Mode");
-		btnConstructionMode.setBorderPainted(false);
-		btnConstructionMode.setMargin(new Insets(0, 0, 0, 0));
-		btnConstructionMode.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/construction.png")));
-		GridBagConstraints gbc_btnConstructionMode = new GridBagConstraints();
-		gbc_btnConstructionMode.fill = GridBagConstraints.BOTH;
-		gbc_btnConstructionMode.gridwidth = 3;
-		gbc_btnConstructionMode.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConstructionMode.gridx = 0;
-		gbc_btnConstructionMode.gridy = 1;
-		pnlToolsBtn.add(btnConstructionMode, gbc_btnConstructionMode);
-
-		//TODO : supprimer ?
-		JButton btnFurnitureMode = new JButton("");
-		btnFurnitureMode.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/ameublementB.png")));
-		btnFurnitureMode.setToolTipText("Furniture Mode");
-		btnFurnitureMode.setBorderPainted(false);
-		btnFurnitureMode.setMargin(new Insets(0, 0, 0, 0));
-		btnFurnitureMode.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/ameublement.png")));
-		GridBagConstraints gbc_btnFurnitureMode = new GridBagConstraints();
-		gbc_btnFurnitureMode.insets = new Insets(0, 0, 5, 0);
-		gbc_btnFurnitureMode.fill = GridBagConstraints.BOTH;
-		gbc_btnFurnitureMode.gridwidth = 3;
-		gbc_btnFurnitureMode.gridx = 3;
-		gbc_btnFurnitureMode.gridy = 1;
-		pnlToolsBtn.add(btnFurnitureMode, gbc_btnFurnitureMode);
 
 		//sélection de la librairie Bedroom
 		JButton btnBedroom = new JButton("");
@@ -616,6 +538,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 						.getFurniturePlacementTool());
 			}
 		});
+		
+		//outils pour zomme arrière dans l'affichage du plan
+		JButton btnZoomminus = new JButton("");
+		btnZoomminus.setToolTipText("Zoom arrière");
+		btnZoomminus.setBorderPainted(false);
+		btnZoomminus.setMargin(new Insets(0, 0, 0, 0));
+		GridBagConstraints gbc_btnZoomminus = new GridBagConstraints();
+		gbc_btnZoomminus.fill = GridBagConstraints.VERTICAL;
+		gbc_btnZoomminus.insets = new Insets(0, 0, 5, 5);
+		gbc_btnZoomminus.gridx = 4;
+		gbc_btnZoomminus.gridy = 0;
+		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/chambreB.png")));
 		btnBedroom.setToolTipText("BedRoom");
@@ -746,33 +680,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/salle_a_manger.png")));
 		GridBagConstraints gbc_btnDiningRoom = new GridBagConstraints();
 		gbc_btnDiningRoom.fill = GridBagConstraints.BOTH;
-		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDiningRoom.gridx = 5;
 		gbc_btnDiningRoom.gridy = 2;
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
-
-		//sélection de la librairie objets personnalisés
-		JButton btnCustomfurniture = new JButton("");
-		btnCustomfurniture.setToolTipText("Custom furnitures");
-		btnCustomfurniture.setBorderPainted(false);
-		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
-		btnCustomfurniture.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectLibrary(customLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getFurniturePlacementTool());
-			}
-		});
-		btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/librairieCustomB.png")));
-		btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/librairieCustom.png")));
-		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
-		gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
-		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCustomfurniture.gridx = 0;
-		gbc_btnCustomfurniture.gridy = 3;
-		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
 
 		//outils pour tracer des murs simples
 		JButton btnWall = new JButton("");
@@ -792,6 +703,29 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				showContentOfLibrary(null);
 			}
 		});
+		
+				//sélection de la librairie objets personnalisés
+				JButton btnCustomfurniture = new JButton("");
+				btnCustomfurniture.setToolTipText("Custom furnitures");
+				btnCustomfurniture.setBorderPainted(false);
+				btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
+				btnCustomfurniture.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						selectLibrary(customLibrary);
+						pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+								.getFurniturePlacementTool());
+					}
+				});
+				btnCustomfurniture.setSelectedIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/librairieCustomB.png")));
+				btnCustomfurniture.setIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/librairieCustom.png")));
+				GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
+				gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
+				gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 0);
+				gbc_btnCustomfurniture.gridx = 6;
+				gbc_btnCustomfurniture.gridy = 2;
+				pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
 		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
