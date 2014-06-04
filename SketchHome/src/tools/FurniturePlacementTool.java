@@ -56,6 +56,11 @@ public class FurniturePlacementTool extends PlacementTool {
 		drawingBoardContent.setSelectedFurniture(furnitureDetect(me.getX(),
 				me.getY()));
 		if(drawingBoardContent.getSelectedFurniture() != null) {
+			//Mise de l'objet sélectionné au premier plan
+			drawingBoardContent.getFurnitures().remove(drawingBoardContent.getSelectedFurniture());
+			drawingBoardContent.getFurnitures().addLast(drawingBoardContent.getSelectedFurniture());
+			
+			//Calcul de la position de la souris par rapport au coin haut-gauche de l'objet
 			relX = me.getX() - drawingBoardContent.getSelectedFurniture().getPosition().x;
 			relY = me.getY() - drawingBoardContent.getSelectedFurniture().getPosition().y;
 		}
