@@ -19,13 +19,18 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileView;
@@ -66,7 +71,6 @@ public class FurnitureCreationFrame extends JFrame {
 		drawPencil = DrawPencilTool.getInstance();
 		drawRectangle = DrawRectangleTool.getInstance();
 
-
 		dp = new DrawingPanel();
 		toolPanel = new ToolPanel();
 		modifPanel = new ModifPanel();
@@ -87,6 +91,7 @@ public class FurnitureCreationFrame extends JFrame {
 		private JButton ellipse;
 		private JButton pencil;
 		private JButton erase;
+		private JComboBox<Float> strokeSizeChoser;
 
 		public ToolPanel() {
 
@@ -94,13 +99,31 @@ public class FurnitureCreationFrame extends JFrame {
 			setLayout(new FlowLayout());
 
 			makeButtons();
+			strokeSizeChoser = new JComboBox<>(new Float[] { 1.0f, 2.0f, 3.0f,
+					4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f });
+			strokeSizeChoser.setEditable(true);
+			strokeSizeChoser.setSelectedIndex(1);
+			strokeSizeChoser.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						dp.strokeSize = (Float) strokeSizeChoser
+								.getSelectedItem();
+
+					} catch (ClassCastException e) {
+						strokeSizeChoser.setSelectedIndex(1);
+					}
+
+				}
+			});
 
 			add(line);
 			add(rectangle);
 			add(ellipse);
 			add(pencil);
-			add(erase);			
-
+			add(erase);
+			add(strokeSizeChoser);
 		}
 
 		private void makeButtons() {
@@ -120,12 +143,11 @@ public class FurnitureCreationFrame extends JFrame {
 					new ImageIcon(
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/pencil.png")));
-			
+
 			erase = new JButton(
 					new ImageIcon(
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/colors.png")));
-		
 
 			line.addActionListener(new ActionListener() {
 
@@ -154,7 +176,6 @@ public class FurnitureCreationFrame extends JFrame {
 				}
 			});
 
-		
 			pencil.addActionListener(new ActionListener() {
 
 				@Override
@@ -163,7 +184,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 				}
 			});
-			
+
 			erase.addActionListener(new ActionListener() {
 
 				@Override
@@ -172,9 +193,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 				}
 			});
-			
 
-	
 		}
 	}
 
@@ -182,66 +201,95 @@ public class FurnitureCreationFrame extends JFrame {
 
 		private JButton importImage;
 		private JButton save;
+		private FileNameExtensionFilter extensionFilterPng ;
 		
 		private ContentExporter contentExport;
-		
+
 		public ModifPanel() {
 			setBackground(Color.GRAY);
 			setLayout(new GridLayout(2, 0));
-
-			makeModifButtons();
-			contentExport= new ContentExporter(dp);
+			extensionFilterPng = new FileNameExtensionFilter(
+					"Portable Network Graphics", "png");
 			
+			makeModifButtons();
+			contentExport = new ContentExporter(dp);
+
 			add(importImage);
 			add(save);
 		}
-		
-		private void makeModifButtons(){
+
+		private void makeModifButtons() {
 			importImage = new JButton("Import");
 			
-			
-			save = new JButton("Save");
-			
-			save.addActionListener(new ActionListener() {
+			importImage.addActionListener(new ActionListener() {
 				
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					final File dirToLock = new File("library/personalized");
-					JFileChooser fc = new JFileChooser(dirToLock);
-					fc.setFileView(new FileView() {
-					    @Override
-					    public Boolean isTraversable(File f) {
-					         return dirToLock.equals(f);
-					    }
-					});
-					
-					
-					
-					
-					FileNameExtensionFilter extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");
-					
+				public void actionPerformed(ActionEvent arg0) {
+					JFileChooser fc = new JFileChooser();
 					fc.addChoosableFileFilter(extensionFilterPng);
 					fc.setFileFilter(extensionFilterPng);
 					
-					int action = fc.showSaveDialog(null);
+					int action = fc.showOpenDialog(null);
 					fc.setMultiSelectionEnabled(false);
-				
-					
+
 					if (action == JFileChooser.APPROVE_OPTION) {
 						File selectedFile = fc.getSelectedFile();
 						String filePath = selectedFile.getAbsolutePath();
-						//le fichier selectionné est bien un fichier .png
-						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterPng.getExtensions()[0])){
-							contentExport.createPng(selectedFile);
-						}
-						else{
-							File f = new File(filePath.concat(".").concat(extensionFilterPng.getExtensions()[0]));
-							contentExport.createPng(f);
+						try {
+					
+							
+							dp.furnitureCreationContent.setImg(	ImageIO.read(selectedFile));
+						} catch (IOException e) {
+							JOptionPane.showMessageDialog(null,
+									"Problem loading the image!", "Error",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
+
+				}
+			});
+
+			save = new JButton("Save");
+
+			save.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
 					
-					
+					new FurnitureCreationSave(contentExport);
+//					final File dirToLock = new File("library/personalized");
+//					JFileChooser fc = new JFileChooser(dirToLock);
+//					fc.setFileView(new FileView() {
+//						@Override
+//						public Boolean isTraversable(File f) {
+//							return dirToLock.equals(f);
+//						}
+//					});
+//
+//					
+//
+//					fc.addChoosableFileFilter(extensionFilterPng);
+//					fc.setFileFilter(extensionFilterPng);
+//
+//					int action = fc.showSaveDialog(null);
+//					fc.setMultiSelectionEnabled(false);
+//
+//					if (action == JFileChooser.APPROVE_OPTION) {
+//						File selectedFile = fc.getSelectedFile();
+//						String filePath = selectedFile.getAbsolutePath();
+//						// le fichier selectionné est bien un fichier .png
+//						if (filePath.substring(filePath.lastIndexOf(".") + 1,
+//								filePath.length()).equals(
+//								extensionFilterPng.getExtensions()[0])) {
+//							contentExport.createPng(selectedFile);
+//						} else {
+//							File f = new File(filePath.concat(".").concat(
+//									extensionFilterPng.getExtensions()[0]));
+//							contentExport.createPng(f);
+//						}
+//					}
+
 				}
 			});
 		}
@@ -251,22 +299,20 @@ public class FurnitureCreationFrame extends JFrame {
 			MouseListener {
 
 		private FurnitureCreationContent furnitureCreationContent;
-
+		private Float strokeSize;
+		
 		public DrawingPanel() {
 
-
 			furnitureCreationContent = new FurnitureCreationContent();
+			strokeSize = 2.0f;
 
 			drawEllipse.setFurnitureCreationContent(furnitureCreationContent);
 			drawPencil.setFurnitureCreationContent(furnitureCreationContent);
 			drawLine.setFurnitureCreationContent(furnitureCreationContent);
 			drawRectangle.setFurnitureCreationContent(furnitureCreationContent);
 			
-
-			// polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
-			// furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
-			// onWallPlacementTool.setDrawingBoardContent(drawingBoardContent);
-			// onWallPlacementTool.setWallTool(simpleWallTool);
+			
+		
 
 			setBackground(Color.WHITE);
 
@@ -282,71 +328,76 @@ public class FurnitureCreationFrame extends JFrame {
 					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
 					RenderingHints.VALUE_RENDER_SPEED);
-			g2d.setStroke(new BasicStroke(2 , BasicStroke.CAP_ROUND,
+			g2d.setStroke(new BasicStroke(strokeSize, BasicStroke.CAP_ROUND,
 					BasicStroke.JOIN_BEVEL));
 			g2d.setColor(Color.BLACK);
-			
-			
+
 			drawLines(g2d);
-		
-			
+			drawImage(g2d);
 			g2d.dispose();
 
 		}
-
 		
-
-		public void drawLines(Graphics2D g2d ) {
-			
-			
-
-			if (furnitureCreationContent.getPoints() != null
-					&& furnitureCreationContent.getPoints().size() > 1) {
-
-				
-				for (int i = 0; i < furnitureCreationContent.getPoints().size() - 1; i++) {
-					int x1 = furnitureCreationContent.getPoints().get(i).x;
-					int y1 = furnitureCreationContent.getPoints().get(i).y;
-					int x2 = furnitureCreationContent.getPoints().get(i + 1).x;
-					int y2 = furnitureCreationContent.getPoints().get(i + 1).y;
-					g2d.drawLine(x1, y1, x2, y2);
-				}
+		public void drawImage(Graphics2D g2d){
+			if(furnitureCreationContent.getImg()!=null){
+				g2d.drawImage(furnitureCreationContent.getImg(), null, 0, 0);
+				repaint();
 			}
-			if(furnitureCreationContent.getTmpLine() != null){
+			
+		}
+
+		public void drawLines(Graphics2D g2d) {
+
+			if (furnitureCreationContent.getPoints() != null) {
+				for (int i = 0; i < furnitureCreationContent.getPoints().size(); i++) {
+
+					for (int j = 0; j < furnitureCreationContent.getPoints()
+							.get(i).size() - 2; j++) {
+						int x1 = (int) furnitureCreationContent.getPoints()
+								.get(i).get(j).getX();
+						int y1 = (int) furnitureCreationContent.getPoints()
+								.get(i).get(j).getY();
+						int x2 = (int) furnitureCreationContent.getPoints()
+								.get(i).get(j + 1).getX();
+						int y2 = (int) furnitureCreationContent.getPoints()
+								.get(i).get(j + 1).getY();
+						g2d.drawLine(x1, y1, x2, y2);
+					}
+				}
+
+			}
+			if (furnitureCreationContent.getTmpLine() != null) {
 				g2d.draw(furnitureCreationContent.getTmpLine());
 			}
 			for (Line2D l : furnitureCreationContent.getLines()) {
 				g2d.draw(l);
 			}
-			
-			
-			if(furnitureCreationContent.getTmpRectangle() != null){
+
+			if (furnitureCreationContent.getTmpRectangle() != null) {
 				g2d.draw(furnitureCreationContent.getTmpRectangle());
 			}
 			for (Rectangle2D r : furnitureCreationContent.getRectangles()) {
 				g2d.draw(r);
 			}
-			
-			
-			if(furnitureCreationContent.getTmpEllipse() != null){
+
+			if (furnitureCreationContent.getTmpEllipse() != null) {
 				g2d.draw(furnitureCreationContent.getTmpEllipse());
 			}
 			for (Ellipse2D e : furnitureCreationContent.getEllipses()) {
 				g2d.draw(e);
 			}
 		}
-		
-		public void clearContent()
-		{
-	        furnitureCreationContent.clearContent();
-	        repaint();
+
+		public void clearContent() {
+			furnitureCreationContent.clearContent();
+			repaint();
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (selectedTool != null) {
 				selectedTool.onMouseDragged(e);
-				
+
 				repaint();
 			} else {
 				System.out.println("ToolNotSelected");
@@ -372,7 +423,7 @@ public class FurnitureCreationFrame extends JFrame {
 				selectedTool.onMouseClicked(e);
 
 				repaint();
-				
+
 			} else {
 				System.out.println("ToolNotSelected");
 			}

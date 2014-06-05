@@ -4,12 +4,13 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class FurnitureCreationContent {
 
-	private Vector<Point> points;
+	private Vector<Vector<Point>> points;
 	
 	private Ellipse2D tmpEllipse;
 	private Vector<Ellipse2D> ellipses;
@@ -19,10 +20,13 @@ public class FurnitureCreationContent {
 	
 	private Rectangle2D tmpRectangle;
 	private Vector<Rectangle2D> rectangles;
+	
+	private BufferedImage img;
+
 
 	public FurnitureCreationContent() {
 		ellipses = new Vector<Ellipse2D>();
-		points = new Vector<Point>();
+		points = new Vector<Vector<Point>>();
 		lines = new Vector<Line2D>();
 		rectangles = new Vector<Rectangle2D>();
 	}
@@ -59,12 +63,18 @@ public class FurnitureCreationContent {
 		ellipses.add(finalEllipse);
 	}
 
-	public Vector<Point> getPoints() {
+	public Vector<Vector<Point>> getPoints() {
 		return points;
 	}
 
 	public void addPoint(Point finalPoint) {
-		points.add(finalPoint);
+
+		points.get(points.size()-1).add(finalPoint);
+	}
+	public void addNewPoints(Point newPoint){
+		
+		points.add(new Vector<Point>());
+		points.get(points.size()-1).add(newPoint);
 	}
 
 	public Vector<Line2D> getLines() {
@@ -77,6 +87,15 @@ public class FurnitureCreationContent {
 			tmpLine = null;
 		}
 	}
+	
+	public BufferedImage getImg() {
+		return img;
+	}
+
+	public void setImg(BufferedImage img) {
+		this.img = img;
+	}
+
 
 	public void addEllipse() {
 		if (tmpEllipse != null) {
@@ -104,5 +123,6 @@ public class FurnitureCreationContent {
 		rectangles.clear();
 		tmpLine = null;
 		tmpRectangle = null;
+		img=null;
 	}
 }

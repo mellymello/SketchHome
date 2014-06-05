@@ -1,5 +1,6 @@
 package fileFeatures;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +28,13 @@ public class ContentExporter
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public int getImageWidth(){
+		return content.getWidth();
+	}
+	public int getImageHeigtH(){
+		return content.getHeight();
 	}
 
 }
