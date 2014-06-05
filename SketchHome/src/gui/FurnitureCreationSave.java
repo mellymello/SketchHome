@@ -134,9 +134,10 @@ public class FurnitureCreationSave extends JFrame {
 					dispose();
 					JFileChooser fc = new JFileChooser();
 					fc.setCurrentDirectory(new File("library/custom"));
+					fc.setSelectedFile(new File(name.getText()));
 					fc.addChoosableFileFilter(extensionFilterPng);
 					fc.setFileFilter(extensionFilterPng);
-
+				
 					int action = fc.showSaveDialog(null);
 					fc.setMultiSelectionEnabled(false);
 

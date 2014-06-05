@@ -234,7 +234,6 @@ public class FurnitureCreationFrame extends JFrame {
 
 					if (action == JFileChooser.APPROVE_OPTION) {
 						File selectedFile = fc.getSelectedFile();
-						String filePath = selectedFile.getAbsolutePath();
 						try {
 					
 							
@@ -258,37 +257,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 					
 					new FurnitureCreationSave(contentExport);
-//					final File dirToLock = new File("library/personalized");
-//					JFileChooser fc = new JFileChooser(dirToLock);
-//					fc.setFileView(new FileView() {
-//						@Override
-//						public Boolean isTraversable(File f) {
-//							return dirToLock.equals(f);
-//						}
-//					});
-//
-//					
-//
-//					fc.addChoosableFileFilter(extensionFilterPng);
-//					fc.setFileFilter(extensionFilterPng);
-//
-//					int action = fc.showSaveDialog(null);
-//					fc.setMultiSelectionEnabled(false);
-//
-//					if (action == JFileChooser.APPROVE_OPTION) {
-//						File selectedFile = fc.getSelectedFile();
-//						String filePath = selectedFile.getAbsolutePath();
-//						// le fichier selectionné est bien un fichier .png
-//						if (filePath.substring(filePath.lastIndexOf(".") + 1,
-//								filePath.length()).equals(
-//								extensionFilterPng.getExtensions()[0])) {
-//							contentExport.createPng(selectedFile);
-//						} else {
-//							File f = new File(filePath.concat(".").concat(
-//									extensionFilterPng.getExtensions()[0]));
-//							contentExport.createPng(f);
-//						}
-//					}
+
 
 				}
 			});
