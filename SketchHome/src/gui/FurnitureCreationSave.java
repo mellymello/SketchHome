@@ -88,7 +88,7 @@ public class FurnitureCreationSave extends JFrame {
 		nameLabel = new JLabel("Name",JLabel.CENTER);
 		descriptionLabel = new JLabel("Description",JLabel.CENTER);
 		widthLabel = new JLabel("Width",JLabel.CENTER);
-		heightLabel = new JLabel("Hieght",JLabel.CENTER);
+		heightLabel = new JLabel("Height",JLabel.CENTER);
 		errorLabel= new JLabel(" ",JLabel.CENTER);
 		errorLabel.setForeground(Color.RED);
 
@@ -178,31 +178,31 @@ public class FurnitureCreationSave extends JFrame {
 
 	private boolean checkValues(){
 		boolean isOk=true;
-			if(name.getText().isEmpty()){
-				isOk=false;
-				errorLabel.setText("give a name");
+		if(name.getText().isEmpty()){
+			isOk=false;
+			errorLabel.setText("give a name");
+		}
+		else if(description.getText().isEmpty()){
+			isOk=false;
+			errorLabel.setText("give a description");
+		}
+		else if(width.getText().isEmpty()){
+			isOk=false;
+			errorLabel.setText("give a width");
+		}
+		else if(height.getText().isEmpty()){
+			isOk=false;
+			errorLabel.setText("give an height");
+		}
+		else{
+			try{
+				Integer.parseInt(width.getText());
+				Integer.parseInt(height.getText());
+			}catch(NumberFormatException nfe){
+				isOk= false;
+				errorLabel.setText("Dimension must be integer");
 			}
-			else if(description.getText().isEmpty()){
-				isOk=false;
-				errorLabel.setText("give a description");
-			}
-			else if(width.getText().isEmpty()){
-				isOk=false;
-				errorLabel.setText("give a width");
-			}
-			else if(height.getText().isEmpty()){
-				isOk=false;
-				errorLabel.setText("give an height");
-			}
-			else{
-				try{
-					Integer.parseInt(width.getText());
-					Integer.parseInt(height.getText());
-				}catch(NumberFormatException nfe){
-					isOk= false;
-					errorLabel.setText("Dimension must be integer");
-				}
-			}
+		}
 			
 			
 		return isOk;

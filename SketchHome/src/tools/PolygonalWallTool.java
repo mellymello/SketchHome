@@ -11,7 +11,7 @@ public class PolygonalWallTool extends WallTool {
 
 	private PolygonalWallTool() {
 	}
-
+	
 	@Override
 	public void onMouseClicked(MouseEvent me) {
 		// éliminer le mur sélectionné avec un clic droite
@@ -130,7 +130,6 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMousePressed(MouseEvent me) {
-
 		drawingBoardContent.setSelectedCtrlPoint(ctrlPointDetect(me.getX(),
 				me.getY()));
 		drawingBoardContent.setSelectedWall(wallDetect(me.getX(), me.getY()));
@@ -139,7 +138,6 @@ public class PolygonalWallTool extends WallTool {
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-
 		Wall tmpSelected = drawingBoardContent.getSelectedWall();
 
 		// déplacer le point de contrôle

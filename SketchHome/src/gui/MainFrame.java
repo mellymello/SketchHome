@@ -41,8 +41,10 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import tools.PolygonalWallTool;
 import drawableObjects.Furniture;
 import drawableObjects.FurnitureLibrary;
+import drawableObjects.Wall;
 import fileFeatures.ContentExporter;
 import fileFeatures.ContentRestorer;
 import fileFeatures.ContentSaver;
@@ -135,10 +137,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setTitle("SketchHome");
-				pnlDrawingBoard.getDrawingBoardContent().clearContent();
-				contentSaver.setOpenedFile(null);
-				repaint();
+				new NewSketchFrame(MainFrame.this);
 			}
 		});
 		mnFile.add(mntmNew);
@@ -310,7 +309,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new FurnitureCreationFrame();				
+				new FurnitureCreationFrame();	
 			}
 		});
 		mnObject.add(mntmCreateNew);
@@ -423,47 +422,47 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
 		
-				//Outils pour la création d'objets personnalisés
-				JButton btnFurniturecreation = new JButton("");
-				btnFurniturecreation.setToolTipText("Furniture creation");
-				btnFurniturecreation.setBorderPainted(false);
-				btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
-				btnFurniturecreation.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new FurnitureCreationFrame();
-					}
-				});
-				btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/obje_persoB.png")));
-				btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/obje_perso.png")));
-				GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
-				gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
-				gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
-				gbc_btnFurniturecreation.gridx = 0;
-				gbc_btnFurniturecreation.gridy = 0;
-				pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
-		
-				//outils pour le placement de texte
-				JButton btnTextTool = new JButton("");
-				btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/texteB.png")));
-				btnTextTool.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// selectedTool = TextTool.getInstance();
-					}
-				});
-				btnTextTool.setToolTipText("Text");
-				btnTextTool.setBorderPainted(false);
-				btnTextTool.setMargin(new Insets(0, 0, 0, 0));
-				btnTextTool.setIcon(new ImageIcon(MainFrame.class
-						.getResource("/gui/img/texte.png")));
-				GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
-				gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
-				gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
-				gbc_btnTextTool.gridx = 1;
-				gbc_btnTextTool.gridy = 0;
-				pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
+		//Outils pour la création d'objets personnalisés
+		JButton btnFurniturecreation = new JButton("");
+		btnFurniturecreation.setToolTipText("Furniture creation");
+		btnFurniturecreation.setBorderPainted(false);
+		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
+		btnFurniturecreation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new FurnitureCreationFrame();
+			}
+		});
+		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/obje_persoB.png")));
+		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/obje_perso.png")));
+		GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
+		gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
+		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
+		gbc_btnFurniturecreation.gridx = 0;
+		gbc_btnFurniturecreation.gridy = 0;
+		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
+
+		//outils pour le placement de texte
+		JButton btnTextTool = new JButton("");
+		btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/texteB.png")));
+		btnTextTool.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// selectedTool = TextTool.getInstance();
+			}
+		});
+		btnTextTool.setToolTipText("Text");
+		btnTextTool.setBorderPainted(false);
+		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
+		btnTextTool.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/texte.png")));
+		GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
+		gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
+		gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
+		gbc_btnTextTool.gridx = 1;
+		gbc_btnTextTool.gridy = 0;
+		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 
 		//sélection de la librairie Bedroom
 		JButton btnBedroom = new JButton("");
@@ -1078,8 +1077,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 	public void showContentOfLibrary(FurnitureLibrary furnitureLibrary) {
 		pnlFurnitureLibrary.removeAll();		
 
-		for (Furniture f : furnitureLibrary.getFurnitures()) {
-			pnlFurnitureLibrary.add(new FurnitureMiniature(f));
+		if(furnitureLibrary != null) {
+			for (Furniture f : furnitureLibrary.getFurnitures()) {
+				pnlFurnitureLibrary.add(new FurnitureMiniature(f));
+			}
 		}
 
 		pnlFurnitureLibrary.validate();
@@ -1195,6 +1196,11 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
     	
     }
 
+    /**
+     * Retourne une librarie dont le nom correspond.
+     * @param libraryName : nom de la librarie à trouver
+     * @return librarie portant le nom donné par libraryName, null si pas trouvé
+     */
 	public FurnitureLibrary getLibraryByName(String libraryName) {
 		for (FurnitureLibrary library : furnitureLibraries) {
 			if(library.getName().equals(libraryName)) {
@@ -1202,5 +1208,48 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Supprime le contenu du plan.
+	 * Réinitialise le programme à un nouveau plan vide.
+	 */
+	public void resetDrawingBoard() {
+		setTitle("SketchHome");
+		pnlDrawingBoard.getDrawingBoardContent().clearContent();
+		contentSaver.setOpenedFile(null);
+		repaint();
+	}
+	
+	/**
+	 * Supprime le contenu du plan.
+	 * Réinitialise le programme à un nouveau plan avec une pièce rectangulaire.
+	 */
+	public void resetDrawingBoard(int roomWidth, int roomHeight) {
+		resetDrawingBoard();
+		
+		//dessin d'une pièce rectangulaire
+		MouseEvent me = new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false);
+		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10, 1, false));
+		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
+		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
+		me.translatePoint(roomWidth, 0);
+		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10 + roomWidth, 10, 1, false));
+		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
+		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
+		me.translatePoint(0, roomHeight);
+		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10 + roomWidth, 10 + roomHeight, 1, false));
+		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
+		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10 + roomHeight, 1, false));
+		me.translatePoint(-roomWidth, 0);
+		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10 + roomHeight, 1, false));
+		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
+		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10 + roomHeight, 1, false));
+		me.translatePoint(0, -roomHeight);
+		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10, 1, false));
+		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
+		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
+		
+		repaint();
 	}
 }
