@@ -9,7 +9,6 @@ import java.awt.geom.Rectangle2D;
 public class DrawRectangleTool extends IDragDrawTool {
 
 	private static DrawRectangleTool instance;
-	private Rectangle2D tmpRect;
 
 	private DrawRectangleTool() {
 
@@ -17,25 +16,37 @@ public class DrawRectangleTool extends IDragDrawTool {
 
 	@Override
 	public void onMouseClicked(MouseEvent me) {
-		System.out.println("rectangle gogogo");
+
 
 	}
 
 	@Override
 	public void onMousePressed(MouseEvent me) {
-
+		if (furnitureCreationContent.getTmpRectangle() == null) {
+			furnitureCreationContent.setTmpRectangle(new Rectangle2D.Double(me
+					.getX(), me.getY(), 0, 0));
+		} 
 	}
 
 	@Override
 	public void onMouseDragged(MouseEvent me) {
-
-
+		
+			furnitureCreationContent.getTmpRectangle()
+					.setRect(
+							furnitureCreationContent.getTmpRectangle().getX(),
+							furnitureCreationContent.getTmpRectangle().getY(),
+							me.getX()
+									- furnitureCreationContent
+											.getTmpRectangle().getX(),
+							me.getY()
+									- furnitureCreationContent
+											.getTmpRectangle().getY());
+		
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-
-
+		furnitureCreationContent.addRectangle();
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package tools;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-
 public class DrawPencilTool extends IDragDrawTool {
 
 	private static DrawPencilTool instance;
@@ -14,24 +13,20 @@ public class DrawPencilTool extends IDragDrawTool {
 
 	public void onMouseDragged(MouseEvent me) {
 
-		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
-		
+		furnitureCreationContent.addPoint(me.getPoint());
 
 	}
 
 	public void onMousePressed(MouseEvent me) {
 
-		furnitureCreationContent.getPoints().clear();
-		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
 		
+		furnitureCreationContent.addNewPoints(new Point(me.getPoint()));
 
 	}
 
 	public void onMouseReleased(MouseEvent me) {
-//
-//		furnitureCreationContent.getPoints().addElement((new Point(me.getPoint())));
-//		furnitureCreationContent.getPoints().clear();
-
+	
+		furnitureCreationContent.addPoint(me.getPoint());
 
 	}
 
