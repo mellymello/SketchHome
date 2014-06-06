@@ -1,5 +1,8 @@
 package fileFeatures;
 
+import gui.DrawingBoard;
+import gui.MainFrame;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,19 +12,22 @@ import java.util.LinkedList;
 
 import drawableObjects.DrawingBoardContent;
 import drawableObjects.Furniture;
+import drawableObjects.FurnitureLibrary;
 import drawableObjects.Wall;
 
 public class ContentRestorer 
 {
 	File file;
 	DrawingBoardContent content;
+	MainFrame libraryContainer;
 	FileInputStream fis;
 	ObjectInputStream in;
 	
 	LinkedList<Wall> listWall = new LinkedList<Wall>();
 	
-	public ContentRestorer (DrawingBoardContent dbc)
+	public ContentRestorer (MainFrame libraryContainer, DrawingBoardContent dbc)
 	{
+		this.libraryContainer = libraryContainer;
 		content = dbc;
 	}
 	
@@ -39,6 +45,10 @@ public class ContentRestorer
 			{
 				if(o instanceof Furniture)
 				{
+					//System.out.println(((Furniture)o).getLibrary().getName());
+					String n = ((Furniture)o).getLibraryName();
+					FurnitureLibrary l = libraryContainer.getLibraryByName(n);
+					((Furniture)o).setLibrary(libraryContainer.getLibraryByName(((Furniture)o).getLibraryName()));
 					content.addFurniture(((Furniture)o));
 				}
 				else if (o instanceof Wall)

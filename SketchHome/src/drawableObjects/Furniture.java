@@ -22,28 +22,28 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;
-	private static int count = 0;
+	private static int count = 0; //TODO : delete ?
 	
 	private int id; //TODO : delete ?
 	private String name;
 	private String description;
 	private Dimension dimension;
 	private String picture;
+	private Color color;
+	private transient Image loadedPicture;
 	//degré de rotation
 	private double orientation;
 	//position du coin supérieur-gauche
 	private Point position;
+	//empêche la modification du meuble
 	private boolean locked;
 	private boolean visible;
+	//pour le dessin de la bordure de sélection
+	private boolean isSelected = false;
 	
-	private boolean isSelected;
-	
-	private transient Image loadedPicture;
-	
-	private Color color;
-	
-	private FurnitureLibrary library;
-	private DefaultMutableTreeNode jTreeNode;
+	private transient FurnitureLibrary library; //TODO : bug open
+	private String libraryName;
+	private transient DefaultMutableTreeNode jTreeNode;
 	
 	
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color) {
@@ -58,9 +58,8 @@ public class Furniture implements Cloneable, Serializable {
 		this.visible = visible;
 		this.library = library;
 		this.color = color;
-		
 
-		this.jTreeNode = new DefaultMutableTreeNode(name);
+		this.libraryName = library.getName();
 		
 		loadPicture();
 
@@ -83,24 +82,62 @@ public class Furniture implements Cloneable, Serializable {
 		return dimension;
 	}
 	
+	public void setDimension(Dimension dimension) {
+		this.dimension = dimension;
+	}
+	
 	public Point getPosition() {
 		return position;
+	}
+	
+	public void setPosition(Point position) {
+		this.position = position;
+	}
+	
+	public void setPosition(int x, int y) {
+		this.position.x = x;
+		this.position.y = y;
 	}
 	
 	public String getPicture() {
 		return picture;
 	}
 	
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	
+	public Image getLoadedPicture() {
+		//si on fait "open" dans le fichier de sauvegarde il n'y a pas les
+		//images et donc nous devons la charger depuis la librairie
+		if(loadedPicture==null){
+			loadPicture();
+		}
+		return loadedPicture;
+	}
+	
 	public boolean getVisible() {
 		return visible;
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 	
 	public boolean getLocked() {
 		return locked;
 	}
 	
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+	
 	public double getOrientation() {
 		return orientation;
+	}
+	
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
 	}
 	
 	public String getName() {
@@ -117,44 +154,6 @@ public class Furniture implements Cloneable, Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setDimension(Dimension dimension) {
-		this.dimension = dimension;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-
-	public void setOrientation(double orientation) {
-		this.orientation = orientation;
-	}
-
-	public void setPosition(Point position) {
-		this.position = position;
-	}
-	
-	public void setPosition(int x, int y) {
-		this.position.x = x;
-		this.position.y = y;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public Image getLoadedPicture() {
-		//car si on fait "open" dans le fichier de sauvegarde il n'y a pas les
-		//images et donc nous devons la charger depuis la librairie
-		if(loadedPicture==null){
-			loadPicture();
-		}
-		return loadedPicture;
 	}
 	
 	public boolean contains(int x, int y) {
@@ -193,6 +192,14 @@ public class Furniture implements Cloneable, Serializable {
 
 	public FurnitureLibrary getLibrary() {
 		return library;
+	}
+	
+	public void setLibrary(FurnitureLibrary library) {
+		this.library = library;		
+	}
+	
+	public String getLibraryName() {
+		return libraryName;
 	}
 
 	public DefaultMutableTreeNode getJtreeNode() {

@@ -148,10 +148,11 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
 			System.out.println("add jtree");
 			//crée le JTreeNode du meuble et l'ajoute au JTree
 			((Furniture)arg).setJTreeNode(addObject(((Furniture)arg).getLibrary().getJTreeNode(), ((Furniture)arg).getName(), true));
+			//((Furniture)arg).setJTreeNode(addObject(rootNode, ((Furniture)arg).getName(), true));
 			//treeModel.reload();
 //			int indices[] = new int[]{((Furniture)arg).getLibrary().getJTreeNode().getLeafCount()};
 //			treeModel.nodesWereInserted(((Furniture)arg).getLibrary().getJTreeNode(),indices);
-			treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
+			//treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
 		}
     	
     }
@@ -174,7 +175,6 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
 			//modifie le JTreeNode du meuble
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
 			treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
-			System.out.println("modifiy JTree");
 		}
     	
     }

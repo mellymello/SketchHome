@@ -174,8 +174,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				contentSaver.setDrawingBoardContent(pnlDrawingBoard
-//						.getDrawingBoardContent());
 
 				try {
 					contentSaver.save();
@@ -212,8 +210,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				contentSaver.setDrawingBoardContent(pnlDrawingBoard
-//						.getDrawingBoardContent());
 				JFileChooser fc = new JFileChooser();
 
 				fc.addChoosableFileFilter(extensionFilterSkt);
@@ -400,7 +396,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		 * outils pour sauvegarder/ouvrir/exporter des fichiers représentant le plan
 		 */
 		contentSaver = new ContentSaver(pnlDrawingBoard.getDrawingBoardContent());
-		contentRestorer = new ContentRestorer(pnlDrawingBoard.getDrawingBoardContent());
+		contentRestorer = new ContentRestorer(this, pnlDrawingBoard.getDrawingBoardContent());
 		contentExport = new ContentExporter(pnlDrawingBoard);
 		pnlDrawingBoard.setLayout(null);
 				
@@ -426,76 +422,48 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
-
-		//TODO : supprimer ?
-		JButton btnSelectionTool = new JButton("");
-		btnSelectionTool.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/sourisB.png")));
-		btnSelectionTool.setToolTipText("Select");
-		btnSelectionTool.setBorderPainted(false);
-		btnSelectionTool.setMargin(new Insets(0, 0, 0, 0));
-		btnSelectionTool.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/souris.png")));
-		GridBagConstraints gbc_btnSelectionTool = new GridBagConstraints();
-		gbc_btnSelectionTool.fill = GridBagConstraints.VERTICAL;
-		gbc_btnSelectionTool.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSelectionTool.gridx = 0;
-		gbc_btnSelectionTool.gridy = 0;
-		pnlToolsBtn.add(btnSelectionTool, gbc_btnSelectionTool);
-
-		//Outils pour la création d'objets personnalisés
-		JButton btnFurniturecreation = new JButton("");
-		btnFurniturecreation.setToolTipText("Furniture creation");
-		btnFurniturecreation.setBorderPainted(false);
-		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
-		btnFurniturecreation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new FurnitureCreationFrame();
-			}
-		});
-		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_persoB.png")));
-		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_perso.png")));
-		GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
-		gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
-		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
-		gbc_btnFurniturecreation.gridx = 1;
-		gbc_btnFurniturecreation.gridy = 0;
-		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
-
-		//outils pour le placement de texte
-		JButton btnTextTool = new JButton("");
-		btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/texteB.png")));
-		btnTextTool.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// selectedTool = TextTool.getInstance();
-			}
-		});
-		btnTextTool.setToolTipText("Text");
-		btnTextTool.setBorderPainted(false);
-		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
-		btnTextTool.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/texte.png")));
-		GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
-		gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
-		gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
-		gbc_btnTextTool.gridx = 2;
-		gbc_btnTextTool.gridy = 0;
-		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 		
-		//outils pour zomme avant dans l'affichage du plan 
-		JButton btnZoomplus = new JButton("Zoom +");
-		btnZoomplus.setToolTipText("Zoom avant");
-		btnZoomplus.setBorderPainted(false);
-		btnZoomplus.setMargin(new Insets(0, 0, 0, 0));
-		GridBagConstraints gbc_btnZoomplus = new GridBagConstraints();
-		gbc_btnZoomplus.fill = GridBagConstraints.VERTICAL;
-		gbc_btnZoomplus.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZoomplus.gridx = 3;
-		gbc_btnZoomplus.gridy = 0;
-		pnlToolsBtn.add(btnZoomplus, gbc_btnZoomplus);
+				//Outils pour la création d'objets personnalisés
+				JButton btnFurniturecreation = new JButton("");
+				btnFurniturecreation.setToolTipText("Furniture creation");
+				btnFurniturecreation.setBorderPainted(false);
+				btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
+				btnFurniturecreation.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new FurnitureCreationFrame();
+					}
+				});
+				btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/obje_persoB.png")));
+				btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/obje_perso.png")));
+				GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
+				gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
+				gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
+				gbc_btnFurniturecreation.gridx = 0;
+				gbc_btnFurniturecreation.gridy = 0;
+				pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
+		
+				//outils pour le placement de texte
+				JButton btnTextTool = new JButton("");
+				btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/texteB.png")));
+				btnTextTool.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// selectedTool = TextTool.getInstance();
+					}
+				});
+				btnTextTool.setToolTipText("Text");
+				btnTextTool.setBorderPainted(false);
+				btnTextTool.setMargin(new Insets(0, 0, 0, 0));
+				btnTextTool.setIcon(new ImageIcon(MainFrame.class
+						.getResource("/gui/img/texte.png")));
+				GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
+				gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
+				gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
+				gbc_btnTextTool.gridx = 1;
+				gbc_btnTextTool.gridy = 0;
+				pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
 
 		//sélection de la librairie Bedroom
 		JButton btnBedroom = new JButton("");
@@ -507,6 +475,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		});
 		
+		//outils pour zomme avant dans l'affichage du plan 
+		JButton btnZoomplus = new JButton("Zoom +");
+		btnZoomplus.setToolTipText("Zoom avant");
+		btnZoomplus.setBorderPainted(false);
+		btnZoomplus.setMargin(new Insets(0, 0, 0, 0));
+		GridBagConstraints gbc_btnZoomplus = new GridBagConstraints();
+		gbc_btnZoomplus.fill = GridBagConstraints.VERTICAL;
+		gbc_btnZoomplus.insets = new Insets(0, 0, 5, 5);
+		gbc_btnZoomplus.gridx = 2;
+		gbc_btnZoomplus.gridy = 0;
+		pnlToolsBtn.add(btnZoomplus, gbc_btnZoomplus);
+		
 		//outils pour zomme arrière dans l'affichage du plan
 		JButton btnZoomminus = new JButton("Zoom -");
 		btnZoomminus.setToolTipText("Zoom arrière");
@@ -515,7 +495,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		GridBagConstraints gbc_btnZoomminus = new GridBagConstraints();
 		gbc_btnZoomminus.fill = GridBagConstraints.VERTICAL;
 		gbc_btnZoomminus.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZoomminus.gridx = 4;
+		gbc_btnZoomminus.gridx = 3;
 		gbc_btnZoomminus.gridy = 0;
 		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class
@@ -1214,4 +1194,13 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		}
     	
     }
+
+	public FurnitureLibrary getLibraryByName(String libraryName) {
+		for (FurnitureLibrary library : furnitureLibraries) {
+			if(library.getName().equals(libraryName)) {
+				return library;
+			}
+		}
+		return null;
+	}
 }
