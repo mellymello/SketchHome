@@ -1,6 +1,5 @@
 package drawableObjects;
 
-import java.awt.Polygon;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -10,31 +9,44 @@ import java.util.Observer;
  */
 public class DrawingBoardContent extends Observable {
 	
-	private LinkedList<Wall> walls = new LinkedList<Wall>();
+	//murs du plan
+	private LinkedList<Wall> placedWalls = new LinkedList<Wall>();
 	private Wall tmpWall;
 	private CtrlPoint selectedCtrlPoint;
 	private Wall selectedWall;
 	private int ctrlPointDiameter;
 	private int wallThickness;
 	
+	//meubles du plan
 	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
-	//le modèle du meuble sélectionné dans la librairie
+	//le modèle de meuble sélectionné dans la librairie
 	private Furniture selectedFurnitureModel;
 	//le meuble sélectionné dans le plan
 	private Furniture selectedFurniture;
 	
+	/**
+	 * Objet observable utilisé pour signaler la modification d'un meuble
+	 */
 	public class ModificationObservable extends Observable {
 		public void sendNotify(Furniture modifiedFurniture) {
 			setChanged();
 			notifyObservers(modifiedFurniture);
 		}
 	}
+	
+	/**
+	 * Objet observable utilisé pour signaler l'ajout d'un meuble
+	 */
 	private class AdditionObservable extends Observable {
 		public void sendNotify(Furniture addedFurniture) {
 			setChanged();
 			notifyObservers(addedFurniture);
 		}
 	}
+	
+	/**
+	 * Objet observable utilisé pour signaler la supprssion d'un meuble
+	 */
 	private class DeletionObservable extends Observable {
 		public void sendNotify(Furniture deletedFurniture) {
 			setChanged();
@@ -46,19 +58,36 @@ public class DrawingBoardContent extends Observable {
 	private AdditionObservable additionObservable = new AdditionObservable();
 	private DeletionObservable deletionObservable = new DeletionObservable();
 	
+	/**
+	 * Génère un nouveau contenu de plan
+	 * @param ctrlPointDiameter : diamètre des points de contrôle de mur dans le plan
+	 * @param wallThickness : largeur des murs dans le plan
+	 */
 	public DrawingBoardContent(int ctrlPointDiameter, int wallThickness) {
 		this.ctrlPointDiameter = ctrlPointDiameter;
-		this.setWallThickness(wallThickness);
+		this.wallThickness = wallThickness;
 	}
 	
+	/**
+	 * Abonne un observateur à l'ajout de meuble dans le plan.
+	 * @param obs : observateur à abonner.
+	 */
 	public void addAdditionObserver(Observer obs) {
 		additionObservable.addObserver(obs);
 	}
 	
+	/**
+	 * Abonne un observateur à la suppression de meuble dans le plan.
+	 * @param obs : observateur à abonner.
+	 */	
 	public void addDeletionObserver(Observer obs) {
 		deletionObservable.addObserver(obs);
 	}
 	
+	/**
+	 * Abonne un observateur à la modification de meuble dans le plan.
+	 * @param obs : observateur à abonner.
+	 */
 	public void addModificationObserver(Observer obs) {
 		modificationObservable.addObserver(obs);
 	}
@@ -87,10 +116,6 @@ public class DrawingBoardContent extends Observable {
 		return ctrlPointDiameter;
 	}
 
-	public void setCtrlPointDiameter(int ctrlPointDiameter) {
-		this.ctrlPointDiameter = ctrlPointDiameter;
-	}
-
 	public Wall getSelectedWall() {
 		return selectedWall;
 	}
@@ -99,45 +124,57 @@ public class DrawingBoardContent extends Observable {
 		this.selectedWall = selectedWall;
 	}
 
-	public LinkedList<Furniture> getFurnitures() {
+	public LinkedList<Furniture> getPlacedFurnitures() {
 		return placedFurnitures;
 	}
 
+	/**
+	 * Ajoute un meuble au plan
+	 * Notifie les AdditionObserver du plan
+	 * @param f : meuble à ajouter
+	 */
 	public void addFurniture(Furniture f) {
 		placedFurnitures.add(f);
 		additionObservable.sendNotify(f);
 	}
 
+	/**
+	 * Supprime un meuble du plan
+	 * Notifie les DeletionObserver du plan
+	 * @param f : meuble à supprimer
+	 */
 	public void deleteFurniture(Furniture f) {
 		placedFurnitures.remove(f);
 		deletionObservable.sendNotify(f);
 	}
 	
-	public LinkedList<Wall> getWalls() {
-		return walls;
+	public LinkedList<Wall> getPlacedWalls() {
+		return placedWalls;
 	}
 
 	public void addWall(Wall w) {
-		walls.add(w);
+		placedWalls.add(w);
 	}
-	
 
 	public int getWallThickness() {
 		return wallThickness;
-	}
-
-	public void setWallThickness(int wallThickness) {
-		this.wallThickness = wallThickness;
 	}
 
 	public Furniture getSelectedFurniture() {
 		return selectedFurniture;
 	}
 
+	/**
+	 * Change le meuble sélectionné dans le plan.
+	 * Si un meuble est réellement sélectionné, notifie les ModificationObserver du plan.
+	 * @param selectedFurniture : meuble sélectionné dans le plan
+	 */
 	public void setSelectedFurniture(Furniture selectedFurniture) {
+		//désélection du meuble précédemment sélectionné
 		if (this.selectedFurniture != null) {
 			this.selectedFurniture.setSelected(false);
 		}
+		//sélection du meuble
 		this.selectedFurniture = selectedFurniture;
 		if(selectedFurniture != null) {
 			selectedFurniture.setSelected(true);
@@ -153,8 +190,11 @@ public class DrawingBoardContent extends Observable {
 		this.selectedFurnitureModel = selectedlFurnitureModel;
 	}
 
+	/**
+	 * Vide le contenu du plan
+	 */
 	public void clearContent(){
-		walls.clear();
+		placedWalls.clear();
 		tmpWall=null;
 		selectedCtrlPoint=null;
 		selectedWall=null;

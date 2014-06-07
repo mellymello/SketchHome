@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 /**
  * Représente un mur tracable sur le plan.
- *
  */
 public class Wall implements Serializable{
 

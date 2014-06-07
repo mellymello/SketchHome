@@ -21,13 +21,18 @@ import org.w3c.dom.NodeList;
  */
 public class FurnitureLibrary implements Serializable {
 
-	private static final long serialVersionUID = 6647904402578830435L;
 	private LinkedList<Furniture> libraryContent = new LinkedList<Furniture>();
 	private String xmlFilePath;
 	private String name;
 
+	//noeud représentant la librairie dans l'arborescence du plan
 	private DefaultMutableTreeNode jTreeNode;
 	
+	/**
+	 * Crée une nouvelle librairie de meuble
+	 * @param xmlFilePath : chemin d'accès du fichier XML du contenu  de la librairie
+	 * @param name : nom de la librairie
+	 */
 	public FurnitureLibrary(String xmlFilePath, String name) {
 		this.xmlFilePath = xmlFilePath;
 		this.name = name;
@@ -80,15 +85,9 @@ public class FurnitureLibrary implements Serializable {
 	    }
 	}
 
-	/**
-	 * @return nom de la librairie de meuble
-	 */
 	public String getName () {
 		return name;
 	}
-	/**
-	 * @return contenu de la librairie de meuble
-	 */
 	public LinkedList<Furniture> getFurnitures() {
 		return libraryContent;
 	}

@@ -16,15 +16,24 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import drawableObjects.DrawingBoardContent;
-
+/**
+ * Boite de dialogue utilisée pour la fonctionnalité "nouveau document" dans la barre de menu.
+ * Propose à l'utilisateur de créer un nouveau plan "standard" ou "personnalisé".
+ * Pour un plan standard, on dessine les murs d'une pièce rectangulaire aux dimensions fournies par l'utilisateur.
+ *
+ */
 public class NewSketchFrame extends JFrame {
 
 	private MainFrame sketchHomeFrame;
 	
+	//panel proposant les boutons OK et Cancel
 	private JPanel buttonPanel;
+	//panel proposant les options de création de plan
 	private JPanel optionPanel;
 
+	/*
+	 * dimensions de la pièce rectangulaire du plan standard
+	 */
 	private JLabel widthLabel;
 	private JLabel heightLabel;
 	private JLabel errorLabel;
@@ -32,12 +41,19 @@ public class NewSketchFrame extends JFrame {
 	private JTextField txtWidth;
 	private JTextField txtHeight;
 
+	/*
+	 * choix du type de plan
+	 */
 	private JRadioButton standardRadioButton;
 	private JRadioButton customRadioButton;
 	
 	private JButton btnCreateNewSketch;
 	private JButton btnCancel;
 	
+	/**
+	 * Constructeur de la fenêtre de dialogue.
+	 * @param sketchHomeFrame : fenêtre de l'application qui génèrera le nouveau plan
+	 */
 	public NewSketchFrame(MainFrame sketchHomeFrame) {
 		
 		this.sketchHomeFrame = sketchHomeFrame;
@@ -47,7 +63,7 @@ public class NewSketchFrame extends JFrame {
 		setMinimumSize(new Dimension(275,200));
 		setLayout(new BorderLayout());
 
-		makeOption();
+		makeOptions();
 		makeButtons();
 
 		add(optionPanel, BorderLayout.CENTER);
@@ -57,7 +73,10 @@ public class NewSketchFrame extends JFrame {
 		pack();
 	}
 
-	private void makeOption() {
+	/**
+	 * Génération de l'interface pour le choix du type de plan à créer.
+	 */
+	private void makeOptions() {
 		optionPanel = new JPanel();
 		optionPanel.setLayout(new BorderLayout());
 		
@@ -69,6 +88,7 @@ public class NewSketchFrame extends JFrame {
 		standardRadioButton.setSelected(true);
 	    
 	    infoPanel.add(standardRadioButton);
+	    //JLabel de remplissage pour faire un retour à la ligne
 	    infoPanel.add(new JLabel());
 	   		
 		widthLabel = new JLabel("Width",JLabel.CENTER);
@@ -76,8 +96,8 @@ public class NewSketchFrame extends JFrame {
 		errorLabel= new JLabel("",JLabel.CENTER);
 		errorLabel.setForeground(Color.RED);
 
-		txtWidth = new JTextField("200");
-		txtHeight = new JTextField("200");
+		txtWidth = new JTextField("500");
+		txtHeight = new JTextField("500");
 
 		infoPanel.add(widthLabel);
 		infoPanel.add(txtWidth);
@@ -90,7 +110,7 @@ public class NewSketchFrame extends JFrame {
 	    
 	    infoPanel.add(customRadioButton);
 		
-		 //Group the radio buttons.
+		//Grouper les radioButton permet de s'assurer qu'un seul soit sélectionné
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(standardRadioButton);
 	    group.add(customRadioButton);
@@ -99,22 +119,28 @@ public class NewSketchFrame extends JFrame {
 		optionPanel.add(errorLabel,BorderLayout.SOUTH);
 	}
 
+	/**
+	 * Génération de l'interface permettant de valider le choix effectué.
+	 */
 	private void makeButtons() {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		btnCreateNewSketch = new JButton("OK");
 		btnCancel = new JButton("Cancel");
 
+		//bouton pour valider la création d'un nouveau plan
 		btnCreateNewSketch.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
+				//création plan "standard"
 				if(standardRadioButton.isSelected()) {
 					if (checkValues()) {
 						errorLabel.setText("");
 						sketchHomeFrame.resetDrawingBoard(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
 					}
+				//création plan "personnalisé"
 				} else {
 					sketchHomeFrame.resetDrawingBoard();
 				}
@@ -122,6 +148,7 @@ public class NewSketchFrame extends JFrame {
 			}
 		});
 		
+		//bouton pour annuler la création d'un nouveau plan
 		btnCancel.addActionListener(new ActionListener() {
 			
 			@Override
@@ -134,6 +161,10 @@ public class NewSketchFrame extends JFrame {
 		buttonPanel.add(btnCancel);
 	}
 
+	/**
+	 * Vérifie les valeurs entrées par l'utilisateur.
+	 * @return true si les champs de largeur et longueur contiennent des entiers, false sinon
+	 */
 	private boolean checkValues(){
 		boolean isOk=true;
 		if(txtWidth.getText().isEmpty()){

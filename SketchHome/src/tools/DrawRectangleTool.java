@@ -15,12 +15,6 @@ public class DrawRectangleTool extends IDragDrawTool {
 	}
 
 	@Override
-	public void onMouseClicked(MouseEvent me) {
-
-
-	}
-
-	@Override
 	public void onMousePressed(MouseEvent me) {
 		if (furnitureCreationContent.getTmpRectangle() == null) {
 			furnitureCreationContent.setTmpRectangle(new Rectangle2D.Double(me
@@ -47,12 +41,6 @@ public class DrawRectangleTool extends IDragDrawTool {
 	@Override
 	public void onMouseReleased(MouseEvent me) {
 		furnitureCreationContent.addRectangle();
-	}
-
-	@Override
-	public void onMouseMoved(MouseEvent me) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public static DrawRectangleTool getInstance() {

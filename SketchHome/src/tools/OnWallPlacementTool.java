@@ -19,26 +19,27 @@ public class OnWallPlacementTool extends FurniturePlacementTool {
 	@Override
 	public void onMouseClicked(MouseEvent me) {
 	
-		
 		detectedWall = wallTool.wallDetect(me.getX(), me.getY());
 		
 		if(detectedWall != null){
 			super.onMouseClicked(me);
 		}
-		
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent me) { //TODO : problème : on peut déplacer des meubles non-fenêtres et ducoup ils disparaissent si on les laches sur un mur
 		detectedWall = wallTool.wallDetect(me.getX(), me.getY());
 		
-		if(detectedWall ==null && drawingBoardContent.getSelectedFurniture()!=null){
+		if(detectedWall == null && drawingBoardContent.getSelectedFurniture() != null){
 			
-			drawingBoardContent.getFurnitures().remove(drawingBoardContent.getSelectedFurniture());
+			drawingBoardContent.deleteFurniture(drawingBoardContent.getSelectedFurniture());
 		}
 		
 	}
-	
+
+	public void setWallTool(WallTool wallTool) {
+		this.wallTool = wallTool;
+	}
 	
 	public static OnWallPlacementTool getInstance() {
 		if (instance == null) {
@@ -46,8 +47,4 @@ public class OnWallPlacementTool extends FurniturePlacementTool {
 		}
 		return instance;
 	}
-
-	public void setWallTool(WallTool wallTool) {
-		this.wallTool = wallTool;
-	}	
 }

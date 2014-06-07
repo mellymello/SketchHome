@@ -7,7 +7,7 @@ public abstract class WallTool extends IDrawingTool {
 	
 
 	public CtrlPoint ctrlPointDetect(int x, int y) {
-		for (Wall w : drawingBoardContent.getWalls()) {
+		for (Wall w : drawingBoardContent.getPlacedWalls()) {
 			if (w.getCtrlPointStart().getCtrlPoint().contains(x, y)) {
 				return w.getCtrlPointStart();
 			} else if (w.getCtrlPointEnd().getCtrlPoint().contains(x, y)) {
@@ -18,7 +18,7 @@ public abstract class WallTool extends IDrawingTool {
 	}
 
 	public Wall wallDetect(int x, int y) {
-		for (Wall w : drawingBoardContent.getWalls()) {
+		for (Wall w : drawingBoardContent.getPlacedWalls()) {
 			if (w.getWallLine().ptSegDist(x, y) < drawingBoardContent.getWallThickness()) {
 				return w;
 			}

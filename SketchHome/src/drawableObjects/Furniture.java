@@ -22,9 +22,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;
-	private static int count = 0; //TODO : delete ?
 	
-	private int id; //TODO : delete ?
 	private String name;
 	private String description;
 	private Dimension dimension;
@@ -37,17 +35,32 @@ public class Furniture implements Cloneable, Serializable {
 	private Point position;
 	//empêche la modification du meuble
 	private boolean locked;
+	//afficher ou pas le meuble
 	private boolean visible;
-	//pour le dessin de la bordure de sélection
+	//utilisé pour le dessin de la bordure de sélection dans le plan
 	private boolean isSelected = false;
 	
-	private transient FurnitureLibrary library; //TODO : bug open
+	//librarie dont le meuble fait partie
+	private transient FurnitureLibrary library;
+	//utilisé pour ouvrir un fichier sauvegardé comme l'attribut library n'est pas sauvegardé
 	private String libraryName;
+	//noeud représentant le meuble dans l'arborescence du plan
 	private transient DefaultMutableTreeNode jTreeNode;
 	
-	
+	/**
+	 * Crée un nouveau meuble
+	 * @param name : nom du meuble
+	 * @param description : description du meuble
+	 * @param picture : chemin d'accès de l'image du meuble
+	 * @param dimension : dimensions du meuble
+	 * @param position : position du coin supérieur-gauche du meuble
+	 * @param orientation : degré de rotation du meuble
+	 * @param locked : true si meuble mofifiable
+	 * @param visible : true si meuble visible
+	 * @param library : librairie d'appartenance du meuble
+	 * @param color : couleur de fond du meuble
+	 */
 	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color) {
-		this.id = count++;
 		this.name = name;
 		this.description = description;
 		this.dimension = dimension;
@@ -64,11 +77,11 @@ public class Furniture implements Cloneable, Serializable {
 		loadPicture();
 
 	}
-
-	public Furniture(String name, String description, String picture, Dimension dimension, Point position, FurnitureLibrary library, Color color) {
-		this(name, description, picture, dimension, position, 0, false, true, library, color);
-	}
 	
+	/**
+	 * Clone le meuble
+	 * @return clone du meuble
+	 */
 	public Furniture clone() { 
 		Furniture f = null; 
 		try { 
@@ -99,16 +112,8 @@ public class Furniture implements Cloneable, Serializable {
 		this.position.y = y;
 	}
 	
-	public String getPicture() {
-		return picture;
-	}
-	
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-	
 	public Image getLoadedPicture() {
-		//si on fait "open" dans le fichier de sauvegarde il n'y a pas les
+		//si on ouvre un fichier sauvegardé il n'y a pas les
 		//images et donc nous devons la charger depuis la librairie
 		if(loadedPicture==null){
 			loadPicture();
@@ -118,10 +123,6 @@ public class Furniture implements Cloneable, Serializable {
 	
 	public boolean getVisible() {
 		return visible;
-	}
-	
-	public void setVisible(boolean visible) {
-		this.visible = visible;
 	}
 	
 	public boolean getLocked() {
@@ -156,12 +157,18 @@ public class Furniture implements Cloneable, Serializable {
 		this.description = description;
 	}
 	
+	/**
+	 * Vérifie si un point est contenu dans le meuble.
+	 * @param x : position X du point
+	 * @param y : position Y du point
+	 * @return true si le point est contenu dans le meuble
+	 */
 	public boolean contains(int x, int y) {
 		return getPathPolygon().contains(new Point(x, y));
 	}
 	
 	/**
-	 * @return un polygon représentant le rectangle de sélection de l'image
+	 * @return un polygon représentant le rectangle de sélection de l'image prenant en charge sa rotation
 	 */
 	public Polygon getPathPolygon() {
 		Polygon p = new Polygon();
@@ -218,6 +225,9 @@ public class Furniture implements Cloneable, Serializable {
 		return color;
 	}
 	
+	/**
+	 * Charge l'image du meuble en mémoire.
+	 */
 	private void loadPicture(){
 		try {
 			loadedPicture = ImageIO.read(new File(picture));

@@ -9,10 +9,17 @@ import java.awt.print.PrinterException;
 
 import javax.swing.JPanel;
 
+/**
+ * Outil pour imprimer un JPanel
+ */
 public class Printer implements Printable {
 
 	private JPanel panelToPrint = null;
 	
+	/**
+	 * Crée un nouvel imprimeur de JPanel
+	 * @param p : JPanel à imprimer
+	 */
 	public Printer (JPanel p)
 	{
 		panelToPrint = p;

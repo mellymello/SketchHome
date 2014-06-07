@@ -1,0 +1,47 @@
+<furnitureLibrary>
+	<furniture>
+		<name>DoubleDoor</name>
+		<description>A door with two openings</description>
+		<dimension>
+			<width>160</width>
+			<height>100</height>
+		</dimension>
+		<picture>library/door/porte_double_160_10.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Right-side Door</name>
+		<description>A door opening on the right</description>
+		<dimension>
+			<width>90</width>
+			<height>30</height>
+		</dimension>
+		<picture>library/door/porteD_90_3.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Left-side door</name>
+		<description>A door opening on the left</description>
+		<dimension>
+			<width>90</width>
+			<height>30</height>
+		</dimension>
+		<picture>library/door/porteG_90_3.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+</furnitureLibrary>

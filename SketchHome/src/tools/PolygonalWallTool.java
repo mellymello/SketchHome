@@ -16,7 +16,7 @@ public class PolygonalWallTool extends WallTool {
 	public void onMouseClicked(MouseEvent me) {
 		// éliminer le mur sélectionné avec un clic droite
 		if (me.getButton() == MouseEvent.BUTTON3) {
-			drawingBoardContent.getWalls().remove(
+			drawingBoardContent.getPlacedWalls().remove(
 					drawingBoardContent.getSelectedWall());
 		} else {
 			if (drawingBoardContent.getSelectedWall() == null) {
@@ -31,7 +31,7 @@ public class PolygonalWallTool extends WallTool {
 						// on peut fixer le tmpWall et l'ajouter dans la liste
 						// des murs
 
-						drawingBoardContent.getWalls().add(
+						drawingBoardContent.getPlacedWalls().add(
 								drawingBoardContent.getTmpWall());
 
 						drawingBoardContent.setTmpWall(new Wall(
@@ -56,7 +56,7 @@ public class PolygonalWallTool extends WallTool {
 								.getWallThickness()));
 
 						drawingBoardContent
-								.getWalls()
+								.getPlacedWalls()
 								.add(new Wall(drawingBoardContent
 										.getSelectedWall().getCtrlPointStart(),
 										drawingBoardContent.getTmpWall()
@@ -64,14 +64,14 @@ public class PolygonalWallTool extends WallTool {
 										drawingBoardContent.getWallThickness()));
 
 						drawingBoardContent
-								.getWalls()
+								.getPlacedWalls()
 								.add(new Wall(drawingBoardContent.getTmpWall()
 										.getCtrlPointStart(),
 										drawingBoardContent.getSelectedWall()
 												.getCtrlPointEnd(),
 										drawingBoardContent.getWallThickness()));
 
-						drawingBoardContent.getWalls().remove(
+						drawingBoardContent.getPlacedWalls().remove(
 								drawingBoardContent.getSelectedWall());
 
 					} else {
@@ -80,7 +80,7 @@ public class PolygonalWallTool extends WallTool {
 								me.getY());
 
 						drawingBoardContent
-								.getWalls()
+								.getPlacedWalls()
 								.add(new Wall(drawingBoardContent
 										.getSelectedWall().getCtrlPointStart(),
 										drawingBoardContent.getTmpWall()
@@ -88,16 +88,16 @@ public class PolygonalWallTool extends WallTool {
 										drawingBoardContent.getWallThickness()));
 
 						drawingBoardContent
-								.getWalls()
+								.getPlacedWalls()
 								.add(new Wall(drawingBoardContent.getTmpWall()
 										.getCtrlPointEnd(), drawingBoardContent
 										.getSelectedWall().getCtrlPointEnd(),
 										drawingBoardContent.getWallThickness()));
 
-						drawingBoardContent.getWalls().remove(
+						drawingBoardContent.getPlacedWalls().remove(
 								drawingBoardContent.getSelectedWall());
 
-						drawingBoardContent.getWalls().add(
+						drawingBoardContent.getPlacedWalls().add(
 								drawingBoardContent.getTmpWall());
 
 						drawingBoardContent.setTmpWall(null);
@@ -117,7 +117,7 @@ public class PolygonalWallTool extends WallTool {
 						drawingBoardContent.getTmpWall().setNewEndPoint(
 								drawingBoardContent.getSelectedCtrlPoint());
 
-						drawingBoardContent.getWalls().add(
+						drawingBoardContent.getPlacedWalls().add(
 								drawingBoardContent.getTmpWall());
 
 						drawingBoardContent.setTmpWall(null);
@@ -186,7 +186,7 @@ public class PolygonalWallTool extends WallTool {
 
 			}
 
-			for (Wall w : drawingBoardContent.getWalls()) {
+			for (Wall w : drawingBoardContent.getPlacedWalls()) {
 				if (w.getCtrlPointStart() == drawingBoardContent
 						.getSelectedCtrlPoint()) {
 					w.setNewStartPoint(drawingBoardContent
@@ -216,7 +216,7 @@ public class PolygonalWallTool extends WallTool {
 							.getSelectedCtrlPoint()) {
 
 				if (drawingBoardContent.getSelectedCtrlPoint() != null) {
-					for (Wall w : drawingBoardContent.getWalls()) {
+					for (Wall w : drawingBoardContent.getPlacedWalls()) {
 						if (w.getCtrlPointStart() == detectedReleasedPoint) {
 							w.setNewStartPoint(drawingBoardContent
 									.getSelectedCtrlPoint());
@@ -239,8 +239,8 @@ public class PolygonalWallTool extends WallTool {
 						detectedRelasedWall.getCtrlPointEnd(),
 						drawingBoardContent.getWallThickness());
 
-				drawingBoardContent.getWalls().add(newWall);
-				drawingBoardContent.getWalls().add(newWall2);
+				drawingBoardContent.getPlacedWalls().add(newWall);
+				drawingBoardContent.getPlacedWalls().add(newWall2);
 
 				if (drawingBoardContent.getSelectedCtrlPoint() == drawingBoardContent
 						.getSelectedWall().getCtrlPointEnd()) {
@@ -251,10 +251,10 @@ public class PolygonalWallTool extends WallTool {
 							newWall.getCtrlPointEnd());
 				}
 
-				drawingBoardContent.getWalls().add(newWall);
-				drawingBoardContent.getWalls().add(newWall2);
+				drawingBoardContent.getPlacedWalls().add(newWall);
+				drawingBoardContent.getPlacedWalls().add(newWall2);
 
-				drawingBoardContent.getWalls().remove(detectedRelasedWall);
+				drawingBoardContent.getPlacedWalls().remove(detectedRelasedWall);
 
 			}
 		}

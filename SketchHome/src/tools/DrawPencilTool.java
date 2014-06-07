@@ -30,18 +30,6 @@ public class DrawPencilTool extends IDragDrawTool {
 
 	}
 
-	public void onMouseMoved(MouseEvent me) {
-	}
-
-	public void onMouseClicked(MouseEvent me) {
-	}
-
-	public void onMouseEntered(MouseEvent me) {
-	}
-
-	public void onMouseExited(MouseEvent me) {
-	}
-
 	public static DrawPencilTool getInstance() {
 		if (instance == null) {
 			instance = new DrawPencilTool();

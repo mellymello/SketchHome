@@ -26,6 +26,9 @@ public class CtrlPoint extends Point2D implements Serializable {
 
 	}
 
+	/**
+	 * @return un Ellipse2D représentant le point de contrôle
+	 */
 	public Ellipse2D getCtrlPoint() {
 		return ctrlPoint;
 	}

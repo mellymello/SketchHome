@@ -35,13 +35,6 @@ public class FurniturePlacementTool extends PlacementTool {
 		}
 	}
 
-	public static FurniturePlacementTool getInstance() {
-		if(instance == null) {
-			instance = new FurniturePlacementTool();
-		}
-		return instance;
-	}
-
 	@Override
 	public void onMouseDragged(MouseEvent me) {
 		if(drawingBoardContent.getSelectedFurniture() != null && !drawingBoardContent.getSelectedFurniture().getLocked()) {
@@ -57,8 +50,8 @@ public class FurniturePlacementTool extends PlacementTool {
 				me.getY()));
 		if(drawingBoardContent.getSelectedFurniture() != null) {
 			//Mise de l'objet sélectionné au premier plan
-			drawingBoardContent.getFurnitures().remove(drawingBoardContent.getSelectedFurniture());
-			drawingBoardContent.getFurnitures().addLast(drawingBoardContent.getSelectedFurniture());
+			drawingBoardContent.getPlacedFurnitures().remove(drawingBoardContent.getSelectedFurniture());
+			drawingBoardContent.getPlacedFurnitures().addLast(drawingBoardContent.getSelectedFurniture());
 			
 			//Calcul de la position de la souris par rapport au coin haut-gauche de l'objet
 			relX = me.getX() - drawingBoardContent.getSelectedFurniture().getPosition().x;
@@ -67,12 +60,18 @@ public class FurniturePlacementTool extends PlacementTool {
 	}
 	
 	public Furniture furnitureDetect(int x, int y) {
-		for (int i = drawingBoardContent.getFurnitures().size()-1; i >= 0; i--) {
-			if (drawingBoardContent.getFurnitures().get(i).contains(x,y)) {
-				return drawingBoardContent.getFurnitures().get(i);
+		for (int i = drawingBoardContent.getPlacedFurnitures().size()-1; i >= 0; i--) {
+			if (drawingBoardContent.getPlacedFurnitures().get(i).contains(x,y)) {
+				return drawingBoardContent.getPlacedFurnitures().get(i);
 			}
 		}
 		return null;
 	}
 
+	public static FurniturePlacementTool getInstance() {
+		if(instance == null) {
+			instance = new FurniturePlacementTool();
+		}
+		return instance;
+	}
 }

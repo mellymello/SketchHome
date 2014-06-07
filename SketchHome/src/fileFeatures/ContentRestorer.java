@@ -1,6 +1,5 @@
 package fileFeatures;
 
-import gui.DrawingBoard;
 import gui.MainFrame;
 
 import java.io.File;
@@ -8,13 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.LinkedList;
-
 import drawableObjects.DrawingBoardContent;
 import drawableObjects.Furniture;
-import drawableObjects.FurnitureLibrary;
 import drawableObjects.Wall;
 
+/**
+ * Outil pour ouvrir un fichier SketchHome enregistré
+ */
 public class ContentRestorer 
 {
 	File file;
@@ -23,14 +22,21 @@ public class ContentRestorer
 	FileInputStream fis;
 	ObjectInputStream in;
 	
-	LinkedList<Wall> listWall = new LinkedList<Wall>();
-	
+	/**
+	 * Crée un nouvel ouvreur de fichier SketchHome
+	 * @param libraryContainer : contient les librairies de meubles pour paramétrer les meubles à restaurer
+	 * @param dbc : plan à remplir lors de la restauration de contenu
+	 */
 	public ContentRestorer (MainFrame libraryContainer, DrawingBoardContent dbc)
 	{
 		this.libraryContainer = libraryContainer;
 		content = dbc;
 	}
 	
+	/**
+	 * Restaure un plan sauvegardé en lisant le fichier donné.
+	 * @param f : fichier SketchHome à ouvrir
+	 */
 	public void restore (File f)
 	{
 		openFile(f);
@@ -45,10 +51,9 @@ public class ContentRestorer
 			{
 				if(o instanceof Furniture)
 				{
-					//System.out.println(((Furniture)o).getLibrary().getName());
-					String n = ((Furniture)o).getLibraryName();
-					FurnitureLibrary l = libraryContainer.getLibraryByName(n);
+					//paramétrage de la librairie du meuble
 					((Furniture)o).setLibrary(libraryContainer.getLibraryByName(((Furniture)o).getLibraryName()));
+					
 					content.addFurniture(((Furniture)o));
 				}
 				else if (o instanceof Wall)
@@ -67,6 +72,10 @@ public class ContentRestorer
 		}
 	}
 		
+	/**
+	 * Ouvre un fichier.
+	 * @param file fichier à ouvrir
+	 */
 	public void openFile(File file)
 	{
 		this.file = file;
@@ -81,6 +90,10 @@ public class ContentRestorer
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Ferme le fichier géré par l'ouvreur de fichier
+	 */
 	public void closeFile()
 	{
 		try {

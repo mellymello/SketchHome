@@ -17,34 +17,26 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileView;
 
-import drawableObjects.FurnitureCreationContent;
-import drawableObjects.Wall;
-import fileFeatures.ContentExporter;
-import sun.java2d.loops.DrawLine;
-import sun.security.util.PendingException;
 import tools.DrawEllipseTool;
 import tools.DrawLineTool;
 import tools.DrawPencilTool;
 import tools.DrawRectangleTool;
 import tools.ITools;
+import drawableObjects.FurnitureCreationContent;
+import fileFeatures.ContentExporter;
 
 public class FurnitureCreationFrame extends JFrame {
 

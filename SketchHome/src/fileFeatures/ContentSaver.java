@@ -11,7 +11,9 @@ import drawableObjects.DrawingBoardContent;
 import drawableObjects.Furniture;
 import drawableObjects.Wall;
 
-
+/**
+ * Outil pour sauvegarder un plan dans un fichier SketchHome
+ */
 public class ContentSaver
 {
 	private File file;
@@ -22,12 +24,19 @@ public class ContentSaver
 	LinkedList<Furniture> listFur;
 	LinkedList<Wall> listWall;
 	
-	
+	/**
+	 * Crée un nouvel sauvegardeur de fichier SketchHome
+	 * @param dbc : plan à sauvegarder
+	 */
 	public ContentSaver(DrawingBoardContent dbc)
 	{
 		content = dbc;
 	}
 	
+	/**
+	 * Sauvegarde le plan dans un nouveau fichier 
+	 * @param f : nouveau fichier à créer
+	 */
 	public void saveAs (File f)
 	{
 		file = f;
@@ -39,8 +48,11 @@ public class ContentSaver
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 	}
+	
+	/**
+	 * Sauvegarde le plan dans le fichier géré par le sauvegardeur. 
+	 */
 	public void save () throws FileNotFoundException
 	{
 		if(file == null){
@@ -49,7 +61,8 @@ public class ContentSaver
 		
 		openFile(file);
 		
-		listFur = content.getFurnitures();
+		//sauvegarde des meubles
+		listFur = content.getPlacedFurnitures();
 		for (Furniture f :listFur )
 		{
 			try {
@@ -58,7 +71,9 @@ public class ContentSaver
 				e.printStackTrace();
 			}
 		}
-		listWall = content.getWalls();
+		
+		//sauvegarde des murs
+		listWall = content.getPlacedWalls();
 		for (Wall w :listWall )
 		{
 			try {
@@ -67,8 +82,15 @@ public class ContentSaver
 				e.printStackTrace();
 			}
 		}
+		
+		
 		closeFile();
 	}
+	
+	/**
+	 * Ouvre un fichier.
+	 * @param file fichier à ouvrir
+	 */
 	public void openFile(File file)
 	{
 		this.file = file;
@@ -81,6 +103,10 @@ public class ContentSaver
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Ferme le fichier géré par l'ouvreur de fichier
+	 */
 	public void closeFile()
 	{
 		try {
@@ -96,10 +122,6 @@ public class ContentSaver
 			e.printStackTrace();
 		}
 	}
-//	public void setDrawingBoardContent (DrawingBoardContent dbc)
-//	{
-//		content = dbc;
-//	}
 	
 	public void setOpenedFile(File f){
 		this.file=f;

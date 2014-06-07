@@ -16,11 +16,6 @@ public class DrawLineTool extends IDragDrawTool {
 	}
 
 	@Override
-	public void onMouseClicked(MouseEvent me) {
-
-	}
-
-	@Override
 	public void onMousePressed(MouseEvent me) {
 		if (furnitureCreationContent.getTmpLine() == null) {
 			furnitureCreationContent.setTmpLine(new Line2D.Double(me.getX(), me
@@ -53,11 +48,6 @@ public class DrawLineTool extends IDragDrawTool {
 	public void onMouseReleased(MouseEvent me) {
 
 		furnitureCreationContent.addLine();
-
-	}
-
-	@Override
-	public void onMouseMoved(MouseEvent me) {
 
 	}
 

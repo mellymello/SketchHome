@@ -141,42 +141,39 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
         return childNode;
     }
     
+    /**
+     * Classe observateur d'ajout de meuble
+     */
     private class AdditionListener implements Observer {
-
 		@Override
 		public void update(Observable o, Object arg) {
-			System.out.println("add jtree");
 			//crée le JTreeNode du meuble et l'ajoute au JTree
 			((Furniture)arg).setJTreeNode(addObject(((Furniture)arg).getLibrary().getJTreeNode(), ((Furniture)arg).getName(), true));
-			//((Furniture)arg).setJTreeNode(addObject(rootNode, ((Furniture)arg).getName(), true));
-			//treeModel.reload();
-//			int indices[] = new int[]{((Furniture)arg).getLibrary().getJTreeNode().getLeafCount()};
-//			treeModel.nodesWereInserted(((Furniture)arg).getLibrary().getJTreeNode(),indices);
-			//treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
 		}
-    	
     }
     
+    /**
+     * Classe observateur de suppression de meuble
+     */
     private class DeletionListener implements Observer {
-
 		@Override
 		public void update(Observable o, Object arg) {
 			//supprime le JTreeNode du meuble
 			DynamicTree.this.tree.setSelectionPath(new TreePath(((Furniture)arg).getJtreeNode().getPath()));
 			DynamicTree.this.removeCurrentNode();
 		}
-    	
     }
     
+    /**
+     * Classe observateur de modification de meuble
+     */
     private class ModificationListener implements Observer {
-
 		@Override
 		public void update(Observable o, Object arg) {
 			//modifie le JTreeNode du meuble
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
 			treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
 		}
-    	
     }
 
 	@Override

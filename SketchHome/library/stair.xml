@@ -1,0 +1,62 @@
+<furnitureLibrary>
+	<furniture>
+		<name>SquareStairsRight</name>
+		<description>Stairs goint to the right</description>
+		<dimension>
+			<width>60</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/stair/escaliers_carresD_60_60.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>SquareStairsLeft</name>
+		<description>Stairs goint to the left</description>
+		<dimension>
+			<width>60</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/stair/escaliers_carresG_60_60.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+	<furniture>
+		<name>Short stairs</name>
+		<description>Short straight stairs</description>
+		<dimension>
+			<width>100</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/stair/escaliers_courts_100_60.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+		<furniture>
+		<name>Long stairs</name>
+		<description>long straight stairs</description>
+		<dimension>
+			<width>200</width>
+			<height>60</height>
+		</dimension>
+		<picture>library/stair/escaliers_longs_200_60.png</picture>
+		<orientation>0</orientation>
+		<color>
+			<red>255</red>
+			<green>255</green>
+			<blue>255</blue>
+		</color>
+	</furniture>
+</furnitureLibrary>

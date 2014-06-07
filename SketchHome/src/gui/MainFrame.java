@@ -42,6 +42,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import tools.PolygonalWallTool;
+import drawableObjects.CtrlPoint;
 import drawableObjects.Furniture;
 import drawableObjects.FurnitureLibrary;
 import drawableObjects.Wall;
@@ -53,15 +54,21 @@ import fileFeatures.Printer;
 import java.awt.Component;
 
 /**
- * Interface graphique de l'application SketchHome
+ * Fenêtre principale de l'interface graphique de l'application SketchHome
  */
 public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
+	//dimension de la zone de dessin
 	private static final int WINDOW_HEIGHT = 600;
 	private static final int WINDOW_WIDTH = 800;
+	//largeur des points de contrôle des murs
 	private static final int CTRL_POINT_DIAMETER = 10;
+	//largeur des murs
 	private static final int WALL_THICKNESS = 5;
 
+	/*
+	 * librairies de meubles utilisables dans le programme
+	 */
 	private FurnitureLibrary bedRoomLibrary = new FurnitureLibrary(
 			"library/bedroom.xml", "Bedroom");
 	private FurnitureLibrary livingRoomLibrary = new FurnitureLibrary(
@@ -87,22 +94,35 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			livingRoomLibrary, kitchenLibrary, diningRoomLibrary,
 			bathroomLibrary, officeLibrary, windowLibrary, doorLibrary, customLibrary };
 
+	/*
+	 * Outils pour la gestion de fichier
+	 */
 	private FileNameExtensionFilter extensionFilterSkt = new FileNameExtensionFilter("Sketch Home File", "skt");
-	private FileNameExtensionFilter extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");;
+	private FileNameExtensionFilter extensionFilterPng = new FileNameExtensionFilter("Portable Network Graphics", "png");
 	private ContentSaver contentSaver;
 	private ContentRestorer contentRestorer;
 	private ContentExporter contentExport;
 	
-	private ModificationListener modificationListener = new ModificationListener();
+	//zone de dessin
 	private DrawingBoard pnlDrawingBoard;
+	//observateur de la zone de dessin, utilisé pour mettre à jour l'affichage lors de la sélection d'un meuble dans la zone de dessin
+	private ModificationListener modificationListener = new ModificationListener();
 	
+	//affichage des outils du programme
 	private JPanel pnlTools;
 	
-	private JLabel lblSelectedobjectlibrary;
+	/*
+	 * affichage de la librairie actuellement utilisée
+	 */
+	private JLabel lblSelectedFurnitureLibrary;
 	private JPanel pnlFurnitureLibrary;
 	
+	//affichage des meubles utilisés dans le plan
 	private JPanel pnlObjectTree;
 	
+	/*
+	 * Contrôles pour la modification des propriétés des meubles
+	 */
 	private JPanel pnlFurnitureProperties;
 	private JTextField txtName;
 	private JFormattedTextField txtWidth;
@@ -112,6 +132,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 	private JLabel lblColor;
 	private JCheckBox checkBoxLocked;
 
+	/**
+	 * Création de l'interface graphique de SketchHome
+	 */
 	public MainFrame() {
 
 		setTitle("SketchHome");
@@ -131,22 +154,30 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		//controle pour la création d'un nouveau plan
+		//contrôle pour la création d'un nouveau plan
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "New"
+			 * Par le biais d'une fenêtre de dialogue, crée un nouveau plan vide et l'affiche.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				new NewSketchFrame(MainFrame.this);
 			}
 		});
 		mnFile.add(mntmNew);
 
-		//controle pour l'ouverture d'un fichier sauvegardé
+		//contrôle pour l'ouverture d'un fichier sauvegardé
 		JMenuItem mntmOpen = new JMenuItem("Open");
 		mntmOpen.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Open"
+			 * Par le biais d'une fenêtre de dialogue, ouvre un fichier plan sauvegardé
+			 */
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 
@@ -167,47 +198,15 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		mnFile.add(mntmOpen);
 
-		//controle pour la sauvegarde du plan en cours dans un fichier
-		JMenuItem mntmSave = new JMenuItem("Save");
-		mntmSave.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					contentSaver.save();
-				} catch (FileNotFoundException e1) {
-					JFileChooser fc = new JFileChooser();
-
-					fc.addChoosableFileFilter(extensionFilterSkt);
-					fc.setFileFilter(extensionFilterSkt);
-					int action = fc.showSaveDialog(null);
-					fc.setMultiSelectionEnabled(false);
-					if (action == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fc.getSelectedFile();
-						String filePath = selectedFile.getAbsolutePath();
-						//le fichier selectionné est bien un fichier .skt
-						if(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals(extensionFilterSkt.getExtensions()[0])){
-							contentSaver.saveAs(selectedFile);
-							setTitle("SketchHome - " + selectedFile.getName());
-						}
-						else {
-							File f = new File(filePath.concat(".").concat(extensionFilterSkt.getExtensions()[0]));
-							contentSaver.saveAs(f);
-							setTitle("SketchHome - " + f.getName());
-						}
-					}
-				}
-
-			}
-		});
-		mnFile.add(mntmSave);
-
 		//controle pour la sauvegarde du plan en cours dans un fichier différent
-		JMenuItem mntmSaveAs = new JMenuItem("Save as");
+		final JMenuItem mntmSaveAs = new JMenuItem("Save as");
 		mntmSaveAs.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Save as"
+			 * Par le biais d'une fenêtre de dialogue, enregistre le plan dans un fichier précisé par l'utilisateur.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 
@@ -232,13 +231,42 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 			}
 		});
+		
+		//contrôle pour la sauvegarde du plan en cours dans un fichier
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+
+			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Save"
+			 * Par le biais d'une fenêtre de dialogue, enregistre le plan dans son fichier.
+			 * S'il n'en a pas, comportement identique à "Save as".
+			 */
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					contentSaver.save();
+				} catch (FileNotFoundException e1) {
+					//si on a pas déjà défini un fichier de sauvegarde, on fait un saveAs()
+					for(ActionListener a: mntmSaveAs.getActionListeners()) {
+					    a.actionPerformed(e);
+					}
+				}
+
+			}
+		});
+		mnFile.add(mntmSave);
 		mnFile.add(mntmSaveAs);
 
-		//controle pour l'exportation du plan dans un fichier image
+		//contrôle pour l'exportation du plan dans un fichier image
 		JMenuItem mntmExport = new JMenuItem("Export");
 		mntmExport.addActionListener(new ActionListener() {
 			
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Export"
+			 * Par le biais d'une fenêtre de dialogue, enregistre le plan sous forme d'image png dans un fichier précisé par l'utilisateur.
+			 */
 			public void actionPerformed(ActionEvent arg0) {
 
 				JFileChooser fc = new JFileChooser();
@@ -265,12 +293,16 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		mnFile.add(mntmExport);
 		
 
-		//controle pour l'impression du plan
+		//contrôle pour l'impression du plan
 		JMenuItem mntmPrint = new JMenuItem("Print");
 		mnFile.add(mntmPrint);
 		mntmPrint.addActionListener(new ActionListener() {
 			
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Print"
+			 * Ouvre la fenêtre de dialogue prédéfinie permettant d'imprimer le plan.
+			 */
 			public void actionPerformed(ActionEvent arg0) {
 				PrinterJob printJob = PrinterJob.getPrinterJob();
 				printJob.setPrintable(new Printer(pnlDrawingBoard));
@@ -286,8 +318,13 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			}
 		});
 
+		//contrôle pour quitter le programme
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnFile.add(mntmExit);
+		/**
+		 * Action effectuée sur le clic sur le JMenuItem "Exit"
+		 * Quitte l'application
+		 */
 		mntmExit.addActionListener(new ActionListener() {
 			
 			@Override
@@ -308,6 +345,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		mntmCreateNew.addActionListener(new ActionListener() {
 			
 			@Override
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Create new"
+			 * Ouvre la fenêtre de dialogue permettant de créer un meuble personnalisé.
+			 */
 			public void actionPerformed(ActionEvent arg0) {
 				new FurnitureCreationFrame();	
 			}
@@ -324,6 +365,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		JMenuItem mntmShowMeasurements = new JMenuItem("Measurements");
 		mntmShowMeasurements.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/img/cotations.png")));
 		mntmShowMeasurements.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Measurements"
+			 * Affiche ou cache les mensurations des objets du plan
+			 */
 			public void actionPerformed(ActionEvent e) {
 				pnlDrawingBoard.toggleShowMeasurements();
 				pnlDrawingBoard.repaint();
@@ -335,6 +380,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		JMenuItem mntmShowObjectTree = new JMenuItem("Object tree");
 		mntmShowObjectTree.addActionListener(new ActionListener() {
 			boolean objectTreeVisible = true;
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Object tree"
+			 * Affiche ou cache le JTree affichant les objets présents dans le plan
+			 */
 			public void actionPerformed(ActionEvent e) {
 				if(objectTreeVisible) {
 					pnlTools.remove(pnlObjectTree);
@@ -353,6 +402,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		JMenuItem mntmShowProperties = new JMenuItem("Properties");
 		mntmShowProperties.addActionListener(new ActionListener() {
 			boolean propertiesVisible = true;
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "Properties"
+			 * Affiche ou cache les contrôles permettant d'agir sur les propriétés des objets présents dans le plan
+			 */
 			public void actionPerformed(ActionEvent e) {
 				if(propertiesVisible) {
 					pnlTools.remove(pnlFurnitureProperties);
@@ -375,21 +428,26 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//controle pour afficher des informations
 		JMenuItem mntmAboutSketchhome = new JMenuItem("About SketchHome");
 		mntmAboutSketchhome.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur le JMenuItem "About SketchHome"
+			 * Affiche des informations
+			 */
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(MainFrame.this,"SketchHome\nAuthors : Hug Auriana, Jollien Dominique, Melly Calixte, Righitto Simone, Saam Frédéric\nVersion : 1.0");
 			}
 		});
 		mnHelp.add(mntmAboutSketchhome);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		
 
 		
 		//affichage du plan
 		pnlDrawingBoard = new DrawingBoard(WINDOW_WIDTH, WINDOW_HEIGHT,
 				CTRL_POINT_DIAMETER, WALL_THICKNESS);
 		pnlDrawingBoard.setBackground(Color.WHITE);
+		pnlDrawingBoard.setLayout(null);
 		getContentPane().add(pnlDrawingBoard, BorderLayout.CENTER);
+		//l'application principale observe les modifications apportées au plan
+		pnlDrawingBoard.addContentObserver(this);
 
 		/*
 		 * outils pour sauvegarder/ouvrir/exporter des fichiers représentant le plan
@@ -397,19 +455,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		contentSaver = new ContentSaver(pnlDrawingBoard.getDrawingBoardContent());
 		contentRestorer = new ContentRestorer(this, pnlDrawingBoard.getDrawingBoardContent());
 		contentExport = new ContentExporter(pnlDrawingBoard);
-		pnlDrawingBoard.setLayout(null);
 				
 		/*
-		 * Controles pour utiliser les outils
+		 * Contrôles pour utiliser les outils
 		 */
 		pnlTools = new JPanel();
 		pnlTools.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(pnlTools, BorderLayout.WEST);
-
-		/*
-		 * Boutons pour utiliser les outils
-		 */
 		pnlTools.setLayout(new BoxLayout(pnlTools, BoxLayout.Y_AXIS));
+		
+		/*
+		 * Boutons pour représentant des outils
+		 */
 		JPanel pnlToolsBtn = new JPanel();
 		pnlToolsBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		pnlTools.add(pnlToolsBtn);
@@ -422,12 +479,16 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
 		
-		//Outils pour la création d'objets personnalisés
+		//Outil pour la création d'objets personnalisés
 		JButton btnFurniturecreation = new JButton("");
 		btnFurniturecreation.setToolTipText("Furniture creation");
 		btnFurniturecreation.setBorderPainted(false);
 		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
 		btnFurniturecreation.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnFurniturecreation
+			 * Affiche la fenêtre permettant de créer un meuble personnalisé
+			 */
 			public void actionPerformed(ActionEvent e) {
 				new FurnitureCreationFrame();
 			}
@@ -443,11 +504,15 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnFurniturecreation.gridy = 0;
 		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
 
-		//outils pour le placement de texte
+		//Outil pour le placement de texte
 		JButton btnTextTool = new JButton("");
 		btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/texteB.png")));
 		btnTextTool.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnTextTool
+			 * Sélectionne l'outils pour le placement de texte.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				// selectedTool = TextTool.getInstance();
 			}
@@ -463,18 +528,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnTextTool.gridx = 1;
 		gbc_btnTextTool.gridy = 0;
 		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
-
-		//sélection de la librairie Bedroom
-		JButton btnBedroom = new JButton("");
-		btnBedroom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectLibrary(bedRoomLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getFurniturePlacementTool());
-			}
-		});
 		
-		//outils pour zomme avant dans l'affichage du plan 
+		//outil pour zomm avant dans l'affichage du plan 
 		JButton btnZoomplus = new JButton("Zoom +");
 		btnZoomplus.setToolTipText("Zoom avant");
 		btnZoomplus.setBorderPainted(false);
@@ -486,7 +541,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnZoomplus.gridy = 0;
 		pnlToolsBtn.add(btnZoomplus, gbc_btnZoomplus);
 		
-		//outils pour zomme arrière dans l'affichage du plan
+		//outil pour zomm arrière dans l'affichage du plan
 		JButton btnZoomminus = new JButton("Zoom -");
 		btnZoomminus.setToolTipText("Zoom arrière");
 		btnZoomminus.setBorderPainted(false);
@@ -497,6 +552,20 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnZoomminus.gridx = 3;
 		gbc_btnZoomminus.gridy = 0;
 		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
+
+		//sélection de la librairie Bedroom
+		JButton btnBedroom = new JButton("");
+		btnBedroom.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnBedroom
+			 * Sélectionne la librairie Bedroom et l'outils pour le placement de meuble.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(bedRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
 		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/chambreB.png")));
 		btnBedroom.setToolTipText("BedRoom");
@@ -519,6 +588,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnOffice.setBorderPainted(false);
 		btnOffice.setMargin(new Insets(0, 0, 0, 0));
 		btnOffice.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnOffice
+			 * Sélectionne la librairie office et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(officeLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -537,6 +610,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//sélection de la librairie Kitchen
 		JButton btnKitchen = new JButton("");
 		btnKitchen.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnKitchen
+			 * Sélectionne la librairie kitchen et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(kitchenLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -562,6 +639,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnLivingroom.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur btnLivingroom
+			 * Sélectionne la librairie living room et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(livingRoomLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -587,6 +668,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnBathroom.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur btnBathroom
+			 * Sélectionne la librairie bathroom et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(bathroomLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -612,6 +697,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnDiningRoom.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur btnDiningRoom
+			 * Sélectionne la librairie dining room et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(diningRoomLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -631,25 +720,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnDiningRoom.gridx = 5;
 		gbc_btnDiningRoom.gridy = 1;
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
-
-		//outils pour tracer des murs simples
-		JButton btnWall = new JButton("");
-		btnWall.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_simpleB.png")));
-		btnWall.setToolTipText("Simple Wall");
-		btnWall.setBorderPainted(false);
-		btnWall.setMargin(new Insets(0, 0, 0, 0));
-		btnWall.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_simple.png")));
-		btnWall.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getSimpleWallTool());
-				showContentOfLibrary(null);
-			}
-		});
 		
 		//sélection de la librairie objets personnalisés
 		JButton btnCustomfurniture = new JButton("");
@@ -657,6 +727,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnCustomfurniture.setBorderPainted(false);
 		btnCustomfurniture.setMargin(new Insets(0, 0, 0, 0));
 		btnCustomfurniture.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnCustomfurniture
+			 * Sélectionne la librairie custom et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(customLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -673,6 +747,29 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnCustomfurniture.gridx = 6;
 		gbc_btnCustomfurniture.gridy = 1;
 		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
+		
+		//outils pour tracer des murs simples
+		JButton btnWall = new JButton("");
+		btnWall.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_simpleB.png")));
+		btnWall.setToolTipText("Simple Wall");
+		btnWall.setBorderPainted(false);
+		btnWall.setMargin(new Insets(0, 0, 0, 0));
+		btnWall.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_simple.png")));
+		btnWall.addActionListener(new ActionListener() {
+
+			@Override
+			/**
+			 * Action effectuée sur le clic sur btnWall
+			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur.
+			 */
+			public void actionPerformed(ActionEvent arg0) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getSimpleWallTool());
+				showContentOfLibrary(null);
+			}
+		});
 		GridBagConstraints gbc_btnWall = new GridBagConstraints();
 		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
 		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
@@ -692,6 +789,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnWall2.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * Action effectuée sur le clic sur btnWall2
+			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur continus.
+			 */
 			public void actionPerformed(ActionEvent arg0) {
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
 						.getPolygonalWallTool());
@@ -708,6 +809,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//sélection de la librairie fenêtre
 		JButton btnWindow = new JButton("");
 		btnWindow.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnWindow
+			 * Sélectionne la librairie window et l'outils pour le placement de meuble sur des murs.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(windowLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -734,6 +839,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		btnDoor.setBorderPainted(false);
 		btnDoor.setMargin(new Insets(0, 0, 0, 0));
 		btnDoor.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnDoor
+			 * Sélectionne la librairie door et l'outils pour le placement de meuble sur des murs.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(doorLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
@@ -753,20 +862,23 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		//sélection de la librairie escalier
 		JButton btnStair = new JButton("");
+		btnStair.setToolTipText("Stairs");
+		btnStair.setBorderPainted(false);
+		btnStair.setMargin(new Insets(0, 0, 0, 0));
 		btnStair.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnStair
+			 * Sélectionne la librairie stair et l'outils pour le placement de meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(stairLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
 						.getFurniturePlacementTool());
 			}
 		});
-		btnStair.setBorderPainted(false);
-		btnStair.setMargin(new Insets(0, 0, 0, 0));
+
 		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/escaliersB.png")));
-		btnStair.setToolTipText("Stairs");
-		btnStair.setBorderPainted(false);
-		btnStair.setMargin(new Insets(0, 0, 0, 0));
 		btnStair.setIcon(new ImageIcon(MainFrame.class
 				.getResource("/gui/img/escaliers.png")));
 		GridBagConstraints gbc_btnStair = new GridBagConstraints();
@@ -790,15 +902,15 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				Double.MIN_VALUE };
 		pnlObjects.setLayout(gbl_pnlObjects);
 
-		lblSelectedobjectlibrary = new JLabel("Selected Object Library :");
-		lblSelectedobjectlibrary.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSelectedFurnitureLibrary = new JLabel("Selected Object Library :");
+		lblSelectedFurnitureLibrary.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblSelectedobjectlibrary = new GridBagConstraints();
 		gbc_lblSelectedobjectlibrary.anchor = GridBagConstraints.NORTH;
 		gbc_lblSelectedobjectlibrary.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblSelectedobjectlibrary.insets = new Insets(0, 0, 5, 0);
 		gbc_lblSelectedobjectlibrary.gridx = 0;
 		gbc_lblSelectedobjectlibrary.gridy = 1;
-		pnlObjects.add(lblSelectedobjectlibrary, gbc_lblSelectedobjectlibrary);
+		pnlObjects.add(lblSelectedFurnitureLibrary, gbc_lblSelectedobjectlibrary);
 		
 		//JPanel d'affichage de la librairie sélectionnée
 		pnlFurnitureLibrary = new JPanel();
@@ -827,10 +939,12 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//DynamicTree permettant d'afficher les objets utilisés dans le plan
 		DynamicTree treePanel = new DynamicTree();
 		pnlObjectTree.add(treePanel);
+		//remplissage du DynamicTree avec des noeuds représentant les librairies de meuble
 		for (FurnitureLibrary furnitureLibrary : furnitureLibraries) {
 			furnitureLibrary.setJtreeNode(treePanel.addObject(null,
 					furnitureLibrary.getName()));
 		}
+		//le JTree observe les ajouts, modifications et suppressions apportées au plan
 		pnlDrawingBoard.addContentObserver(treePanel);
 
 		/*
@@ -991,8 +1105,12 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 
 		JButton btnBackgroundColor = new JButton("BackgroundColor");
 		btnBackgroundColor.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnBackgroundColor
+			 * Permet la sélection d'une couleur de fond à utiliser pour le meuble.
+			 */
 			public void actionPerformed(ActionEvent e) {
-				Color bgColor = JColorChooser.showDialog(MainFrame.this, "Choisir une couleur de fond", lblColor.getBackground());
+				Color bgColor = JColorChooser.showDialog(MainFrame.this, "Choose background color", lblColor.getBackground());
 				if (bgColor != null){
 					lblColor.setBackground(bgColor);
 				}
@@ -1021,6 +1139,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		//bouton pour appliquer les modifications au meuble
 		JButton btnModifyFurniture = new JButton("Modify");
 		btnModifyFurniture.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnModifyFurniture
+			 * Modifie les propriétés du meuble sélectionné avec les valeurs données par l'utilisateur.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				Furniture f = pnlDrawingBoard.getDrawingBoardContent().getSelectedFurniture();
 				if(!f.getLocked() || !checkBoxLocked.isSelected()) {
@@ -1030,8 +1152,8 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 					f.setOrientation(Double.valueOf(txtRotation.getText()));
 					f.setColor(lblColor.getBackground());
 					f.setLocked(checkBoxLocked.isSelected());
-					f.getJtreeNode().setUserObject(f.getName());
 					
+					//envoi d'une notification de modification du meuble
 					pnlDrawingBoard.modifyFurniture(f);
 					
 					repaint();
@@ -1045,8 +1167,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_btnModifyFurniture.gridx = 1;
 		gbc_btnModifyFurniture.gridy = 8;
 		pnlFurnitureProperties.add(btnModifyFurniture, gbc_btnModifyFurniture);
-		
-		pnlDrawingBoard.addContentObserver(this);
 
 		pack();
 	}
@@ -1058,13 +1178,27 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 	 *            : librairie de meuble à afficher
 	 */
 	public void selectLibrary(FurnitureLibrary furnitureLibrary) {
-		lblSelectedobjectlibrary.setText("Selected Object Library : "
+		lblSelectedFurnitureLibrary.setText("Selected Object Library : "
 				+ furnitureLibrary.getName());
 		furnitureLibrary.loadLibraryContent();
 		showContentOfLibrary(furnitureLibrary);
 	
 		pnlDrawingBoard.setSelectedFurnitureLibrary(furnitureLibrary);
 		pnlDrawingBoard.setSelectedModelFurniture(null);
+	}
+	
+    /**
+     * Retourne une librarie dont le nom correspond.
+     * @param libraryName : nom de la librarie à trouver
+     * @return librarie portant le nom donné par libraryName, null si pas trouvé
+     */
+	public FurnitureLibrary getLibraryByName(String libraryName) {
+		for (FurnitureLibrary library : furnitureLibraries) {
+			if(library.getName().equals(libraryName)) {
+				return library;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -1100,6 +1234,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		private JComponent miniature;
 		private Dimension miniatureDimension;
 
+		/**
+		 * Crée une nouvelle miniature de meuble.
+		 * @param furniture : meuble à représenter
+		 */
 		public FurnitureMiniature(Furniture furniture) {
 			this.furniture = furniture;
 
@@ -1111,7 +1249,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			lblName = new JLabel(furniture.getName());
 			add(lblName);
 
-			//l'image miniature à un dimension minimale de 80x80
+			//l'image miniature a un dimension maximale de 80x80
 			int reducedWidth = furniture.getDimension().width > 80 ? 80 : furniture.getDimension().width;
 			int reducedHeight = furniture.getDimension().height > 80 ? 80 : furniture.getDimension().height;
 			miniatureDimension = new Dimension(reducedWidth, reducedHeight);
@@ -1176,6 +1314,10 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		return modificationListener;
 	}
 	
+	/**
+	 * Observateur permettant le remplissage des controles d'édition des propriétés d'un meuble
+	 * quand on le sélectionne dans le plan. 
+	 */
     private class ModificationListener implements Observer {
 
 		@Override
@@ -1196,20 +1338,6 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
     	
     }
 
-    /**
-     * Retourne une librarie dont le nom correspond.
-     * @param libraryName : nom de la librarie à trouver
-     * @return librarie portant le nom donné par libraryName, null si pas trouvé
-     */
-	public FurnitureLibrary getLibraryByName(String libraryName) {
-		for (FurnitureLibrary library : furnitureLibraries) {
-			if(library.getName().equals(libraryName)) {
-				return library;
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * Supprime le contenu du plan.
 	 * Réinitialise le programme à un nouveau plan vide.
@@ -1229,26 +1357,14 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		resetDrawingBoard();
 		
 		//dessin d'une pièce rectangulaire
-		MouseEvent me = new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false);
-		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10, 1, false));
-		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
-		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
-		me.translatePoint(roomWidth, 0);
-		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10 + roomWidth, 10, 1, false));
-		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
-		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
-		me.translatePoint(0, roomHeight);
-		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10 + roomWidth, 10 + roomHeight, 1, false));
-		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
-		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10 + roomHeight, 1, false));
-		me.translatePoint(-roomWidth, 0);
-		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10 + roomHeight, 1, false));
-		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
-		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10 + roomHeight, 1, false));
-		me.translatePoint(0, -roomHeight);
-		pnlDrawingBoard.getPolygonalWallTool().onMousePressed(new MouseEvent(this, MouseEvent.MOUSE_PRESSED, 1, 0, 10, 10, 1, false));
-		//pnlDrawingBoard.getPolygonalWallTool().onMouseReleased(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10 + roomWidth, 10, 1, false));
-		pnlDrawingBoard.getPolygonalWallTool().onMouseClicked(new MouseEvent(this, MouseEvent.MOUSE_CLICKED, 1, 0, 10, 10, 1, false));
+		CtrlPoint upLeft = new CtrlPoint(10, 10, CTRL_POINT_DIAMETER);
+		CtrlPoint upRight= new CtrlPoint(10+roomWidth, 10, CTRL_POINT_DIAMETER);
+		CtrlPoint downRight= new CtrlPoint(10+roomWidth, 10+roomHeight, CTRL_POINT_DIAMETER);
+		CtrlPoint downLeft = new CtrlPoint(10, 10+roomHeight, CTRL_POINT_DIAMETER);
+		pnlDrawingBoard.getDrawingBoardContent().addWall(new Wall(upLeft, upRight, WALL_THICKNESS));
+		pnlDrawingBoard.getDrawingBoardContent().addWall(new Wall(upRight, downRight, WALL_THICKNESS));
+		pnlDrawingBoard.getDrawingBoardContent().addWall(new Wall(downRight, downLeft, WALL_THICKNESS));
+		pnlDrawingBoard.getDrawingBoardContent().addWall(new Wall(downLeft, upLeft, WALL_THICKNESS));
 		
 		repaint();
 	}
