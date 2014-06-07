@@ -67,6 +67,8 @@ public class FurnitureLibrary implements Serializable {
 			 
 						Element eElement = (Element) nNode;
 						
+						boolean placedOnWall = eElement.getElementsByTagName("isMural").item(0).getTextContent().equals("0") ? false : true;
+						
 						libraryContent.add(new Furniture(eElement.getElementsByTagName("name").item(0).getTextContent(),
 								eElement.getElementsByTagName("description").item(0).getTextContent(),
 								eElement.getElementsByTagName("picture").item(0).getTextContent(),
@@ -76,7 +78,8 @@ public class FurnitureLibrary implements Serializable {
 								false,
 								true,
 								this,
-								new Color(Integer.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent()))));
+								new Color(Integer.valueOf(eElement.getElementsByTagName("red").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("green").item(0).getTextContent()), Integer.valueOf(eElement.getElementsByTagName("blue").item(0).getTextContent())),
+								placedOnWall));
 						
 					}
 				}

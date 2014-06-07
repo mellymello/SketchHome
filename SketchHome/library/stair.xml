@@ -13,6 +13,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>SquareStairsLeft</name>
@@ -28,6 +29,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Short stairs</name>
@@ -43,6 +45,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 		<furniture>
 		<name>Long stairs</name>
@@ -58,5 +61,6 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 </furnitureLibrary>

@@ -13,6 +13,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Chair</name>
@@ -28,6 +29,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Table1</name>
@@ -43,6 +45,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Table2</name>
@@ -58,6 +61,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Table3</name>
@@ -73,5 +77,6 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 </furnitureLibrary>

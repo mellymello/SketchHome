@@ -238,6 +238,7 @@ public class FurnitureCreationSave extends JFrame {
 			Element red = doc.createElement("red");
 			Element green = doc.createElement("green");
 			Element blue = doc.createElement("blue");
+			Element isMural = doc.createElement("isMural");
 
 			name.setTextContent(this.name.getText());
 			description.setTextContent(this.description.getText());
@@ -245,6 +246,7 @@ public class FurnitureCreationSave extends JFrame {
 			height.setTextContent(this.height.getText());
 			dimension.appendChild(width);
 			dimension.appendChild(height);
+			isMural.setTextContent("0");
 
 			picture.setTextContent(furniturePath);
 			orientation.setTextContent("0");
@@ -265,6 +267,7 @@ public class FurnitureCreationSave extends JFrame {
 			furnitureNode.appendChild(picture);
 			furnitureNode.appendChild(orientation);
 			furnitureNode.appendChild(color);
+			furnitureNode.appendChild(isMural);
 
 			root.appendChild(furnitureNode);
 
@@ -273,8 +276,6 @@ public class FurnitureCreationSave extends JFrame {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-
-			// File outputFile = new File("src/input2.xml");
 
 			StreamResult result = new StreamResult(xmlFile);
 			// creating output stream

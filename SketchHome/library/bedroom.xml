@@ -13,6 +13,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Double Bed</name>
@@ -28,6 +29,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Baby Bed</name>
@@ -43,6 +45,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Bedside Table</name>
@@ -58,6 +61,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Chest of Drawers</name>
@@ -73,6 +77,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 	<furniture>
 		<name>Wardrobe</name>
@@ -88,5 +93,6 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>0</isMural>
 	</furniture>
 </furnitureLibrary>

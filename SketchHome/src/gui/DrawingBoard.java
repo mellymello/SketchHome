@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 
 import tools.FurniturePlacementTool;
 import tools.ITools;
-import tools.OnWallPlacementTool;
 import tools.PolygonalWallTool;
 import tools.SimpleWallTool;
 import drawableObjects.DrawingBoardContent;
@@ -46,8 +45,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	private PolygonalWallTool polygonalWallTool = PolygonalWallTool
 			.getInstance();
 	private FurniturePlacementTool furniturePlacementTool = FurniturePlacementTool
-			.getInstance();
-	private OnWallPlacementTool onWallPlacementTool = OnWallPlacementTool
 			.getInstance();
 	// outil actuellement utilisé
 	private ITools selectedTool = simpleWallTool;
@@ -80,8 +77,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		simpleWallTool.setDrawingBoardContent(drawingBoardContent);
 		polygonalWallTool.setDrawingBoardContent(drawingBoardContent);
 		furniturePlacementTool.setDrawingBoardContent(drawingBoardContent);
-		onWallPlacementTool.setDrawingBoardContent(drawingBoardContent);
-		onWallPlacementTool.setWallTool(simpleWallTool);
+		furniturePlacementTool.setWallTool(simpleWallTool);
 	}
 
 	/**
@@ -290,10 +286,6 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	public PolygonalWallTool getPolygonalWallTool() {
 		return polygonalWallTool;
-	}
-
-	public OnWallPlacementTool getonWallPlacementTool() {
-		return onWallPlacementTool;
 	}
 
 	public FurniturePlacementTool getFurniturePlacementTool() {

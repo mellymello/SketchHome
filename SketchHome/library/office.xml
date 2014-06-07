@@ -13,6 +13,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>1</isMural>
 	</furniture>
 	<furniture>
 		<name>Office chair</name>
@@ -28,5 +29,6 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
+		<isMural>1</isMural>
 	</furniture>
 </furnitureLibrary>

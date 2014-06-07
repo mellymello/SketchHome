@@ -39,6 +39,7 @@ public class Furniture implements Cloneable, Serializable {
 	private boolean visible;
 	//utilisé pour le dessin de la bordure de sélection dans le plan
 	private boolean isSelected = false;
+	private boolean mustBePlacedOnWall;
 	
 	//librarie dont le meuble fait partie
 	private transient FurnitureLibrary library;
@@ -60,7 +61,7 @@ public class Furniture implements Cloneable, Serializable {
 	 * @param library : librairie d'appartenance du meuble
 	 * @param color : couleur de fond du meuble
 	 */
-	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color) {
+	public Furniture(String name, String description, String picture, Dimension dimension, Point position, double orientation, boolean locked, boolean visible, FurnitureLibrary library, Color color, boolean mustBePlacedOnWall) {
 		this.name = name;
 		this.description = description;
 		this.dimension = dimension;
@@ -71,6 +72,7 @@ public class Furniture implements Cloneable, Serializable {
 		this.visible = visible;
 		this.library = library;
 		this.color = color;
+		this.mustBePlacedOnWall = mustBePlacedOnWall;
 
 		this.libraryName = library.getName();
 		
@@ -241,5 +243,9 @@ public class Furniture implements Cloneable, Serializable {
 			bGr.fillRect(0, 0, dimension.width, dimension.height);
 			bGr.dispose();
 		}
+	}
+
+	public boolean getMustBePlacedOnWall() {
+		return mustBePlacedOnWall;
 	}
 }

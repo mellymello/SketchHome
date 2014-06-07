@@ -816,7 +816,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(windowLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getonWallPlacementTool());
+						.getFurniturePlacementTool());
 			}
 		});
 		btnWindow.setToolTipText("Windows");
@@ -846,7 +846,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			public void actionPerformed(ActionEvent e) {
 				selectLibrary(doorLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getonWallPlacementTool());
+						.getFurniturePlacementTool());
 			}
 		});
 		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class
