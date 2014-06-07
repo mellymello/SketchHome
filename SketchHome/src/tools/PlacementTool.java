@@ -11,7 +11,6 @@ import drawableObjects.Furniture;
 public abstract class PlacementTool extends ITools {
 	
 	//méthodes inutiles
-	public void onMouseReleased(MouseEvent me) {}
 	public void onMouseMoved(MouseEvent me) {}
 
 }

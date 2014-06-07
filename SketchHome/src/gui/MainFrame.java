@@ -131,6 +131,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 	private JTextField txtDescription;
 	private JLabel lblColor;
 	private JCheckBox checkBoxLocked;
+	private JCheckBox checkBoxMural;
 
 	/**
 	 * Création de l'interface graphique de SketchHome
@@ -1125,7 +1126,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlFurnitureProperties.add(btnBackgroundColor, gbc_btnBackgroundColor);
 		
 		/*
-		 * Controles pour le vérouillage du meuble
+		 * Controle pour le vérouillage du meuble
 		 */
 		checkBoxLocked = new JCheckBox("Locked");
 		GridBagConstraints gbc_checkBoxLocked = new GridBagConstraints();
@@ -1136,6 +1137,18 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		gbc_checkBoxLocked.gridy = 8;
 		pnlFurnitureProperties.add(checkBoxLocked, gbc_checkBoxLocked);
 		
+		/*
+		 * Controle pour définir si un meuble est mural
+		 */
+		checkBoxMural= new JCheckBox("Mural");
+		GridBagConstraints gbc_checkBoxMural= new GridBagConstraints();
+		gbc_checkBoxMural.anchor = GridBagConstraints.NORTH;
+		gbc_checkBoxMural.insets = new Insets(0, 0, 0, 5);
+		gbc_checkBoxMural.fill = GridBagConstraints.HORIZONTAL;
+		gbc_checkBoxMural.gridx = 1;
+		gbc_checkBoxMural.gridy = 8;
+		pnlFurnitureProperties.add(checkBoxMural, gbc_checkBoxMural);
+		
 		//bouton pour appliquer les modifications au meuble
 		JButton btnModifyFurniture = new JButton("Modify");
 		btnModifyFurniture.addActionListener(new ActionListener() {
@@ -1145,27 +1158,31 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			 */
 			public void actionPerformed(ActionEvent e) {
 				Furniture f = pnlDrawingBoard.getDrawingBoardContent().getSelectedFurniture();
-				if(!f.getLocked() || !checkBoxLocked.isSelected()) {
-					f.setName(txtName.getText());
-					f.setDescription(txtDescription.getText());
-					f.setDimension(new Dimension(Integer.valueOf(txtWidth.getText()), Integer.valueOf(txtHeight.getText())));
-					f.setOrientation(Double.valueOf(txtRotation.getText()));
-					f.setColor(lblColor.getBackground());
-					f.setLocked(checkBoxLocked.isSelected());
-					
-					//envoi d'une notification de modification du meuble
-					pnlDrawingBoard.modifyFurniture(f);
-					
-					repaint();
+				if(f != null) {
+					if(!f.getLocked() || !checkBoxLocked.isSelected()) {
+						f.setName(txtName.getText());
+						f.setDescription(txtDescription.getText());
+						f.setDimension(new Dimension(Integer.valueOf(txtWidth.getText()), Integer.valueOf(txtHeight.getText())));
+						f.setOrientation(Double.valueOf(txtRotation.getText()));
+						f.setColor(lblColor.getBackground());
+						f.setLocked(checkBoxLocked.isSelected());
+						f.setMustBePlacedOnWall(checkBoxMural.isSelected());
+						
+						//envoi d'une notification de modification du meuble
+						pnlDrawingBoard.modifyFurniture(f);
+						
+						repaint();
+					}
 				}
 			}
 		});
 		GridBagConstraints gbc_btnModifyFurniture = new GridBagConstraints();
+		gbc_btnModifyFurniture.gridwidth = 2;
 		gbc_btnModifyFurniture.anchor = GridBagConstraints.NORTH;
 		gbc_btnModifyFurniture.insets = new Insets(0, 0, 0, 5);
 		gbc_btnModifyFurniture.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnModifyFurniture.gridx = 1;
-		gbc_btnModifyFurniture.gridy = 8;
+		gbc_btnModifyFurniture.gridx = 0;
+		gbc_btnModifyFurniture.gridy = 9;
 		pnlFurnitureProperties.add(btnModifyFurniture, gbc_btnModifyFurniture);
 
 		pack();
@@ -1334,6 +1351,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 			txtWidth.setText(String.valueOf(f.getDimension().width));
 			txtHeight.setText(String.valueOf(f.getDimension().height));
 			checkBoxLocked.setSelected(f.getLocked());
+			checkBoxMural.setSelected(f.getMustBePlacedOnWall());
 		}
     	
     }

@@ -248,4 +248,8 @@ public class Furniture implements Cloneable, Serializable {
 	public boolean getMustBePlacedOnWall() {
 		return mustBePlacedOnWall;
 	}
+	
+	public void setMustBePlacedOnWall(boolean mustBePlacedOnWall) {
+		this.mustBePlacedOnWall = mustBePlacedOnWall;
+	}
 }

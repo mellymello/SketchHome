@@ -71,15 +71,17 @@ public class FurniturePlacementTool extends PlacementTool {
 
 	@Override
 	public void onMouseReleased(MouseEvent me) {
-		detectedWall = wallTool.wallDetect(me.getX(), me.getY());
-		
-		if(detectedWall == null && drawingBoardContent.getSelectedFurniture() != null){
-			
+		//vérification pour les meubles muraux
+		if(drawingBoardContent.getSelectedFurniture() != null) {
 			if(drawingBoardContent.getSelectedFurniture().getMustBePlacedOnWall()) {
-				drawingBoardContent.deleteFurniture(drawingBoardContent.getSelectedFurniture());
+				detectedWall = wallTool.wallDetect(me.getX(), me.getY());
+				
+				//suppression du meuble si on le place ailleurs que sur un mur
+				if(detectedWall == null){
+					drawingBoardContent.deleteFurniture(drawingBoardContent.getSelectedFurniture());
+				}
 			}
 		}
-		
 	}
 
 	@Override
