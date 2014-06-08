@@ -146,12 +146,12 @@ public class FurnitureCreationSave extends JFrame {
 								extensionFilterPng.getExtensions()[0])) {
 
 							contentExport.createPng(selectedFile);
-							updateXLMLibrary(selectedFile.getPath());
+							updateXMLlibrary(selectedFile.getPath());
 						} else {
 							File f = new File(filePath.concat(".").concat(
 									extensionFilterPng.getExtensions()[0]));
 							contentExport.createPng(f);
-							updateXLMLibrary(f.getPath());
+							updateXMLlibrary(f.getPath());
 						}
 					}
 
@@ -204,7 +204,7 @@ public class FurnitureCreationSave extends JFrame {
 		return isOk;
 	}
 	
-	private void updateXLMLibrary(String furniturePath) {
+	private void updateXMLlibrary(String furniturePath) {
 		try {
 
 			File xmlFile = new File("library/custom.xml");
@@ -213,17 +213,9 @@ public class FurnitureCreationSave extends JFrame {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			// creating input stream
+
 			Document doc = builder.parse(xmlFile);
 
-			// Xpath compiler
-			// XPathFactory xpf = XPathFactory.newInstance();
-			// XPath xpath = xpf.newXPath();
-
-			// XPath Query
-			// XPathExpression expr = xpath.compile("/");
-			// Node attributeElement = (Node) expr.evaluate(doc,
-			// XPathConstants.NODE);
 
 			Node root = doc.getFirstChild();
 
@@ -258,7 +250,7 @@ public class FurnitureCreationSave extends JFrame {
 			color.appendChild(green);
 			color.appendChild(blue);
 
-			// New Node
+			// nouveau Node
 			Node furnitureNode = doc.createElement("furniture");
 
 			furnitureNode.appendChild(name);
@@ -271,14 +263,14 @@ public class FurnitureCreationSave extends JFrame {
 
 			root.appendChild(furnitureNode);
 
-			// writing xml file
+			// écriture du fichier xml
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 
 			StreamResult result = new StreamResult(xmlFile);
-			// creating output stream
+
 			transformer.transform(source, result);
 
 		} catch (Exception e) {

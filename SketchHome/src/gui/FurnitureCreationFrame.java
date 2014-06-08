@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,6 +53,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 	public FurnitureCreationFrame() {
 		setPreferredSize(new Dimension(500, 400));
+		setMinimumSize(new Dimension(500, 400));
 		setTitle("Furniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -198,7 +200,7 @@ public class FurnitureCreationFrame extends JFrame {
 		private ContentExporter contentExport;
 
 		public ModifPanel() {
-			setBackground(Color.GRAY);
+			setBackground(Color.LIGHT_GRAY);
 			setLayout(new GridLayout(2, 0));
 			extensionFilterPng = new FileNameExtensionFilter(
 					"Portable Network Graphics", "png");
@@ -211,7 +213,11 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		private void makeModifButtons() {
-			importImage = new JButton("Import");
+			importImage= new JButton(
+					new ImageIcon(
+							MainFrame.class
+									.getResource("/gui/img/outil_image.png")));
+			importImage.setToolTipText("Import Image");
 			
 			importImage.addActionListener(new ActionListener() {
 				
@@ -240,7 +246,11 @@ public class FurnitureCreationFrame extends JFrame {
 				}
 			});
 
-			save = new JButton("Save");
+			save= new JButton(
+					new ImageIcon(
+							MainFrame.class
+									.getResource("/gui/img/save.png")));
+			save.setToolTipText("Save furniture");
 
 			save.addActionListener(new ActionListener() {
 
