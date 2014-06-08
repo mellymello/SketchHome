@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import tools.DrawEllipseTool;
 import tools.DrawLineTool;
+import tools.DrawMoveImgTool;
 import tools.DrawPencilTool;
 import tools.DrawRectangleTool;
 import tools.ITools;
@@ -50,6 +53,7 @@ public class FurnitureCreationFrame extends JFrame {
 	private DrawLineTool drawLine;
 	private DrawPencilTool drawPencil;
 	private DrawRectangleTool drawRectangle;
+	private DrawMoveImgTool drawMoveImg;
 
 	public FurnitureCreationFrame() {
 		setPreferredSize(new Dimension(500, 400));
@@ -64,6 +68,7 @@ public class FurnitureCreationFrame extends JFrame {
 		drawLine = DrawLineTool.getInstance();
 		drawPencil = DrawPencilTool.getInstance();
 		drawRectangle = DrawRectangleTool.getInstance();
+		drawMoveImg = DrawMoveImgTool.getInstance();
 
 		dp = new DrawingPanel();
 		toolPanel = new ToolPanel();
@@ -85,6 +90,7 @@ public class FurnitureCreationFrame extends JFrame {
 		private JButton ellipse;
 		private JButton pencil;
 		private JButton erase;
+		private JButton moveImg;
 		private JComboBox<Float> strokeSizeChoser;
 
 		public ToolPanel() {
@@ -111,7 +117,8 @@ public class FurnitureCreationFrame extends JFrame {
 
 				}
 			});
-
+			
+			add(moveImg);
 			add(line);
 			add(rectangle);
 			add(ellipse);
@@ -121,6 +128,12 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		private void makeButtons() {
+			
+			moveImg=new JButton(
+					new ImageIcon(
+							MainFrame.class
+									.getResource("/gui/img/furnitureCreationIcon/moveImg.png")));
+			
 			line = new JButton(
 					new ImageIcon(
 							MainFrame.class
@@ -143,6 +156,15 @@ public class FurnitureCreationFrame extends JFrame {
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/colors.png")));
 
+			moveImg.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					selectedTool = drawMoveImg;
+
+				}
+			});
+			
 			line.addActionListener(new ActionListener() {
 
 				@Override
@@ -272,6 +294,9 @@ public class FurnitureCreationFrame extends JFrame {
 		private FurnitureCreationContent furnitureCreationContent;
 		private Float strokeSize;
 		
+		private BufferedImage bi;
+	
+		
 		public DrawingPanel() {
 
 			furnitureCreationContent = new FurnitureCreationContent();
@@ -281,9 +306,16 @@ public class FurnitureCreationFrame extends JFrame {
 			drawPencil.setFurnitureCreationContent(furnitureCreationContent);
 			drawLine.setFurnitureCreationContent(furnitureCreationContent);
 			drawRectangle.setFurnitureCreationContent(furnitureCreationContent);
+			drawMoveImg.setFurnitureCreationContent(furnitureCreationContent);
 			
-			
-		
+
+		    MediaTracker mt = new MediaTracker(this);
+		    mt.addImage(bi, 1);
+		    try {
+		        mt.waitForAll();
+		      } catch (Exception e) {
+		        System.out.println("Exception while loading image.");
+		      }
 
 			setBackground(Color.WHITE);
 
@@ -310,8 +342,10 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 		
 		public void drawImage(Graphics2D g2d){
-			if(furnitureCreationContent.getImg()!=null){
-				g2d.drawImage(furnitureCreationContent.getImg(), null, 0, 0);
+			bi=furnitureCreationContent.getImg();
+			if(bi !=null){
+//				g2d.drawImage(bi, null, 0, 0);
+				g2d.drawImage(bi, furnitureCreationContent.getImgXpos(), furnitureCreationContent.getImgYpos(), this);
 				repaint();
 			}
 			

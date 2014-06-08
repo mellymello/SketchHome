@@ -21,13 +21,17 @@ public class FurnitureCreationContent {
 	private Vector<Rectangle2D> rectangles;
 	
 	private BufferedImage img;
-
+	private int imgXpos;
+	private int imgYpos;
 
 	public FurnitureCreationContent() {
 		ellipses = new Vector<Ellipse2D>();
 		points = new Vector<Vector<Point>>();
 		lines = new Vector<Line2D>();
 		rectangles = new Vector<Rectangle2D>();
+		
+		imgXpos=0;
+		imgYpos=0;
 	}
 
 	public Ellipse2D getTmpEllipse() {
@@ -94,7 +98,24 @@ public class FurnitureCreationContent {
 	public void setImg(BufferedImage img) {
 		this.img = img;
 	}
+	
 
+
+	public int getImgXpos() {
+		return imgXpos;
+	}
+
+	public void setImgXpos(int imgXpos) {
+		this.imgXpos = imgXpos;
+	}
+
+	public int getImgYpos() {
+		return imgYpos;
+	}
+
+	public void setImgYpos(int imgYpos) {
+		this.imgYpos = imgYpos;
+	}
 
 	public void addEllipse() {
 		if (tmpEllipse != null) {
