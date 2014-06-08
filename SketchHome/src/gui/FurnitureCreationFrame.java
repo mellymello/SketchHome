@@ -161,7 +161,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					selectedTool = drawMoveImg;
-
 				}
 			});
 			
@@ -170,7 +169,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					selectedTool = drawLine;
-
 				}
 			});
 
@@ -179,7 +177,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					selectedTool = drawRectangle;
-
 				}
 			});
 
@@ -188,7 +185,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					selectedTool = drawEllipse;
-
 				}
 			});
 
@@ -197,7 +193,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					selectedTool = drawPencil;
-
 				}
 			});
 
@@ -206,7 +201,6 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					dp.clearContent();
-
 				}
 			});
 
