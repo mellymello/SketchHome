@@ -13,7 +13,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
-		<isMural>0</isMural>
+		<isMural>1</isMural>
 	</furniture>
 	<furniture>
 		<name>Right-side Door</name>
@@ -29,7 +29,7 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
-		<isMural>0</isMural>
+		<isMural>1</isMural>
 	</furniture>
 	<furniture>
 		<name>Left-side door</name>
@@ -45,6 +45,6 @@
 			<green>255</green>
 			<blue>255</blue>
 		</color>
-		<isMural>0</isMural>
+		<isMural>1</isMural>
 	</furniture>
 </furnitureLibrary>
