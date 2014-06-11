@@ -128,33 +128,9 @@ public class FurnitureCreationSave extends JFrame {
 				if (checkValues()) {
 					errorLabel.setText(" ");
 					dispose();
-					JFileChooser fc = new JFileChooser();
-					fc.setCurrentDirectory(new File("library/custom"));
-					fc.setSelectedFile(new File(name.getText()));
-					fc.addChoosableFileFilter(extensionFilterPng);
-					fc.setFileFilter(extensionFilterPng);
-				
-					int action = fc.showSaveDialog(null);
-					fc.setMultiSelectionEnabled(false);
-
-					if (action == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fc.getSelectedFile();
-						String filePath = selectedFile.getAbsolutePath();
-						// le fichier selectionné est bien un fichier .png
-						if (filePath.substring(filePath.lastIndexOf(".") + 1,
-								filePath.length()).equals(
-								extensionFilterPng.getExtensions()[0])) {
-
-							contentExport.createPng(selectedFile);
-							updateXMLlibrary(selectedFile.getPath());
-						} else {
-							File f = new File(filePath.concat(".").concat(
-									extensionFilterPng.getExtensions()[0]));
-							contentExport.createPng(f);
-							updateXMLlibrary(f.getPath());
-						}
-					}
-
+					
+					contentExport.createPng(new File("library/custom/" + name.getText() + ".png"));
+					updateXMLlibrary();
 				}
 			}
 		});
@@ -204,7 +180,7 @@ public class FurnitureCreationSave extends JFrame {
 		return isOk;
 	}
 	
-	private void updateXMLlibrary(String furniturePath) {
+	private void updateXMLlibrary() {
 		try {
 
 			File xmlFile = new File("library/custom.xml");
@@ -240,7 +216,7 @@ public class FurnitureCreationSave extends JFrame {
 			dimension.appendChild(height);
 			isMural.setTextContent("0");
 
-			picture.setTextContent(furniturePath);
+			picture.setTextContent("library/custom/" + this.name.getText() + ".png");
 			orientation.setTextContent("0");
 			red.setTextContent("255");
 			green.setTextContent("255");
