@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-public class DrawRectangleTool extends IDragDrawTool {
+public class DrawRectangleTool extends DragDrawTool {
 
 	private static DrawRectangleTool instance;
 

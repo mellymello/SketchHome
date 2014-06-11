@@ -11,10 +11,10 @@ import drawableObjects.FurnitureCreationContent;
 public abstract class ITools {
 	
 	//contenu du plan sur lequel l'outil doit agir
-	DrawingBoardContent drawingBoardContent;
+	protected DrawingBoardContent drawingBoardContent;
 	
 	//contenu de la fenêtre de création de meuble sur lequel l'outil doit agir
-	FurnitureCreationContent furnitureCreationContent;
+	protected FurnitureCreationContent furnitureCreationContent;
 
 	/**
 	 * Action réalisée par l'outil lors d'un évènement cliqué-relaché de la souris.

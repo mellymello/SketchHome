@@ -3,7 +3,7 @@ package tools;
 import drawableObjects.CtrlPoint;
 import drawableObjects.Wall;
 
-public abstract class WallTool extends IDrawingTool {
+public abstract class WallTool extends DrawingTool {
 	
 
 	public CtrlPoint ctrlPointDetect(int x, int y) {

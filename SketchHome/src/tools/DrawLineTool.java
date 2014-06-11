@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-public class DrawLineTool extends IDragDrawTool {
+public class DrawLineTool extends DragDrawTool {
 
 	private static DrawLineTool instance;
 

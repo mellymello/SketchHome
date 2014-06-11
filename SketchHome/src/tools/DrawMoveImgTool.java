@@ -2,7 +2,7 @@ package tools;
 
 import java.awt.event.MouseEvent;
 
-public class DrawMoveImgTool extends IDragDrawTool {
+public class DrawMoveImgTool extends DragDrawTool {
 
 	private static DrawMoveImgTool instance;
 	

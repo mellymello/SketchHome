@@ -3,7 +3,7 @@ package tools;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-public class DrawPencilTool extends IDragDrawTool {
+public class DrawPencilTool extends DragDrawTool {
 
 	private static DrawPencilTool instance;
 

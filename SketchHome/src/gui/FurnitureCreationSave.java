@@ -10,12 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -27,12 +25,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import drawableObjects.FurnitureLibrary;
 import fileFeatures.ContentExporter;
 
 public class FurnitureCreationSave extends JFrame {
-
-	private FurnitureLibrary xmlLibrary;
 
 	private JPanel buttonPanel;
 	private JPanel infoPanelBase;
@@ -51,13 +46,10 @@ public class FurnitureCreationSave extends JFrame {
 	private JButton save;
 	private JButton cancel;
 
-	private FileNameExtensionFilter extensionFilterPng;
 	private ContentExporter contentExport;
 	
 	public FurnitureCreationSave(ContentExporter contentExporter) {
 		this.contentExport = contentExporter;
-		this.extensionFilterPng = new FileNameExtensionFilter(
-				"Portable Network Graphics", "png");
 
 		setTitle("Save personal furniture");
 		setPreferredSize(new Dimension(275,200));

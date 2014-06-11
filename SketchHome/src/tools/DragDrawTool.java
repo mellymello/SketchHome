@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
  * Cet outil doit permettre de placer des éléments avec un cliqué glissé.
  * Tant que le clic n'est pas relaché, l'élément est redimensionné et affiché à l'écran.
  */
-public abstract class IDragDrawTool extends ITools{
+public abstract class DragDrawTool extends ITools{
 	@Override
 	public void onMouseClicked(MouseEvent me) {}
 	

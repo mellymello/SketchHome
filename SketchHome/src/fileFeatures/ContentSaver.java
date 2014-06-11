@@ -21,8 +21,6 @@ public class ContentSaver
 	private ObjectOutputStream out;
 	
 	private DrawingBoardContent content;
-	private LinkedList<Furniture> listFur;
-	private LinkedList<Wall> listWall;
 	
 	/**
 	 * Crée un nouvel sauvegardeur de fichier SketchHome
@@ -62,8 +60,7 @@ public class ContentSaver
 		openFile(file);
 		
 		//sauvegarde des meubles
-		listFur = content.getPlacedFurnitures();
-		for (Furniture f :listFur )
+		for (Furniture f :content.getPlacedFurnitures())
 		{
 			try {
 				out.writeObject(f);
@@ -73,8 +70,7 @@ public class ContentSaver
 		}
 		
 		//sauvegarde des murs
-		listWall = content.getPlacedWalls();
-		for (Wall w :listWall )
+		for (Wall w :content.getPlacedWalls())
 		{
 			try {
 				out.writeObject(w);

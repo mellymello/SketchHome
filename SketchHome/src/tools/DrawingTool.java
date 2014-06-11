@@ -6,6 +6,6 @@ package tools;
  * Entre les 2 clics l'élément est redimensionné et affiché à l'écran selon les mouvements de souris.
  * Après le 2ème clic, l'élément n'est plus redimensionnable.
  */
-public abstract class IDrawingTool extends ITools {
+public abstract class DrawingTool extends ITools {
 
 }
