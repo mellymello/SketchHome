@@ -27,6 +27,9 @@ public class Printer implements Printable {
 	
 	
 	@Override
+	/**
+	 * impression d'un objet Graphics. Méthode appellée automatiquement
+	 */
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
 			throws PrinterException {
 		if (pageIndex > 0) { 

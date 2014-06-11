@@ -18,6 +18,7 @@ public class FurniturePlacementTool extends PlacementTool {
 	private int relX;
 	private int relY;
 	
+	//objets utilisés pour le placement de meubles muraux (qui doivent être sur un mur)
 	private Wall detectedWall;
 	private WallTool wallTool;
 
@@ -115,6 +116,10 @@ public class FurniturePlacementTool extends PlacementTool {
 		return null;
 	}
 	
+	/**
+	 * Paramétrer l'outils qui servira à détecter les murs.
+	 * @param wallTool : outil permettant de détecter les murs
+	 */
 	public void setWallTool(WallTool wallTool) {
 		this.wallTool = wallTool;
 	}

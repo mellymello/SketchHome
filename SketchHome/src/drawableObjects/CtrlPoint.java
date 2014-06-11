@@ -44,6 +44,11 @@ public class CtrlPoint extends Point2D implements Serializable {
 	}
 
 	@Override
+	/**
+	 * Modifie la position du CtrPoint.
+	 * @param x : nouvelle position x du point
+	 * @param y : nouvelleve position y du point 
+	 */
 	public void setLocation(double x, double y) {
 		this.x = x;
 		this.y = y;

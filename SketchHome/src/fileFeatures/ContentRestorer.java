@@ -16,11 +16,11 @@ import drawableObjects.Wall;
  */
 public class ContentRestorer 
 {
-	File file;
-	DrawingBoardContent content;
-	MainFrame libraryContainer;
-	FileInputStream fis;
-	ObjectInputStream in;
+	private File file;
+	private DrawingBoardContent content;
+	private MainFrame libraryContainer;
+	private FileInputStream fis;
+	private ObjectInputStream in;
 	
 	/**
 	 * Crée un nouvel ouvreur de fichier SketchHome

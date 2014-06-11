@@ -21,8 +21,8 @@ public class ContentSaver
 	private ObjectOutputStream out;
 	
 	private DrawingBoardContent content;
-	LinkedList<Furniture> listFur;
-	LinkedList<Wall> listWall;
+	private LinkedList<Furniture> listFur;
+	private LinkedList<Wall> listWall;
 	
 	/**
 	 * Crée un nouvel sauvegardeur de fichier SketchHome

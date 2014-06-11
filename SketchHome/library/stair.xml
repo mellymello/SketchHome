@@ -1,7 +1,7 @@
 <furnitureLibrary>
 	<furniture>
 		<name>SquareStairsRight</name>
-		<description>Stairs goint to the right</description>
+		<description>Stairs going to the right</description>
 		<dimension>
 			<width>60</width>
 			<height>60</height>
@@ -17,7 +17,7 @@
 	</furniture>
 	<furniture>
 		<name>SquareStairsLeft</name>
-		<description>Stairs goint to the left</description>
+		<description>Stairs going to the left</description>
 		<dimension>
 			<width>60</width>
 			<height>60</height>
@@ -49,7 +49,7 @@
 	</furniture>
 		<furniture>
 		<name>Long stairs</name>
-		<description>long straight stairs</description>
+		<description>Long straight stairs</description>
 		<dimension>
 			<width>200</width>
 			<height>60</height>

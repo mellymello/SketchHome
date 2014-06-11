@@ -473,15 +473,46 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 		pnlTools.add(pnlToolsBtn);
 		GridBagLayout gbl_pnlToolsBtn = new GridBagLayout();
 		gbl_pnlToolsBtn.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_pnlToolsBtn.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_pnlToolsBtn.rowHeights = new int[] { 0, 0, 0 };
 		gbl_pnlToolsBtn.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0 };
-		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0, 0.0,
+		gbl_pnlToolsBtn.rowWeights = new double[] { 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlToolsBtn.setLayout(gbl_pnlToolsBtn);
+
+		//sélection de la librairie Bedroom
+		JButton btnBedroom = new JButton("");
+		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/chambreB.png")));
+		btnBedroom.setToolTipText("BedRoom");
+		btnBedroom.setBorderPainted(false);
+		btnBedroom.setMargin(new Insets(0, 0, 0, 0));
+		btnBedroom.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/chambre.png")));
+		btnBedroom.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnBedroom
+			 * Sélectionne la librairie Bedroom et l'outils pour le placement de meuble.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(bedRoomLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
+		GridBagConstraints gbc_btnBedroom = new GridBagConstraints();
+		gbc_btnBedroom.fill = GridBagConstraints.VERTICAL;
+		gbc_btnBedroom.insets = new Insets(0, 0, 0, 5);
+		gbc_btnBedroom.gridx = 0;
+		gbc_btnBedroom.gridy = 1;
+		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
 		
 		//Outil pour la création d'objets personnalisés
 		JButton btnFurniturecreation = new JButton("");
+		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/obje_persoB.png")));
+		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/obje_perso.png")));
 		btnFurniturecreation.setToolTipText("Furniture creation");
 		btnFurniturecreation.setBorderPainted(false);
 		btnFurniturecreation.setMargin(new Insets(0, 0, 0, 0));
@@ -494,92 +525,151 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				new FurnitureCreationFrame();
 			}
 		});
-		btnFurniturecreation.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_persoB.png")));
-		btnFurniturecreation.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/obje_perso.png")));
 		GridBagConstraints gbc_btnFurniturecreation = new GridBagConstraints();
 		gbc_btnFurniturecreation.fill = GridBagConstraints.VERTICAL;
-		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 5);
-		gbc_btnFurniturecreation.gridx = 0;
+		gbc_btnFurniturecreation.insets = new Insets(0, 0, 5, 0);
+		gbc_btnFurniturecreation.gridx = 6;
 		gbc_btnFurniturecreation.gridy = 0;
 		pnlToolsBtn.add(btnFurniturecreation, gbc_btnFurniturecreation);
+		
+		//outils pour tracer des murs simples
+		JButton btnWall = new JButton("");
+		btnWall.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_simpleB.png")));
+		btnWall.setToolTipText("Simple Wall");
+		btnWall.setBorderPainted(false);
+		btnWall.setMargin(new Insets(0, 0, 0, 0));
+		btnWall.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_simple.png")));
+		btnWall.addActionListener(new ActionListener() {
 
-		//Outil pour le placement de texte
-		JButton btnTextTool = new JButton("");
-		btnTextTool.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/texteB.png")));
-		btnTextTool.addActionListener(new ActionListener() {
+			@Override
 			/**
-			 * Action effectuée sur le clic sur btnTextTool
-			 * Sélectionne l'outils pour le placement de texte.
+			 * Action effectuée sur le clic sur btnWall
+			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur.
 			 */
-			public void actionPerformed(ActionEvent e) {
-				// selectedTool = TextTool.getInstance();
+			public void actionPerformed(ActionEvent arg0) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getSimpleWallTool());
+				showContentOfLibrary(null);
 			}
 		});
-		btnTextTool.setToolTipText("Text");
-		btnTextTool.setBorderPainted(false);
-		btnTextTool.setMargin(new Insets(0, 0, 0, 0));
-		btnTextTool.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/texte.png")));
-		GridBagConstraints gbc_btnTextTool = new GridBagConstraints();
-		gbc_btnTextTool.fill = GridBagConstraints.VERTICAL;
-		gbc_btnTextTool.insets = new Insets(0, 0, 5, 5);
-		gbc_btnTextTool.gridx = 1;
-		gbc_btnTextTool.gridy = 0;
-		pnlToolsBtn.add(btnTextTool, gbc_btnTextTool);
+		GridBagConstraints gbc_btnWall = new GridBagConstraints();
+		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
+		gbc_btnWall.insets = new Insets(0, 0, 5, 5);
+		gbc_btnWall.gridx = 0;
+		gbc_btnWall.gridy = 0;
+		pnlToolsBtn.add(btnWall, gbc_btnWall);
 		
-		//outil pour zomm avant dans l'affichage du plan 
-		JButton btnZoomplus = new JButton("Zoom +");
-		btnZoomplus.setToolTipText("Zoom avant");
-		btnZoomplus.setBorderPainted(false);
-		btnZoomplus.setMargin(new Insets(0, 0, 0, 0));
-		GridBagConstraints gbc_btnZoomplus = new GridBagConstraints();
-		gbc_btnZoomplus.fill = GridBagConstraints.VERTICAL;
-		gbc_btnZoomplus.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZoomplus.gridx = 2;
-		gbc_btnZoomplus.gridy = 0;
-		pnlToolsBtn.add(btnZoomplus, gbc_btnZoomplus);
-		
-		//outil pour zomm arrière dans l'affichage du plan
-		JButton btnZoomminus = new JButton("Zoom -");
-		btnZoomminus.setToolTipText("Zoom arrière");
-		btnZoomminus.setBorderPainted(false);
-		btnZoomminus.setMargin(new Insets(0, 0, 0, 0));
-		GridBagConstraints gbc_btnZoomminus = new GridBagConstraints();
-		gbc_btnZoomminus.fill = GridBagConstraints.VERTICAL;
-		gbc_btnZoomminus.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZoomminus.gridx = 3;
-		gbc_btnZoomminus.gridy = 0;
-		pnlToolsBtn.add(btnZoomminus, gbc_btnZoomminus);
+		//pour tracer des murs continus
+		JButton btnWall2 = new JButton("");
+		btnWall2.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_polygonalB.png")));
+		btnWall2.setToolTipText("Contiguous Wall");
+		btnWall2.setBorderPainted(false);
+		btnWall2.setMargin(new Insets(0, 0, 0, 0));
+		btnWall2.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/mur_polygonal.png")));
+		btnWall2.addActionListener(new ActionListener() {
 
-		//sélection de la librairie Bedroom
-		JButton btnBedroom = new JButton("");
-		btnBedroom.addActionListener(new ActionListener() {
+			@Override
 			/**
-			 * Action effectuée sur le clic sur btnBedroom
-			 * Sélectionne la librairie Bedroom et l'outils pour le placement de meuble.
+			 * Action effectuée sur le clic sur btnWall2
+			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur continus.
+			 */
+			public void actionPerformed(ActionEvent arg0) {
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getPolygonalWallTool());
+				showContentOfLibrary(null);
+			}
+		});
+		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
+		gbc_btnWall2.fill = GridBagConstraints.VERTICAL;
+		gbc_btnWall2.insets = new Insets(0, 0, 5, 5);
+		gbc_btnWall2.gridx = 1;
+		gbc_btnWall2.gridy = 0;
+		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
+
+		//sélection de la librairie fenêtre
+		JButton btnWindow = new JButton("");
+		btnWindow.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnWindow
+			 * Sélectionne la librairie window et l'outils pour le placement de meuble sur des murs.
 			 */
 			public void actionPerformed(ActionEvent e) {
-				selectLibrary(bedRoomLibrary);
+				selectLibrary(windowLibrary);
 				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
 						.getFurniturePlacementTool());
 			}
 		});
-		btnBedroom.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/chambreB.png")));
-		btnBedroom.setToolTipText("BedRoom");
-		btnBedroom.setBorderPainted(false);
-		btnBedroom.setMargin(new Insets(0, 0, 0, 0));
-		btnBedroom.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/chambre.png")));
-		GridBagConstraints gbc_btnBedroom = new GridBagConstraints();
-		gbc_btnBedroom.fill = GridBagConstraints.VERTICAL;
-		gbc_btnBedroom.insets = new Insets(0, 0, 5, 5);
-		gbc_btnBedroom.gridx = 0;
-		gbc_btnBedroom.gridy = 1;
-		pnlToolsBtn.add(btnBedroom, gbc_btnBedroom);
+		btnWindow.setToolTipText("Windows");
+		btnWindow.setBorderPainted(false);
+		btnWindow.setMargin(new Insets(0, 0, 0, 0));
+		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/fenetreB.png")));
+		btnWindow.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/fenetre.png")));
+		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
+		gbc_btnWindow.fill = GridBagConstraints.VERTICAL;
+		gbc_btnWindow.insets = new Insets(0, 0, 5, 5);
+		gbc_btnWindow.gridx = 2;
+		gbc_btnWindow.gridy = 0;
+		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
+
+		//sélection de la librairie porte
+		JButton btnDoor = new JButton("");
+		btnDoor.setToolTipText("Doors");
+		btnDoor.setBorderPainted(false);
+		btnDoor.setMargin(new Insets(0, 0, 0, 0));
+		btnDoor.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnDoor
+			 * Sélectionne la librairie door et l'outils pour le placement de meuble sur des murs.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(doorLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
+		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/porteB.png")));
+		btnDoor.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/porte.png")));
+		GridBagConstraints gbc_btnDoor = new GridBagConstraints();
+		gbc_btnDoor.fill = GridBagConstraints.VERTICAL;
+		gbc_btnDoor.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDoor.gridx = 3;
+		gbc_btnDoor.gridy = 0;
+		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
+
+		//sélection de la librairie escalier
+		JButton btnStair = new JButton("");
+		btnStair.setToolTipText("Stairs");
+		btnStair.setBorderPainted(false);
+		btnStair.setMargin(new Insets(0, 0, 0, 0));
+		btnStair.addActionListener(new ActionListener() {
+			/**
+			 * Action effectuée sur le clic sur btnStair
+			 * Sélectionne la librairie stair et l'outils pour le placement de meuble.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				selectLibrary(stairLibrary);
+				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
+						.getFurniturePlacementTool());
+			}
+		});
+		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/escaliersB.png")));
+		btnStair.setIcon(new ImageIcon(MainFrame.class
+				.getResource("/gui/img/escaliers.png")));
+		GridBagConstraints gbc_btnStair = new GridBagConstraints();
+		gbc_btnStair.fill = GridBagConstraints.BOTH;
+		gbc_btnStair.insets = new Insets(0, 0, 5, 5);
+		gbc_btnStair.gridx = 4;
+		gbc_btnStair.gridy = 0;
+		pnlToolsBtn.add(btnStair, gbc_btnStair);
 
 		//sélection de la librairie Office
 		JButton btnOffice = new JButton("");
@@ -603,7 +693,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/bureau.png")));
 		GridBagConstraints gbc_btnOffice = new GridBagConstraints();
 		gbc_btnOffice.fill = GridBagConstraints.VERTICAL;
-		gbc_btnOffice.insets = new Insets(0, 0, 5, 5);
+		gbc_btnOffice.insets = new Insets(0, 0, 0, 5);
 		gbc_btnOffice.gridx = 1;
 		gbc_btnOffice.gridy = 1;
 		pnlToolsBtn.add(btnOffice, gbc_btnOffice);
@@ -630,7 +720,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/cuisine.png")));
 		GridBagConstraints gbc_btnKitchen = new GridBagConstraints();
 		gbc_btnKitchen.fill = GridBagConstraints.VERTICAL;
-		gbc_btnKitchen.insets = new Insets(0, 0, 5, 5);
+		gbc_btnKitchen.insets = new Insets(0, 0, 0, 5);
 		gbc_btnKitchen.gridx = 2;
 		gbc_btnKitchen.gridy = 1;
 		pnlToolsBtn.add(btnKitchen, gbc_btnKitchen);
@@ -659,7 +749,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/salon.png")));
 		GridBagConstraints gbc_btnLivingroom = new GridBagConstraints();
 		gbc_btnLivingroom.fill = GridBagConstraints.VERTICAL;
-		gbc_btnLivingroom.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLivingroom.insets = new Insets(0, 0, 0, 5);
 		gbc_btnLivingroom.gridx = 3;
 		gbc_btnLivingroom.gridy = 1;
 		pnlToolsBtn.add(btnLivingroom, gbc_btnLivingroom);
@@ -688,7 +778,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/salle_de_bain.png")));
 		GridBagConstraints gbc_btnBathroom = new GridBagConstraints();
 		gbc_btnBathroom.fill = GridBagConstraints.BOTH;
-		gbc_btnBathroom.insets = new Insets(0, 0, 5, 5);
+		gbc_btnBathroom.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBathroom.gridx = 4;
 		gbc_btnBathroom.gridy = 1;
 		pnlToolsBtn.add(btnBathroom, gbc_btnBathroom);
@@ -717,7 +807,7 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/salle_a_manger.png")));
 		GridBagConstraints gbc_btnDiningRoom = new GridBagConstraints();
 		gbc_btnDiningRoom.fill = GridBagConstraints.BOTH;
-		gbc_btnDiningRoom.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDiningRoom.insets = new Insets(0, 0, 0, 5);
 		gbc_btnDiningRoom.gridx = 5;
 		gbc_btnDiningRoom.gridy = 1;
 		pnlToolsBtn.add(btnDiningRoom, gbc_btnDiningRoom);
@@ -744,150 +834,9 @@ public class MainFrame extends JFrame implements  DrawingBoardContentObserver {
 				.getResource("/gui/img/librairieCustom.png")));
 		GridBagConstraints gbc_btnCustomfurniture = new GridBagConstraints();
 		gbc_btnCustomfurniture.fill = GridBagConstraints.VERTICAL;
-		gbc_btnCustomfurniture.insets = new Insets(0, 0, 5, 0);
 		gbc_btnCustomfurniture.gridx = 6;
 		gbc_btnCustomfurniture.gridy = 1;
 		pnlToolsBtn.add(btnCustomfurniture, gbc_btnCustomfurniture);
-		
-		//outils pour tracer des murs simples
-		JButton btnWall = new JButton("");
-		btnWall.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_simpleB.png")));
-		btnWall.setToolTipText("Simple Wall");
-		btnWall.setBorderPainted(false);
-		btnWall.setMargin(new Insets(0, 0, 0, 0));
-		btnWall.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_simple.png")));
-		btnWall.addActionListener(new ActionListener() {
-
-			@Override
-			/**
-			 * Action effectuée sur le clic sur btnWall
-			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur.
-			 */
-			public void actionPerformed(ActionEvent arg0) {
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getSimpleWallTool());
-				showContentOfLibrary(null);
-			}
-		});
-		GridBagConstraints gbc_btnWall = new GridBagConstraints();
-		gbc_btnWall.fill = GridBagConstraints.VERTICAL;
-		gbc_btnWall.insets = new Insets(0, 0, 0, 5);
-		gbc_btnWall.gridx = 0;
-		gbc_btnWall.gridy = 2;
-		pnlToolsBtn.add(btnWall, gbc_btnWall);
-
-		//pour tracer des murs continus
-		JButton btnWall2 = new JButton("");
-		btnWall2.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_polygonalB.png")));
-		btnWall2.setToolTipText("Contiguous Wall");
-		btnWall2.setBorderPainted(false);
-		btnWall2.setMargin(new Insets(0, 0, 0, 0));
-		btnWall2.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/mur_polygonal.png")));
-		btnWall2.addActionListener(new ActionListener() {
-
-			@Override
-			/**
-			 * Action effectuée sur le clic sur btnWall2
-			 * Vide l'affichage de librairie et sélectionne l'outils pour le placement de mur continus.
-			 */
-			public void actionPerformed(ActionEvent arg0) {
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getPolygonalWallTool());
-				showContentOfLibrary(null);
-			}
-		});
-		GridBagConstraints gbc_btnWall2 = new GridBagConstraints();
-		gbc_btnWall2.fill = GridBagConstraints.VERTICAL;
-		gbc_btnWall2.insets = new Insets(0, 0, 0, 5);
-		gbc_btnWall2.gridx = 1;
-		gbc_btnWall2.gridy = 2;
-		pnlToolsBtn.add(btnWall2, gbc_btnWall2);
-
-		//sélection de la librairie fenêtre
-		JButton btnWindow = new JButton("");
-		btnWindow.addActionListener(new ActionListener() {
-			/**
-			 * Action effectuée sur le clic sur btnWindow
-			 * Sélectionne la librairie window et l'outils pour le placement de meuble sur des murs.
-			 */
-			public void actionPerformed(ActionEvent e) {
-				selectLibrary(windowLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getFurniturePlacementTool());
-			}
-		});
-		btnWindow.setToolTipText("Windows");
-		btnWindow.setBorderPainted(false);
-		btnWindow.setMargin(new Insets(0, 0, 0, 0));
-		btnWindow.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/fenetreB.png")));
-		btnWindow.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/fenetre.png")));
-		GridBagConstraints gbc_btnWindow = new GridBagConstraints();
-		gbc_btnWindow.fill = GridBagConstraints.VERTICAL;
-		gbc_btnWindow.insets = new Insets(0, 0, 0, 5);
-		gbc_btnWindow.gridx = 2;
-		gbc_btnWindow.gridy = 2;
-		pnlToolsBtn.add(btnWindow, gbc_btnWindow);
-
-		//sélection de la librairie porte
-		JButton btnDoor = new JButton("");
-		btnDoor.setToolTipText("Doors");
-		btnDoor.setBorderPainted(false);
-		btnDoor.setMargin(new Insets(0, 0, 0, 0));
-		btnDoor.addActionListener(new ActionListener() {
-			/**
-			 * Action effectuée sur le clic sur btnDoor
-			 * Sélectionne la librairie door et l'outils pour le placement de meuble sur des murs.
-			 */
-			public void actionPerformed(ActionEvent e) {
-				selectLibrary(doorLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getFurniturePlacementTool());
-			}
-		});
-		btnDoor.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/porteB.png")));
-		btnDoor.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/porte.png")));
-		GridBagConstraints gbc_btnDoor = new GridBagConstraints();
-		gbc_btnDoor.fill = GridBagConstraints.VERTICAL;
-		gbc_btnDoor.insets = new Insets(0, 0, 0, 5);
-		gbc_btnDoor.gridx = 3;
-		gbc_btnDoor.gridy = 2;
-		pnlToolsBtn.add(btnDoor, gbc_btnDoor);
-
-		//sélection de la librairie escalier
-		JButton btnStair = new JButton("");
-		btnStair.setToolTipText("Stairs");
-		btnStair.setBorderPainted(false);
-		btnStair.setMargin(new Insets(0, 0, 0, 0));
-		btnStair.addActionListener(new ActionListener() {
-			/**
-			 * Action effectuée sur le clic sur btnStair
-			 * Sélectionne la librairie stair et l'outils pour le placement de meuble.
-			 */
-			public void actionPerformed(ActionEvent e) {
-				selectLibrary(stairLibrary);
-				pnlDrawingBoard.setSelectedTool(pnlDrawingBoard
-						.getFurniturePlacementTool());
-			}
-		});
-
-		btnStair.setSelectedIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/escaliersB.png")));
-		btnStair.setIcon(new ImageIcon(MainFrame.class
-				.getResource("/gui/img/escaliers.png")));
-		GridBagConstraints gbc_btnStair = new GridBagConstraints();
-		gbc_btnStair.fill = GridBagConstraints.BOTH;
-		gbc_btnStair.insets = new Insets(0, 0, 0, 5);
-		gbc_btnStair.gridx = 4;
-		gbc_btnStair.gridy = 2;
-		pnlToolsBtn.add(btnStair, gbc_btnStair);
 
 		/*
 		 * Controles pour la sélection de meubles dans la librairie sélectionnée 

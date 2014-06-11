@@ -136,6 +136,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 				transf.rotate(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth() / 2, furniture.getDimension().getHeight() / 2);
 				g2.drawImage(bimage, transf, null);
 				 
+				//point central du meuble
 				int furnitureCenterX = furniture.getPosition().x + furniture.getDimension().width /2;
 				int furnitureCenterY = furniture.getPosition().y + furniture.getDimension().height /2;
 				 
@@ -241,12 +242,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent me) {
-	}
+	public void mouseEntered(MouseEvent me) {}
 
 	@Override
-	public void mouseExited(MouseEvent me) {
-	}
+	public void mouseExited(MouseEvent me) {}
 
 	@Override
 	/**
@@ -311,8 +310,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	/**
@@ -329,8 +327,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 	/**
 	 * Envoyer une notification de modification de meuble aux ModificationObserver du plan 

@@ -83,7 +83,7 @@ public class FurnitureLibrary implements Serializable {
 						
 					}
 				}
-		    } catch (Exception e) {
+	    } catch (Exception e) {
 			e.printStackTrace();
 	    }
 	}

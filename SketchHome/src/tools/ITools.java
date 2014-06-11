@@ -46,10 +46,18 @@ public abstract class ITools {
 	 */
 	public abstract void onMouseMoved(MouseEvent me);
 	
+	/**
+	 * Paramétrer le plan sur lequel l'outils doit travailler
+	 * @param drawingBoardContent : plan qu'on modifie avec l'outil
+	 */
 	public void setDrawingBoardContent(DrawingBoardContent drawingBoardContent) {
 		this.drawingBoardContent = drawingBoardContent;
 	}
 	
+	/**
+	 * Paramétrer la zone de création de meuble sur lequel l'outils doit travailler
+	 * @param furnitureCreationContent : zone de création de meuble qu'on modifie avec l'outil
+	 */
 	public void setFurnitureCreationContent(FurnitureCreationContent furnitureCreationContent){
 		this.furnitureCreationContent = furnitureCreationContent;
 	}

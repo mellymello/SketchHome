@@ -147,7 +147,7 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
     private class AdditionListener implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
-			//crée le JTreeNode du meuble et l'ajoute au JTree
+			//crée le JTreeNode du meuble à partir de son nom et l'ajoute au JTree
 			((Furniture)arg).setJTreeNode(addObject(((Furniture)arg).getLibrary().getJTreeNode(), ((Furniture)arg).getName(), true));
 		}
     }
@@ -170,7 +170,7 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
     private class ModificationListener implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
-			//modifie le JTreeNode du meuble
+			//modifie le JTreeNode du meuble à partir de son nom
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
 			treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
 		}
