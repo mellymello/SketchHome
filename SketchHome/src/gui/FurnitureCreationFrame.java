@@ -21,9 +21,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,7 +30,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import tools.DrawEllipseTool;
 import tools.DrawLineTool;
 import tools.DrawMoveImgTool;
@@ -42,13 +39,23 @@ import tools.ITools;
 import drawableObjects.FurnitureCreationContent;
 import fileFeatures.ContentExporter;
 
+/**
+ * 
+ * Fenêtre principale de l'interface graphique pour la creation de meubles
+ * personnalisé
+ * 
+ */
 public class FurnitureCreationFrame extends JFrame {
 
+	// le panel de dessin pour le meuble
 	private DrawingPanel dp;
+	// JPanels utilitaires
 	private ToolPanel toolPanel;
 	private ModifPanel modifPanel;
 
+	// l'outil sélectionné pour dessiner le meuble
 	private ITools selectedTool;
+	// les outils disponibles
 	private DrawEllipseTool drawEllipse;
 	private DrawLineTool drawLine;
 	private DrawPencilTool drawPencil;
@@ -83,6 +90,11 @@ public class FurnitureCreationFrame extends JFrame {
 
 	}
 
+	/**
+	 * 
+	 * Panel utilitaire pour les outils disponibles
+	 * 
+	 */
 	class ToolPanel extends JPanel {
 
 		private JButton line;
@@ -117,7 +129,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 				}
 			});
-			
+
 			add(moveImg);
 			add(line);
 			add(rectangle);
@@ -128,12 +140,12 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		private void makeButtons() {
-			
-			moveImg=new JButton(
+
+			moveImg = new JButton(
 					new ImageIcon(
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/moveImg.png")));
-			
+
 			line = new JButton(
 					new ImageIcon(
 							MainFrame.class
@@ -163,7 +175,7 @@ public class FurnitureCreationFrame extends JFrame {
 					selectedTool = drawMoveImg;
 				}
 			});
-			
+
 			line.addActionListener(new ActionListener() {
 
 				@Override
@@ -207,12 +219,18 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 	}
 
+	/**
+	 * 
+	 * Panel utilitaire pour les outils de modification (import image / save
+	 * furniture)
+	 * 
+	 */
 	class ModifPanel extends JPanel {
 
 		private JButton importImage;
 		private JButton save;
-		private FileNameExtensionFilter extensionFilterPng ;
-		
+		private FileNameExtensionFilter extensionFilterPng;
+
 		private ContentExporter contentExport;
 
 		public ModifPanel() {
@@ -220,7 +238,7 @@ public class FurnitureCreationFrame extends JFrame {
 			setLayout(new GridLayout(2, 0));
 			extensionFilterPng = new FileNameExtensionFilter(
 					"Portable Network Graphics", "png");
-			
+
 			makeModifButtons();
 			contentExport = new ContentExporter(dp);
 
@@ -229,33 +247,33 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		private void makeModifButtons() {
-			importImage= new JButton(
+			importImage = new JButton(
 					new ImageIcon(
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/outil_image.png")));
 			importImage.setToolTipText("Import Image");
-			
+
 			importImage.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					
-					//on choisie l'outil de déplacement d'image
+
+					// on choisie l'outil de déplacement d'image
 					selectedTool = drawMoveImg;
-					
+
 					JFileChooser fc = new JFileChooser();
 					fc.addChoosableFileFilter(extensionFilterPng);
 					fc.setFileFilter(extensionFilterPng);
-					
+
 					int action = fc.showOpenDialog(null);
 					fc.setMultiSelectionEnabled(false);
 
 					if (action == JFileChooser.APPROVE_OPTION) {
 						File selectedFile = fc.getSelectedFile();
 						try {
-					
-							
-							dp.furnitureCreationContent.setImg(	ImageIO.read(selectedFile));
+
+							dp.furnitureCreationContent.setImg(ImageIO
+									.read(selectedFile));
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null,
 									"Problem loading the image!", "Error",
@@ -266,7 +284,7 @@ public class FurnitureCreationFrame extends JFrame {
 				}
 			});
 
-			save= new JButton(
+			save = new JButton(
 					new ImageIcon(
 							MainFrame.class
 									.getResource("/gui/img/furnitureCreationIcon/save.png")));
@@ -277,24 +295,26 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					
 					new FurnitureCreationSave(contentExport);
-
 
 				}
 			});
 		}
 	}
 
+	/**
+	 * 
+	 * Le JPanel pour dessiner le meuble
+	 * 
+	 */
 	class DrawingPanel extends JPanel implements MouseMotionListener,
 			MouseListener {
 
 		private FurnitureCreationContent furnitureCreationContent;
 		private Float strokeSize;
-		
+
 		private BufferedImage bi;
-	
-		
+
 		public DrawingPanel() {
 
 			furnitureCreationContent = new FurnitureCreationContent();
@@ -305,15 +325,14 @@ public class FurnitureCreationFrame extends JFrame {
 			drawLine.setFurnitureCreationContent(furnitureCreationContent);
 			drawRectangle.setFurnitureCreationContent(furnitureCreationContent);
 			drawMoveImg.setFurnitureCreationContent(furnitureCreationContent);
-			
 
-		    MediaTracker mt = new MediaTracker(this);
-		    mt.addImage(bi, 1);
-		    try {
-		        mt.waitForAll();
-		      } catch (Exception e) {
-		        System.out.println("Exception while loading image.");
-		      }
+			MediaTracker mt = new MediaTracker(this);
+			mt.addImage(bi, 1);
+			try {
+				mt.waitForAll();
+			} catch (Exception e) {
+				System.out.println("Exception while loading image.");
+			}
 
 			setBackground(Color.WHITE);
 
@@ -338,17 +357,27 @@ public class FurnitureCreationFrame extends JFrame {
 			g2d.dispose();
 
 		}
-		
-		public void drawImage(Graphics2D g2d){
-			bi=furnitureCreationContent.getImg();
-			if(bi !=null){
-//				g2d.drawImage(bi, null, 0, 0);
-				g2d.drawImage(bi, furnitureCreationContent.getImgXpos(), furnitureCreationContent.getImgYpos(), this);
+
+		/**
+		 * Dessiner l'image importé dans le panel
+		 * 
+		 * @param g2d
+		 *            : l'objet grphique du panel
+		 */
+		public void drawImage(Graphics2D g2d) {
+			bi = furnitureCreationContent.getImg();
+			if (bi != null) {
+				g2d.drawImage(bi, furnitureCreationContent.getImgXpos(),
+						furnitureCreationContent.getImgYpos(), this);
 				repaint();
 			}
-			
+
 		}
 
+		/**
+		 * dessiner les points, lignes, ellipses, et autres formes dessiné dans
+		 * le panel
+		 */
 		public void drawLines(Graphics2D g2d) {
 
 			if (furnitureCreationContent.getPoints() != null) {
@@ -391,6 +420,9 @@ public class FurnitureCreationFrame extends JFrame {
 			}
 		}
 
+		/**
+		 * Effacer le dessin
+		 */
 		public void clearContent() {
 			furnitureCreationContent.clearContent();
 			repaint();
@@ -402,8 +434,6 @@ public class FurnitureCreationFrame extends JFrame {
 				selectedTool.onMouseDragged(e);
 
 				repaint();
-			} else {
-				System.out.println("ToolNotSelected");
 			}
 
 		}
@@ -414,8 +444,6 @@ public class FurnitureCreationFrame extends JFrame {
 				selectedTool.onMouseMoved(e);
 
 				repaint();
-			} else {
-				System.out.println("ToolNotSelected");
 			}
 
 		}
@@ -427,8 +455,6 @@ public class FurnitureCreationFrame extends JFrame {
 
 				repaint();
 
-			} else {
-				System.out.println("ToolNotSelected");
 			}
 		}
 
@@ -448,8 +474,6 @@ public class FurnitureCreationFrame extends JFrame {
 				selectedTool.onMousePressed(e);
 
 				repaint();
-			} else {
-				System.out.println("ToolNotSelected");
 			}
 
 		}
@@ -460,8 +484,6 @@ public class FurnitureCreationFrame extends JFrame {
 				selectedTool.onMouseReleased(e);
 
 				repaint();
-			} else {
-				System.out.println("ToolNotSelected");
 			}
 
 		}

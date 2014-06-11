@@ -10,7 +10,7 @@ import java.awt.print.PrinterException;
 import javax.swing.JPanel;
 
 /**
- * Outil pour imprimer un JPanel
+ * Outil pour imprimer le JPanel contenant le dessin du pan
  */
 public class Printer implements Printable {
 
