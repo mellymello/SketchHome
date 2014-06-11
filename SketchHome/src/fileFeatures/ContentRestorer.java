@@ -16,7 +16,7 @@ import drawableObjects.Wall;
  */
 public class ContentRestorer 
 {
-	private File file;
+
 	private DrawingBoardContent content;
 	private MainFrame libraryContainer;
 	private FileInputStream fis;
@@ -78,7 +78,7 @@ public class ContentRestorer
 	 */
 	public void openFile(File file)
 	{
-		this.file = file;
+
 		try {
 			fis = new FileInputStream(file);
 			in = new ObjectInputStream(fis);

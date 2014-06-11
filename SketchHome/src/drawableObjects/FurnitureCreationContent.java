@@ -7,8 +7,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
+/**
+ * Représente le contenu d'un plan dans la fenêtre de creation d'objets personnalisés
+ */
 public class FurnitureCreationContent {
 
+	// liste de points nécessaires pour l'outil crayon (dessiner à main libre)
 	private Vector<Vector<Point>> points;
 	
 	private Ellipse2D tmpEllipse;
@@ -20,7 +24,9 @@ public class FurnitureCreationContent {
 	private Rectangle2D tmpRectangle;
 	private Vector<Rectangle2D> rectangles;
 	
+	//image utilisé pour permettre à l'utilisateur d'importer un image .pngs
 	private BufferedImage img;
+	//les coordonnées de l'image
 	private int imgXpos;
 	private int imgYpos;
 
@@ -123,7 +129,6 @@ public class FurnitureCreationContent {
 			tmpEllipse = null;
 		}
 	}
-
 	
 	public Vector<Rectangle2D> getRectangles() {
 		return rectangles;
@@ -136,6 +141,9 @@ public class FurnitureCreationContent {
 		}
 	}
 
+	/**
+	 * méthode utile pour effacer le contenu du panel de creation d'objets  
+	 */
 	public void clearContent() {
 		ellipses.clear();
 		points.clear();

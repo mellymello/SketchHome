@@ -10,7 +10,7 @@ import java.awt.print.PrinterException;
 import javax.swing.JPanel;
 
 /**
- * Outil pour imprimer un JPanel
+ * Outil pour imprimer le JPanel contenant le dessin du pan
  */
 public class Printer implements Printable {
 
@@ -38,12 +38,21 @@ public class Printer implements Printable {
   		int W = (int) pageFormat.getImageableWidth(), H = (int) pageFormat.getImageableHeight();
 
 		BufferedImage img = new BufferedImage(panelToPrint.getWidth(), panelToPrint.getHeight(), BufferedImage.TYPE_INT_RGB);
+		
 		Graphics2D g2 = img.createGraphics();
-		g2.scale(1, 1);
+		
 		panelToPrint.paint(g2);
 		
-		graphics.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
-		graphics.drawRect(1, 1, W-2, H-2);
+		//
+		BufferedImage scaledImg = new BufferedImage(W, H, BufferedImage.TYPE_INT_RGB);
+
+		Graphics2D g = scaledImg.createGraphics();
+		g.drawImage(img, 0, 0, W, H, null);
+		g.dispose();
+		//
+		
+		graphics.drawImage(scaledImg, 0, 0, scaledImg.getWidth(), scaledImg.getHeight(), null);
+//		graphics.drawRect(2, 2, W-2, H-2);
 
 		/* tell the caller that this page is part of the printed document */
 		return PAGE_EXISTS;
