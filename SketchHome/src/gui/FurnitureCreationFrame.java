@@ -56,8 +56,8 @@ public class FurnitureCreationFrame extends JFrame {
 	private DrawMoveImgTool drawMoveImg;
 
 	public FurnitureCreationFrame() {
-		setPreferredSize(new Dimension(500, 400));
-		setMinimumSize(new Dimension(500, 400));
+		setPreferredSize(new Dimension(600, 500));
+		setMinimumSize(new Dimension(600, 500));
 		setTitle("Furniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -232,7 +232,7 @@ public class FurnitureCreationFrame extends JFrame {
 			importImage= new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/outil_image.png")));
+									.getResource("/gui/img/furnitureCreationIcon/outil_image.png")));
 			importImage.setToolTipText("Import Image");
 			
 			importImage.addActionListener(new ActionListener() {
@@ -269,7 +269,7 @@ public class FurnitureCreationFrame extends JFrame {
 			save= new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/save.png")));
+									.getResource("/gui/img/furnitureCreationIcon/save.png")));
 			save.setToolTipText("Save furniture");
 
 			save.addActionListener(new ActionListener() {
