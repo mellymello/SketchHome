@@ -9,12 +9,17 @@ import java.util.Observer;
  */
 public class DrawingBoardContent extends Observable {
 	
-	//murs du plan
+	//murs fixé sur le plan
 	private LinkedList<Wall> placedWalls = new LinkedList<Wall>();
+	//mur temporaire dessiné sur le plan 
 	private Wall tmpWall;
+	//le ctrlPoint sélectionné  
 	private CtrlPoint selectedCtrlPoint;
+	//le mur sélectionné
 	private Wall selectedWall;
+	//variable utilisé pour fixer le diamètre du ctrlPoint
 	private int ctrlPointDiameter;
+	//variable utilisé pour fixer l'épesseur du mur
 	private int wallThickness;
 	
 	//meubles du plan
@@ -23,6 +28,11 @@ public class DrawingBoardContent extends Observable {
 	private Furniture selectedFurnitureModel;
 	//le meuble sélectionné dans le plan
 	private Furniture selectedFurniture;
+	
+	private ModificationObservable modificationObservable = new ModificationObservable();
+	private AdditionObservable additionObservable = new AdditionObservable();
+	private DeletionObservable deletionObservable = new DeletionObservable();
+	
 	
 	/**
 	 * Objet observable utilisé pour signaler la modification d'un meuble
@@ -54,9 +64,6 @@ public class DrawingBoardContent extends Observable {
 		}
 	}
 	
-	private ModificationObservable modificationObservable = new ModificationObservable();
-	private AdditionObservable additionObservable = new AdditionObservable();
-	private DeletionObservable deletionObservable = new DeletionObservable();
 	
 	/**
 	 * Génère un nouveau contenu de plan
