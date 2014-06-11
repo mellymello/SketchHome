@@ -239,6 +239,10 @@ public class FurnitureCreationFrame extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					
+					//on choisie l'outil de déplacement d'image
+					selectedTool = drawMoveImg;
+					
 					JFileChooser fc = new JFileChooser();
 					fc.addChoosableFileFilter(extensionFilterPng);
 					fc.setFileFilter(extensionFilterPng);
