@@ -67,6 +67,7 @@ public class FurnitureCreationFrame extends JFrame {
 		setMinimumSize(new Dimension(600, 500));
 		setTitle("Furniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 
 		setLayout(new BorderLayout());
 
@@ -86,8 +87,6 @@ public class FurnitureCreationFrame extends JFrame {
 		add(modifPanel, BorderLayout.WEST);
 
 		pack();
-		setVisible(true);
-
 	}
 
 	/**
@@ -95,7 +94,7 @@ public class FurnitureCreationFrame extends JFrame {
 	 * Panel utilitaire pour les outils disponibles
 	 * 
 	 */
-	class ToolPanel extends JPanel {
+	private class ToolPanel extends JPanel {
 
 		private JButton line;
 		private JButton rectangle;
@@ -225,7 +224,7 @@ public class FurnitureCreationFrame extends JFrame {
 	 * furniture)
 	 * 
 	 */
-	class ModifPanel extends JPanel {
+	private class ModifPanel extends JPanel {
 
 		private JButton importImage;
 		private JButton save;
@@ -307,7 +306,7 @@ public class FurnitureCreationFrame extends JFrame {
 	 * Le JPanel pour dessiner le meuble
 	 * 
 	 */
-	class DrawingPanel extends JPanel implements MouseMotionListener,
+	private class DrawingPanel extends JPanel implements MouseMotionListener,
 			MouseListener {
 
 		private FurnitureCreationContent furnitureCreationContent;
