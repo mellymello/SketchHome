@@ -64,7 +64,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 	public FurnitureCreationFrame() {
 		setPreferredSize(new Dimension(600, 500));
-		setMinimumSize(new Dimension(600, 500));
+		//setMinimumSize(new Dimension(600, 500));
 		setTitle("Furniture Creator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -165,7 +165,7 @@ public class FurnitureCreationFrame extends JFrame {
 			erase = new JButton(
 					new ImageIcon(
 							MainFrame.class
-									.getResource("/gui/img/furnitureCreationIcon/colors.png")));
+									.getResource("/gui/img/furnitureCreationIcon/erase.png")));
 
 			moveImg.addActionListener(new ActionListener() {
 
