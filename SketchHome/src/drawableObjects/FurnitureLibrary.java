@@ -25,11 +25,12 @@ public class FurnitureLibrary implements Serializable {
 	private String xmlFilePath;
 	private String name;
 
-	//noeud représentant la librairie dans l'arborescence du plan
+	// noeud représentant la librairie dans l'arborescence du plan
 	private DefaultMutableTreeNode jTreeNode;
 	
 	/**
 	 * Crée une nouvelle librairie de meuble.
+	 * 
 	 * @param xmlFilePath : chemin d'accès du fichier XML du contenu de la librairie
 	 * @param name : nom de la librairie
 	 */

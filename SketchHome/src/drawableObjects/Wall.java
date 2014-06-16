@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class Wall implements Serializable{
 
 	private static final long serialVersionUID = -7846324772480602708L;
-	//les point qui définissent le début et la fin du mur
+	// les point qui définissent le début et la fin du mur
 	private CtrlPoint startPoint;
 	private CtrlPoint endPoint;
-	//la ligne qui represent le mur
+	// la ligne qui represent le mur
 	private Line2D wallLine;
 
 	private double ctrlPointDiameter;
@@ -40,7 +40,7 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * Construit un mur à partir de:
+	 * Construit un mur à partir de :
 	 * @param startPoint : le point de départ du mur
 	 * @param ctrlPointDiameter : le diamètre du ctrlPoint
 	 * @param wallThickness : l'épaisseur du mur
@@ -89,7 +89,8 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * Définit le point de départ du mur
+	 * Définit le point de départ du mur. 
+	 * 
 	 * @param xStartPoint : coordonnée x du point
 	 * @param yStartPoint : coordonnée y du point
 	 */
@@ -99,7 +100,8 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * Définit un nouveau point d'arrivée pour le mur
+	 * Définit un nouveau point d'arrivée pour le mur.
+	 * 
 	 * @param newEndPoint : le nouveau point
 	 */
 	public void setNewEndPoint(CtrlPoint newEndPoint) {
@@ -108,7 +110,8 @@ public class Wall implements Serializable{
 
 	}
 	/**
-	 * défini un nouveau point de départ pour le mur
+	 * Définit un nouveau point de départ pour le mur.
+	 * 
 	 * @param newStartPoint : le nouveau point
 	 */
 	public void setNewStartPoint(CtrlPoint newStartPoint) {
@@ -122,7 +125,8 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * Permet d'obtenir la longueur du mur
+	 * Permet d'obtenir la longueur du mur.
+	 * 
 	 * @return la longueur du mur
 	 */
 	public double getWallLength() {
@@ -132,6 +136,8 @@ public class Wall implements Serializable{
 
 	/**
 	 * Permet d'obtenir une représentation texte du mur
+	 * 
+	 * @return la représentation texte du mur
 	 */
 	public String toString() {
 		return "[" + startPoint + ":" + endPoint + "] wallLine: {"

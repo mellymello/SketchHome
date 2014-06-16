@@ -24,6 +24,7 @@ public class ContentRestorer
 	
 	/**
 	 * Crée un nouvel "ouvreur" de fichier SketchHome.
+	 * 
 	 * @param libraryContainer : contient les librairies de meubles pour paramétrer les meubles à restaurer
 	 * @param dbc : plan à remplir lors de la restauration du contenu
 	 */
@@ -35,6 +36,7 @@ public class ContentRestorer
 	
 	/**
 	 * Restaure un plan sauvegardé en lisant le fichier donné.
+	 * 
 	 * @param f : fichier SketchHome à ouvrir
 	 */
 	public void restore (File f)
@@ -72,6 +74,7 @@ public class ContentRestorer
 		
 	/**
 	 * Ouvre un fichier.
+	 * 
 	 * @param file fichier à ouvrir
 	 */
 	public void openFile(File file)

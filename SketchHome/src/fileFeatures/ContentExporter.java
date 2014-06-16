@@ -16,6 +16,7 @@ public class ContentExporter
 
 	/**
 	 * Crée un nouvel exportateur.
+	 * 
 	 * @param p : JPanel à gérer
 	 */
 	public ContentExporter (JPanel p)
@@ -25,6 +26,7 @@ public class ContentExporter
 	
 	/**
 	 * Enregistre le JPanel de l'exportateur sous forme d'image png dans le fichier donné.
+	 * 
 	 * @param selectedFile : fichier destination d'exportation
 	 */
 	public void createPng(File selectedFile) 

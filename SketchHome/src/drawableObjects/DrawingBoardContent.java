@@ -9,24 +9,24 @@ import java.util.Observer;
  */
 public class DrawingBoardContent extends Observable {
 	
-	//murs fixé sur le plan
+	// murs fixé sur le plan
 	private LinkedList<Wall> placedWalls = new LinkedList<Wall>();
-	//mur temporaire dessiné sur le plan 
+	// mur temporaire dessiné sur le plan 
 	private Wall tmpWall;
-	//le ctrlPoint sélectionné  
+	// le ctrlPoint sélectionné  
 	private CtrlPoint selectedCtrlPoint;
-	//le mur sélectionné
+	// le mur sélectionné
 	private Wall selectedWall;
-	//variable utilisée pour fixer le diamètre du ctrlPoint
+	// variable utilisée pour fixer le diamètre du ctrlPoint
 	private int ctrlPointDiameter;
-	//variable utilisée pour fixer l'épaisseur du mur
+	// variable utilisée pour fixer l'épaisseur du mur
 	private int wallThickness;
 	
-	//meubles du plan
+	// meubles du plan
 	private LinkedList<Furniture> placedFurnitures = new LinkedList<Furniture>();
-	//le modèle de meuble sélectionné dans la librairie
+	// le modèle de meuble sélectionné dans la librairie
 	private Furniture selectedFurnitureModel;
-	//le meuble sélectionné dans le plan
+	// le meuble sélectionné dans le plan
 	private Furniture selectedFurniture;
 	
 	private ModificationObservable modificationObservable = new ModificationObservable();
@@ -66,7 +66,8 @@ public class DrawingBoardContent extends Observable {
 	
 	
 	/**
-	 * Génère un nouveau contenu de plan
+	 * Génère un nouveau contenu de plan.
+	 * 
 	 * @param ctrlPointDiameter : diamètre des points de contrôle de mur dans le plan
 	 * @param wallThickness : largeur des murs dans le plan
 	 */
@@ -77,6 +78,7 @@ public class DrawingBoardContent extends Observable {
 	
 	/**
 	 * Abonne un observateur à l'ajout de meuble dans le plan.
+	 * 
 	 * @param obs : observateur à abonner.
 	 */
 	public void addAdditionObserver(Observer obs) {
@@ -85,6 +87,7 @@ public class DrawingBoardContent extends Observable {
 	
 	/**
 	 * Abonne un observateur à la suppression de meuble dans le plan.
+	 * 
 	 * @param obs : observateur à abonner.
 	 */	
 	public void addDeletionObserver(Observer obs) {
@@ -93,6 +96,7 @@ public class DrawingBoardContent extends Observable {
 	
 	/**
 	 * Abonne un observateur à la modification de meuble dans le plan.
+	 * 
 	 * @param obs : observateur à abonner.
 	 */
 	public void addModificationObserver(Observer obs) {

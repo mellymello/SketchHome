@@ -52,7 +52,7 @@ import javax.swing.tree.TreeSelectionModel;
 import drawableObjects.Furniture;
 
 /**
- * Classe utilisant un JTreee et permettant sa modification en cours de programme.
+ * Classe utilisant un JTree et permettant sa modification en cours d'exéution.
  */
 public class DynamicTree extends JPanel implements  DrawingBoardContentObserver {
     protected DefaultMutableTreeNode rootNode;
@@ -138,35 +138,36 @@ public class DynamicTree extends JPanel implements  DrawingBoardContentObserver 
     }
     
     /**
-     * Classe observateur d'ajout de meuble
+     * Classe observateur d'ajout de meuble.
      */
     private class AdditionListener implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
-			//crée le JTreeNode du meuble à partir de son nom et l'ajoute au JTree
-			((Furniture)arg).setJTreeNode(addObject(((Furniture)arg).getLibrary().getJTreeNode(), ((Furniture)arg).getName(), true));
+			// Crée le JTreeNode du meuble à partir de son nom et l'ajoute au JTree.
+			((Furniture)arg).setJTreeNode(addObject(((Furniture)arg).getLibrary().getJTreeNode(), 
+					((Furniture)arg).getName(), true));
 		}
     }
     
     /**
-     * Classe observateur de suppression de meuble
+     * Classe observateur de suppression de meuble.
      */
     private class DeletionListener implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
-			//supprime le JTreeNode du meuble
+			// Supprime le JTreeNode du meuble.
 			DynamicTree.this.tree.setSelectionPath(new TreePath(((Furniture)arg).getJtreeNode().getPath()));
 			DynamicTree.this.removeCurrentNode();
 		}
     }
     
     /**
-     * Classe observateur de modification de meuble
+     * Classe observateur de modification de meuble.
      */
     private class ModificationListener implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
-			//modifie le JTreeNode du meuble à partir de son nom
+			// Modifie le JTreeNode du meuble à partir de son nom.
 			((Furniture)arg).getJtreeNode().setUserObject(((Furniture)arg).getName());
 			treeModel.nodeChanged(((Furniture)arg).getJtreeNode());
 		}

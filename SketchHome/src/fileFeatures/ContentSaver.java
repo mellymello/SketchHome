@@ -12,7 +12,7 @@ import drawableObjects.Furniture;
 import drawableObjects.Wall;
 
 /**
- * Outil pour sauvegarder un plan dans un fichier SketchHome
+ * Outil pour sauvegarder un plan dans un fichier SketchHome.
  */
 public class ContentSaver
 {
@@ -23,7 +23,8 @@ public class ContentSaver
 	private DrawingBoardContent content;
 	
 	/**
-	 * Crée un nouveau "sauvegardeur" de fichier SketchHome
+	 * Crée un nouveau "sauvegardeur" de fichier SketchHome.
+	 * 
 	 * @param dbc : plan à sauvegarder
 	 */
 	public ContentSaver(DrawingBoardContent dbc)
@@ -32,7 +33,8 @@ public class ContentSaver
 	}
 	
 	/**
-	 * Sauvegarde le plan dans un nouveau fichier 
+	 * Sauvegarde le plan dans un nouveau fichier.
+	 * 
 	 * @param f : nouveau fichier à créer
 	 */
 	public void saveAs (File f)
@@ -85,7 +87,8 @@ public class ContentSaver
 	
 	/**
 	 * Ouvre un fichier.
-	 * @param file fichier à ouvrir
+	 * 
+	 * @param file : fichier à ouvrir
 	 */
 	public void openFile(File file)
 	{

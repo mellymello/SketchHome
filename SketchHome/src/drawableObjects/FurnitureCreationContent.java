@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 /**
- * Représente le contenu d'un plan dans la fenêtre de création d'objet personnalisé
+ * Représente le contenu d'un plan dans la fenêtre de création d'objet personnalisé.
  */
 public class FurnitureCreationContent {
 
@@ -24,9 +24,9 @@ public class FurnitureCreationContent {
 	private Rectangle2D tmpRectangle;
 	private Vector<Rectangle2D> rectangles;
 	
-	//image utilisée pour permettre à l'utilisateur d'importer une image (format PNG)
+	// image utilisée pour permettre à l'utilisateur d'importer une image (format PNG)
 	private BufferedImage img;
-	//les coordonnées de l'image
+	// coordonnées de l'image
 	private int imgXpos;
 	private int imgYpos;
 

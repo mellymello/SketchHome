@@ -17,7 +17,8 @@ public class Printer implements Printable {
 	private JPanel panelToPrint = null;
 	
 	/**
-	 * Crée un nouvel "imprimeur" de JPanel
+	 * Crée un nouvel "imprimeur" de JPanel.
+	 * 
 	 * @param p : JPanel à imprimer
 	 */
 	public Printer (JPanel p)
