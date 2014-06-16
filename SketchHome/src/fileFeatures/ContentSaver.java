@@ -23,7 +23,7 @@ public class ContentSaver
 	private DrawingBoardContent content;
 	
 	/**
-	 * Crée un nouvel sauvegardeur de fichier SketchHome
+	 * Crée un nouveau "sauvegardeur" de fichier SketchHome
 	 * @param dbc : plan à sauvegarder
 	 */
 	public ContentSaver(DrawingBoardContent dbc)
@@ -101,7 +101,7 @@ public class ContentSaver
 	}
 	
 	/**
-	 * Ferme le fichier géré par l'ouvreur de fichier
+	 * Ferme le fichier géré par l'ouvreur de fichier.
 	 */
 	public void closeFile()
 	{
