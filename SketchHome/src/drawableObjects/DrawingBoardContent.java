@@ -19,7 +19,7 @@ public class DrawingBoardContent extends Observable {
 	private Wall selectedWall;
 	//variable utilisé pour fixer le diamètre du ctrlPoint
 	private int ctrlPointDiameter;
-	//variable utilisé pour fixer l'épesseur du mur
+	//variable utilisé pour fixer l'épaisseur du mur
 	private int wallThickness;
 	
 	//meubles du plan
