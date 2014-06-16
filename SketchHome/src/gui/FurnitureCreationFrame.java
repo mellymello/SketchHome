@@ -40,22 +40,20 @@ import drawableObjects.FurnitureCreationContent;
 import fileFeatures.ContentExporter;
 
 /**
- * 
- * Fenêtre principale de l'interface graphique pour la creation de meubles
- * personnalisé
- * 
+ * Fenêtre principale de l'interface graphique pour la création 
+ * de meubles personnalisés
  */
 public class FurnitureCreationFrame extends JFrame {
 
-	// le panel de dessin pour le meuble
+	// Panel de dessin pour le meuble
 	private DrawingPanel dp;
 	// JPanels utilitaires
 	private ToolPanel toolPanel;
 	private ModifPanel modifPanel;
 
-	// l'outil sélectionné pour dessiner le meuble
+	// Outil sélectionné pour dessiner le meuble
 	private ITools selectedTool;
-	// les outils disponibles
+	// Outils disponibles
 	private DrawEllipseTool drawEllipse;
 	private DrawLineTool drawLine;
 	private DrawPencilTool drawPencil;
@@ -71,7 +69,7 @@ public class FurnitureCreationFrame extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		// creation des outil de travail
+		// Création des outils de travail
 		drawEllipse = DrawEllipseTool.getInstance();
 		drawLine = DrawLineTool.getInstance();
 		drawPencil = DrawPencilTool.getInstance();
@@ -90,9 +88,7 @@ public class FurnitureCreationFrame extends JFrame {
 	}
 
 	/**
-	 * 
-	 * Panel utilitaire pour les outils disponibles
-	 * 
+	 * Panel utilitaire pour les outils disponibles.
 	 */
 	private class ToolPanel extends JPanel {
 
@@ -219,10 +215,8 @@ public class FurnitureCreationFrame extends JFrame {
 	}
 
 	/**
-	 * 
-	 * Panel utilitaire pour les outils de modification (import image / save
-	 * furniture)
-	 * 
+	 * Panel utilitaire pour les outils de modification 
+	 * (import image / save furniture)
 	 */
 	private class ModifPanel extends JPanel {
 
@@ -257,7 +251,7 @@ public class FurnitureCreationFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 
-					// on choisie l'outil de déplacement d'image
+					// On choisit l'outil de déplacement d'image
 					selectedTool = drawMoveImg;
 
 					JFileChooser fc = new JFileChooser();
@@ -302,9 +296,7 @@ public class FurnitureCreationFrame extends JFrame {
 	}
 
 	/**
-	 * 
-	 * Le JPanel pour dessiner le meuble
-	 * 
+	 * JPanel servant à dessiner le meuble.
 	 */
 	private class DrawingPanel extends JPanel implements MouseMotionListener,
 			MouseListener {
@@ -358,10 +350,9 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		/**
-		 * Dessiner l'image importé dans le panel
+		 * Dessine l'image importée dans le panel.
 		 * 
-		 * @param g2d
-		 *            : l'objet grphique du panel
+		 * @param g2d : l'objet graphique du panel
 		 */
 		public void drawImage(Graphics2D g2d) {
 			bi = furnitureCreationContent.getImg();
@@ -374,8 +365,8 @@ public class FurnitureCreationFrame extends JFrame {
 		}
 
 		/**
-		 * dessiner les points, lignes, ellipses, et autres formes dessiné dans
-		 * le panel
+		 * Dessine les points, lignes, ellipses, et autres formes dessinées
+		 * dans le panel.
 		 */
 		public void drawLines(Graphics2D g2d) {
 

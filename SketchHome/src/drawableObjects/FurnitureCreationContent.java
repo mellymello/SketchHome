@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 /**
- * Représente le contenu d'un plan dans la fenêtre de creation d'objets personnalisés
+ * Représente le contenu d'un plan dans la fenêtre de création d'objet personnalisé.
  */
 public class FurnitureCreationContent {
 
@@ -24,9 +24,9 @@ public class FurnitureCreationContent {
 	private Rectangle2D tmpRectangle;
 	private Vector<Rectangle2D> rectangles;
 	
-	//image utilisé pour permettre à l'utilisateur d'importer un image .pngs
+	// image utilisée pour permettre à l'utilisateur d'importer une image (format PNG)
 	private BufferedImage img;
-	//les coordonnées de l'image
+	// coordonnées de l'image
 	private int imgXpos;
 	private int imgYpos;
 
@@ -106,7 +106,6 @@ public class FurnitureCreationContent {
 	}
 	
 
-
 	public int getImgXpos() {
 		return imgXpos;
 	}
@@ -142,7 +141,7 @@ public class FurnitureCreationContent {
 	}
 
 	/**
-	 * méthode utile pour effacer le contenu du panel de creation d'objets  
+	 * Méthode utile pour effacer le contenu du panel de création d'objets  
 	 */
 	public void clearContent() {
 		ellipses.clear();

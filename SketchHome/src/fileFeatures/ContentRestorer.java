@@ -23,9 +23,10 @@ public class ContentRestorer
 	private ObjectInputStream in;
 	
 	/**
-	 * Crée un nouvel ouvreur de fichier SketchHome
+	 * Crée un nouvel "ouvreur" de fichier SketchHome.
+	 * 
 	 * @param libraryContainer : contient les librairies de meubles pour paramétrer les meubles à restaurer
-	 * @param dbc : plan à remplir lors de la restauration de contenu
+	 * @param dbc : plan à remplir lors de la restauration du contenu
 	 */
 	public ContentRestorer (MainFrame libraryContainer, DrawingBoardContent dbc)
 	{
@@ -35,6 +36,7 @@ public class ContentRestorer
 	
 	/**
 	 * Restaure un plan sauvegardé en lisant le fichier donné.
+	 * 
 	 * @param f : fichier SketchHome à ouvrir
 	 */
 	public void restore (File f)
@@ -60,9 +62,7 @@ public class ContentRestorer
 				{
 					content.addWall(((Wall)o));
 				}
-
 			}
-
 		
 		} catch (IOException e) {
 			closeFile();
@@ -74,11 +74,11 @@ public class ContentRestorer
 		
 	/**
 	 * Ouvre un fichier.
+	 * 
 	 * @param file fichier à ouvrir
 	 */
 	public void openFile(File file)
 	{
-
 		try {
 			fis = new FileInputStream(file);
 			in = new ObjectInputStream(fis);
@@ -92,7 +92,7 @@ public class ContentRestorer
 	}
 	
 	/**
-	 * Ferme le fichier géré par l'ouvreur de fichier
+	 * Ferme le fichier géré par l'ouvreur de fichier.
 	 */
 	public void closeFile()
 	{

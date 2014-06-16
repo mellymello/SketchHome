@@ -10,10 +10,10 @@ import java.io.Serializable;
 public class CtrlPoint extends Point2D implements Serializable {
 
 	private static final long serialVersionUID = 3100241430946391451L;
-	//position
+	// position
 	private double x;
 	private double y;
-	//représentation graphique
+	// représentation graphique
 	private Ellipse2D ctrlPoint;
 	private double diameter;
 
@@ -23,7 +23,6 @@ public class CtrlPoint extends Point2D implements Serializable {
 		this.diameter = diameter;
 		ctrlPoint = new Ellipse2D.Double(x - diameter / 2, y - diameter / 2,
 				diameter, diameter);
-
 	}
 
 	/**
@@ -46,6 +45,7 @@ public class CtrlPoint extends Point2D implements Serializable {
 	@Override
 	/**
 	 * Modifie la position du CtrPoint.
+	 * 
 	 * @param x : nouvelle position x du point
 	 * @param y : nouvelleve position y du point 
 	 */

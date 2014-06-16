@@ -37,7 +37,7 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	// contenu du plan
 	private DrawingBoardContent drawingBoardContent;
 
-	// si vaut true on affiche les cotations des éléments du plan
+	// s'il vaut true, on affiche les cotations des éléments du plan
 	private boolean showMeasurements;
 
 	// outils utilisables pour dessiner le plan
@@ -54,7 +54,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	/**
 	 * Crée un nouveau plan.
-	 * @param width : largeur du plan
+	 * 
+	 * @param width: largeur du plan
 	 * @param height : hauteur du plan
 	 * @param ctrlPointDiameter : largeur des points de contrôle de mur du plan
 	 * @param wallThickness : largeur des murs du plan
@@ -81,8 +82,9 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	/**
-	 * Abonne un observateur aux modification apportées au plan.
-	 * Notifications possibles : ajout, modification ou suppression de meuble.
+	 * Abonne un observateur aux modification apportées au plan. Notifications
+	 * possibles : ajout, modification ou suppression de meuble.
+	 * 
 	 * @param obs : observateur à abonner
 	 */
 	public void addContentObserver(DrawingBoardContentObserver obs) {
@@ -100,10 +102,10 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		Graphics2D g2 = (Graphics2D) g;
-		
-		//activation de l'anti-aliasing
+
+		// activation de l'anti-aliasing
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -122,49 +124,81 @@ public class DrawingBoard extends JPanel implements MouseListener,
 		for (Furniture furniture : drawingBoardContent.getPlacedFurnitures()) {
 			if (furniture.getVisible()) {
 				/*
-				* Affichage de l'image du meuble en y appliquant une rotation
-				*/
-				//copie de l'image dans un BufferedImage de travail 
-				BufferedImage bimage = new BufferedImage((int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), BufferedImage.TYPE_INT_ARGB);
+				 * Affichage de l'image du meuble en y appliquant une rotation.
+				 */
+				// copie de l'image dans un BufferedImage de travail
+				BufferedImage bimage = new BufferedImage((int) furniture
+						.getDimension().getWidth(), (int) furniture
+						.getDimension().getHeight(),
+						BufferedImage.TYPE_INT_ARGB);
 				Graphics2D tempG2D = bimage.createGraphics();
-				tempG2D.drawImage(furniture.getLoadedPicture(),0, 0, (int)furniture.getDimension().getWidth(), (int)furniture.getDimension().getHeight(), furniture.getColor(), null);
+				tempG2D.drawImage(furniture.getLoadedPicture(), 0, 0,
+						(int) furniture.getDimension().getWidth(),
+						(int) furniture.getDimension().getHeight(),
+						furniture.getColor(), null);
 				tempG2D.dispose();
 
-				//copie avec rotation du BufferedImage dans le Graphics d'affichage
-				AffineTransform transf = new AffineTransform(); 
-				transf.translate(furniture.getPosition().x, furniture.getPosition().y); 
-				transf.rotate(Math.toRadians(furniture.getOrientation()), furniture.getDimension().getWidth() / 2, furniture.getDimension().getHeight() / 2);
+				// Copie avec rotation du BufferedImage dans le Graphics
+				// d'affichage.
+				AffineTransform transf = new AffineTransform();
+				transf.translate(furniture.getPosition().x,
+						furniture.getPosition().y);
+				transf.rotate(Math.toRadians(furniture.getOrientation()),
+						furniture.getDimension().getWidth() / 2, furniture
+								.getDimension().getHeight() / 2);
 				g2.drawImage(bimage, transf, null);
-				 
-				//point central du meuble
-				int furnitureCenterX = furniture.getPosition().x + furniture.getDimension().width /2;
-				int furnitureCenterY = furniture.getPosition().y + furniture.getDimension().height /2;
-				 
-				//affichage de la bordure bleu sur le meuble sélectionné
+
+				// Point central du meuble.
+				int furnitureCenterX = furniture.getPosition().x
+						+ furniture.getDimension().width / 2;
+				int furnitureCenterY = furniture.getPosition().y
+						+ furniture.getDimension().height / 2;
+
+				// Affichage de la bordure bleue sur le meuble sélectionné.
 				if (furniture.getSelected()) {
 					g2.setColor(Color.BLUE);
 					g2.drawPolygon(furniture.getPathPolygon());
 				}
 
-				//affichage des cotations
+				// Affichage des cotations.
 				if (showMeasurements) {
-					//largeur affichée en haut au millieu de l'image
-				   Point2D initialWidthMeasurementPosition = new Point(furniture.getPosition().x + furniture.getDimension().width / 2, furniture.getPosition().y);
-				   Point2D widthMeasurementPosition = new Point2D.Double();
-				   //hauteur affichée à droite au millieu de l'image
-				   Point2D initialHeightMeasurementPosition = new Point(furniture.getPosition().x + furniture.getDimension().width, furniture.getPosition().y + furniture.getDimension().height / 2);
-				   Point2D heightMeasurementPosition = new Point2D.Double();
-				    
-				   //rotation des positions d'affichage des cotations
-				   AffineTransform transformationMeasurementPoint = new AffineTransform(); 
-				   transformationMeasurementPoint.rotate(Math.toRadians(furniture.getOrientation()), furnitureCenterX, furnitureCenterY);
-				   transformationMeasurementPoint.transform ( initialWidthMeasurementPosition, widthMeasurementPosition );
-				   transformationMeasurementPoint.transform ( initialHeightMeasurementPosition, heightMeasurementPosition );
+					// largeur affichée en haut au millieu de l'image
+					Point2D initialWidthMeasurementPosition = new Point(
+							furniture.getPosition().x
+									+ furniture.getDimension().width / 2,
+							furniture.getPosition().y);
+					Point2D widthMeasurementPosition = new Point2D.Double();
+					
+					// hauteur affichée à droite au millieu de l'image
+					Point2D initialHeightMeasurementPosition = new Point(
+							furniture.getPosition().x
+									+ furniture.getDimension().width,
+							furniture.getPosition().y
+									+ furniture.getDimension().height / 2);
+					Point2D heightMeasurementPosition = new Point2D.Double();
 
-				   //afficher les cotations
-				   g2.setColor(Color.BLACK);
-				   g2.drawString(String.valueOf(furniture.getDimension().width), (int)widthMeasurementPosition.getX(), (int)widthMeasurementPosition.getY());
-				   g2.drawString(String.valueOf(furniture.getDimension().height), (int)heightMeasurementPosition.getX(), (int)heightMeasurementPosition.getY());
+					// rotation des positions d'affichage des cotations
+					AffineTransform transformationMeasurementPoint = new AffineTransform();
+					transformationMeasurementPoint.rotate(
+							Math.toRadians(furniture.getOrientation()),
+							furnitureCenterX, furnitureCenterY);
+					transformationMeasurementPoint.transform(
+							initialWidthMeasurementPosition,
+							widthMeasurementPosition);
+					transformationMeasurementPoint.transform(
+							initialHeightMeasurementPosition,
+							heightMeasurementPosition);
+
+					// afficher les cotations
+					g2.setColor(Color.BLACK);
+					g2.drawString(
+							String.valueOf(furniture.getDimension().width),
+							(int) widthMeasurementPosition.getX(),
+							(int) widthMeasurementPosition.getY());
+					g2.drawString(
+							String.valueOf(furniture.getDimension().height),
+							(int) heightMeasurementPosition.getX(),
+							(int) heightMeasurementPosition.getY());
 				}
 			}
 		}
@@ -173,10 +207,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	/**
 	 * Dessiner un mur sur le plan.
 	 * 
-	 * @param g2
-	 *            : espace de dessin
-	 * @param w
-	 *            : mur à dessiner
+	 * @param g2 : espace de dessin
+	 * @param w : mur à dessiner
 	 */
 	private void paintWall(Graphics2D g2, Wall w) {
 		// dessiner le mur
@@ -207,8 +239,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	/**
-	 * Evènement du cliqué-glissé de la souris
-	 * Application de la méthode de l'outil sélectionné
+	 * Evènement du cliquer-glisser de la souris.
+	 * Application de la méthode de l'outil sélectionné.
 	 */
 	public void mouseDragged(MouseEvent me) {
 		selectedTool.onMouseDragged(me);
@@ -218,8 +250,8 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	/**
-	 * Evènement du déplacement de la souris
-	 * Application de la méthode de l'outil sélectionné
+	 * Evènement du déplacement de la souris.
+	 * Application de la méthode de l'outil sélectionné.
 	 */
 	public void mouseMoved(MouseEvent me) {
 		selectedTool.onMouseMoved(me);
@@ -229,42 +261,44 @@ public class DrawingBoard extends JPanel implements MouseListener,
 
 	@Override
 	/**
-	 * Evènement du cliqué-relaché la souris.
-	 * Application de la méthode de l'outil sélectionné
+	 * Evènement du cliquer-relacher la souris.
+	 * Application de la méthode de l'outil sélectionné.
 	 */
 	public void mouseClicked(MouseEvent me) {
 		selectedTool.onMouseClicked(me);
-		
-		//on a besoin du focus pour détecter les touches claviers
+
+		// besoin du focus pour détecter les touches claviers
 		requestFocus();
 
 		repaint();
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent me) {}
+	public void mouseEntered(MouseEvent me) {
+	}
 
 	@Override
-	public void mouseExited(MouseEvent me) {}
+	public void mouseExited(MouseEvent me) {
+	}
 
 	@Override
 	/**
-	 * Evènement du cliqué de la souris.
+	 * Evènement du clic de la souris.
 	 * Application de la méthode de l'outil sélectionné
 	 */
 	public void mousePressed(MouseEvent me) {
 		selectedTool.onMousePressed(me);
-		
-		//on a besoin du focus pour détecter les touches claviers
+
+		// besoin du focus pour détecter les touches claviers
 		requestFocus();
-		
+
 		repaint();
 	}
 
 	@Override
 	/**
-	 * Evènement du relaché de la souris.
-	 * Application de la méthode de l'outil sélectionné
+	 * Evènement du relacher de la souris.
+	 * Application de la méthode de l'outil sélectionné.
 	 */
 	public void mouseReleased(MouseEvent me) {
 		selectedTool.onMouseReleased(me);
@@ -310,28 +344,33 @@ public class DrawingBoard extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+	}
 
 	@Override
 	/**
 	 * Evènement de l'appui sur une touche de clavier
 	 */
 	public void keyPressed(KeyEvent e) {
-		//supprimer le meuble avec la touche delete
-		if(e.getKeyCode() == KeyEvent.VK_DELETE) {
-			if(drawingBoardContent.getSelectedFurniture() != null) {
-				drawingBoardContent.deleteFurniture(drawingBoardContent.getSelectedFurniture());
+		// supprimer le meuble avec la touche delete
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+			if (drawingBoardContent.getSelectedFurniture() != null) {
+				drawingBoardContent.deleteFurniture(drawingBoardContent
+						.getSelectedFurniture());
 				repaint();
 			}
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	}
 
 	/**
-	 * Envoyer une notification de modification de meuble aux ModificationObserver du plan 
-	 * @param f : meuble modifié
+	 * Envoyer une notification de modification de meuble aux
+	 * ModificationObserver du plan
+	 * 
+	 * @param f: meuble modifié
 	 */
 	public void modifyFurniture(Furniture f) {
 		drawingBoardContent.getModificationObservable().sendNotify(f);

@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- * Représente un meuble.
+ * Représentation d'un meuble
  */
 public class Furniture implements Cloneable, Serializable {
 	private static final long serialVersionUID = -4108285572677120893L;
@@ -29,27 +29,28 @@ public class Furniture implements Cloneable, Serializable {
 	private String picture;
 	private Color color;
 	private transient Image loadedPicture;
-	//degré de rotation
+	// degré de rotation
 	private double orientation;
-	//position du coin supérieur-gauche
+	// position du coin supérieur gauche
 	private Point position;
-	//empêche la modification du meuble
+	// empêche la modification du meuble
 	private boolean locked;
-	//afficher ou pas le meuble
+	// affiche ou pas le meuble
 	private boolean visible;
-	//utilisé pour le dessin de la bordure de sélection dans le plan
+	// utilisé pour le dessin de la bordure de sélection dans le plan
 	private boolean isSelected = false;
 	private boolean mustBePlacedOnWall;
 	
-	//librarie dont le meuble fait partie
+	// librarie dont le meuble fait partie
 	private transient FurnitureLibrary library;
-	//utilisé pour ouvrir un fichier sauvegardé comme l'attribut library n'est pas sauvegardé
+	// utilisé pour ouvrir un fichier sauvegardé (comme l'attribut library n'est pas sauvegardé)
 	private String libraryName;
-	//noeud représentant le meuble dans l'arborescence du plan
+	// noeud représentant le meuble dans l'arborescence du plan
 	private transient DefaultMutableTreeNode jTreeNode;
 	
 	/**
-	 * Crée un nouveau meuble
+	 * Crée un nouveau meuble.
+	 * 
 	 * @param name : nom du meuble
 	 * @param description : description du meuble
 	 * @param picture : chemin d'accès de l'image du meuble
@@ -81,7 +82,8 @@ public class Furniture implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Clone le meuble
+	 * Clone le meuble.
+	 * 
 	 * @return clone du meuble
 	 */
 	public Furniture clone() { 
@@ -161,6 +163,7 @@ public class Furniture implements Cloneable, Serializable {
 	
 	/**
 	 * Vérifie si un point est contenu dans le meuble.
+	 * 
 	 * @param x : position X du point
 	 * @param y : position Y du point
 	 * @return true si le point est contenu dans le meuble
@@ -170,6 +173,8 @@ public class Furniture implements Cloneable, Serializable {
 	}
 	
 	/**
+	 * Polygone de sélection.
+	 * 
 	 * @return un polygon représentant le rectangle de sélection de l'image prenant en charge sa rotation
 	 */
 	public Polygon getPathPolygon() {
