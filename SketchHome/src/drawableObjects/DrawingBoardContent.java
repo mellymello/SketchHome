@@ -17,9 +17,9 @@ public class DrawingBoardContent extends Observable {
 	private CtrlPoint selectedCtrlPoint;
 	//le mur sélectionné
 	private Wall selectedWall;
-	//variable utilisé pour fixer le diamètre du ctrlPoint
+	//variable utilisée pour fixer le diamètre du ctrlPoint
 	private int ctrlPointDiameter;
-	//variable utilisé pour fixer l'épesseur du mur
+	//variable utilisée pour fixer l'épaisseur du mur
 	private int wallThickness;
 	
 	//meubles du plan
@@ -55,7 +55,7 @@ public class DrawingBoardContent extends Observable {
 	}
 	
 	/**
-	 * Objet observable utilisé pour signaler la supprssion d'un meuble
+	 * Objet observable utilisé pour signaler la suppression d'un meuble
 	 */
 	private class DeletionObservable extends Observable {
 		public void sendNotify(Furniture deletedFurniture) {
@@ -136,8 +136,9 @@ public class DrawingBoardContent extends Observable {
 	}
 
 	/**
-	 * Ajoute un meuble au plan
-	 * Notifie les AdditionObserver du plan
+	 * Ajoute un meuble au plan.
+	 * Notifie les AdditionObserver du plan.
+	 * 
 	 * @param f : meuble à ajouter
 	 */
 	public void addFurniture(Furniture f) {
@@ -146,8 +147,9 @@ public class DrawingBoardContent extends Observable {
 	}
 
 	/**
-	 * Supprime un meuble du plan
-	 * Notifie les DeletionObserver du plan
+	 * Supprime un meuble du plan.
+	 * Notifie les DeletionObserver du plan.
+	 * 
 	 * @param f : meuble à supprimer
 	 */
 	public void deleteFurniture(Furniture f) {
@@ -174,6 +176,7 @@ public class DrawingBoardContent extends Observable {
 	/**
 	 * Change le meuble sélectionné dans le plan.
 	 * Si un meuble est réellement sélectionné, notifie les ModificationObserver du plan.
+	 * 
 	 * @param selectedFurniture : meuble sélectionné dans le plan
 	 */
 	public void setSelectedFurniture(Furniture selectedFurniture) {

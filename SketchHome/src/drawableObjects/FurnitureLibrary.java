@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Représente une librairie de meuble.
+ * Représente une librairie de meubles.
  */
 public class FurnitureLibrary implements Serializable {
 
@@ -29,8 +29,8 @@ public class FurnitureLibrary implements Serializable {
 	private DefaultMutableTreeNode jTreeNode;
 	
 	/**
-	 * Crée une nouvelle librairie de meuble
-	 * @param xmlFilePath : chemin d'accès du fichier XML du contenu  de la librairie
+	 * Crée une nouvelle librairie de meuble.
+	 * @param xmlFilePath : chemin d'accès du fichier XML du contenu de la librairie
 	 * @param name : nom de la librairie
 	 */
 	public FurnitureLibrary(String xmlFilePath, String name) {
@@ -45,7 +45,7 @@ public class FurnitureLibrary implements Serializable {
 		libraryContent.clear();
 		try {
 				/*
-				 * ouverture du fichier xml
+				 * Ouverture du fichier XML
 				 */
 				File fXmlFile = new File(xmlFilePath);
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

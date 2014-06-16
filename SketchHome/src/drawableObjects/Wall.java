@@ -1,12 +1,10 @@
 package drawableObjects;
 
-
-
 import java.awt.geom.Line2D;
 import java.io.Serializable;
 
 /**
- * Représente un mur tracable sur le plan.
+ * Représente un mur traçable sur le plan.
  */
 public class Wall implements Serializable{
 
@@ -25,9 +23,9 @@ public class Wall implements Serializable{
 	 * @param xStartPoint : coordonné x du point de départ
 	 * @param yStartPoint : coordonné y du point de départ
 	 * @param ctrlPointDiameter : le diamètre du ctrlPoint
-	 * @param wallThickness : l'épesseur du mur
+	 * @param wallThickness : l'épaisseur du mur
 	 * 
-	 * Note: Le mur crée possède comme point d'arrivé le point de départ (donc le mur possède une longueur de 0)
+	 * Note: Le mur créé possède comme point d'arrivée le point de départ (donc le mur possède une longueur de 0)
 	 */
 	public Wall(double xStartPoint, double yStartPoint,
 			double ctrlPointDiameter, int wallThickness) {
@@ -39,16 +37,15 @@ public class Wall implements Serializable{
 		endPoint = new CtrlPoint(xStartPoint, yStartPoint, ctrlPointDiameter);
 
 		wallLine = new Line2D.Double(startPoint, endPoint);
-
 	}
 
 	/**
 	 * Construit un mur à partir de:
 	 * @param startPoint : le point de départ du mur
 	 * @param ctrlPointDiameter : le diamètre du ctrlPoint
-	 * @param wallThickness : l'épesseur du mur
+	 * @param wallThickness : l'épaisseur du mur
 	 * 
-	 * Note: Le mur crée possède comme point d'arrivé le point de départ (donc le mur possède une longueur de 0)
+	 * Note: Le mur créé possède comme point d'arrivée le point de départ (donc le mur possède une longueur de 0)
 	 */
 	public Wall(CtrlPoint startPoint, int ctrlPointDiameter, int wallThickness) {
 		this.startPoint = startPoint;
@@ -57,14 +54,13 @@ public class Wall implements Serializable{
 
 		this.wallThickness = wallThickness;
 		wallLine = new Line2D.Double(startPoint, endPoint);
-
 	}
 
 	/**
 	 * 
-	 * @param startPoint :le point de départ du mur
-	 * @param endPoint : le point d'arrivé du mur
-	 * @param wallThickness : l'épesseur du mur
+	 * @param startPoint : 	le point de départ du mur
+	 * @param endPoint : 	le point d'arrivée du mur
+	 * @param wallThickness : l'épaisseur du mur
 	 */
 	public Wall(CtrlPoint startPoint, CtrlPoint endPoint, int wallThickness) {
 		this.startPoint = startPoint;
@@ -72,7 +68,6 @@ public class Wall implements Serializable{
 		this.wallThickness = wallThickness;
 
 		wallLine = new Line2D.Double(startPoint, endPoint);
-
 	}
 
 	public CtrlPoint getCtrlPointStart() {
@@ -84,9 +79,9 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * définir le point d'arrivé du mur
-	 * @param xEndPoint : coordonné x du point
-	 * @param yEndPoint : coordonné y du point
+	 * Définit le point d'arrivée du mur
+	 * @param xEndPoint : coordonnée x du point
+	 * @param yEndPoint : coordonnée y du point
 	 */
 	public void setEndPoint(double xEndPoint, double yEndPoint) {
 		endPoint.setLocation(xEndPoint, yEndPoint);
@@ -94,9 +89,9 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * définir le point de départ du mur
-	 * @param xStartPoint : coordonné x du point
-	 * @param yStartPoint : coordonné y du point
+	 * Définit le point de départ du mur
+	 * @param xStartPoint : coordonnée x du point
+	 * @param yStartPoint : coordonnée y du point
 	 */
 	public void setStartPoint(double xStartPoint, double yStartPoint) {
 		startPoint.setLocation(xStartPoint, yStartPoint);
@@ -104,7 +99,7 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * défini un nouveau point d'arrivé pour le mur
+	 * Définit un nouveau point d'arrivée pour le mur
 	 * @param newEndPoint : le nouveau point
 	 */
 	public void setNewEndPoint(CtrlPoint newEndPoint) {
@@ -127,7 +122,7 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * Méthode pour obtenir la longueur du mur
+	 * Permet d'obtenir la longueur du mur
 	 * @return la longueur du mur
 	 */
 	public double getWallLength() {
@@ -136,7 +131,7 @@ public class Wall implements Serializable{
 	}
 
 	/**
-	 * permet d'obtenir une représentation texte du mur
+	 * Permet d'obtenir une représentation texte du mur
 	 */
 	public String toString() {
 		return "[" + startPoint + ":" + endPoint + "] wallLine: {"

@@ -23,7 +23,6 @@ public class CtrlPoint extends Point2D implements Serializable {
 		this.diameter = diameter;
 		ctrlPoint = new Ellipse2D.Double(x - diameter / 2, y - diameter / 2,
 				diameter, diameter);
-
 	}
 
 	/**
