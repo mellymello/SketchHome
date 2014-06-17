@@ -1,10 +1,7 @@
 package tools;
 
-import gui.FurnitureCreationFrame;
-
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 public class DrawEllipseTool extends DragDrawTool {
 

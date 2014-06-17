@@ -1,12 +1,7 @@
 package tools;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import com.sun.media.sound.FFT;
-
-import drawableObjects.CtrlPoint;
 import drawableObjects.Furniture;
 import drawableObjects.Wall;
 

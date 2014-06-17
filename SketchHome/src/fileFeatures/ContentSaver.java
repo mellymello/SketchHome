@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.LinkedList;
-
 import drawableObjects.DrawingBoardContent;
 import drawableObjects.Furniture;
 import drawableObjects.Wall;

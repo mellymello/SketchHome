@@ -41,7 +41,6 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import tools.PolygonalWallTool;
 import drawableObjects.CtrlPoint;
 import drawableObjects.Furniture;
 import drawableObjects.FurnitureLibrary;
